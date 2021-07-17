@@ -1,29 +1,27 @@
 # Site settings
-title: Klise Theme # site title
+title: m3rcer - Hacking/Security Blog # site title
 description: >- # site description
-  He's writing in Bahasa about web technology and experience as a journal 
-  for documentation things that he learned, meet him <a href="https://github.com/piharpi" target="_blank" rel="noopener">@github</a>.
+  Hacking, Security, Red Teaming, Malware Analysis and CTF's.
 lang: en-US # default lang
-timezone: Asia/Jakarta # set your timezone
-image: assets/img/ogp.png # This image used for Open Graph more info https://ogp.me/
-repo: https://github.com/piharpi/jekyll-klise # site repo [optional]
+timezone: Asia/Kolkata # set your timezone
+image: https://avatars.githubusercontent.com/u/81712403?s=400&u=b0458a3a7a7fa7f371ce4c0454b64d79895b4af5&v=4 # This image used for Open Graph more info https://ogp.me/
+repo: https://github.com/m3rcer/m3rcer.github.io # site repo [optional]
 mode: dark # default theme "dark" | "light"
 
 # Profile settings
 author:
-  name: Jekyll Klisé # author name
+  name: m3rcer # author name
   bio: >- # tell to the world
-    The minimalist Jekyll theme, light and dark mode support, for running a personal site and blog, 
-    meet Klisé theme at <a href="https://github.com/piharpi/jekyll-klise" target="_blank" rel="noopener">@github</a>.
-  username: username # general username
-  github: github_username # github username
-  twitter: twitter_username # twitter username
-  facebook: facebook_username # facebook username
-  email: your-email@email.com # email adress
-  avatar: /assets/img/avatar.jpg # change with your own avatar
+    23 - Red Teaming <3.
+  username: m3rcer # general username
+  github: m3rcer # github username
+  #twitter: twitter_username # twitter username
+  #facebook: facebook_username # facebook username
+  #email: your-email@email.com # email adress
+  HackTheBox: https://app.hackthebox.eu/profile/179007 # change with your own avatar
 
 # URL settings
-url: "https://klise.now.sh" #
+url: "https://m3rcer.netlify.app" #
 baseurl:
 permalink: /:title/
 google_analytics: # leave it blank if not wish
