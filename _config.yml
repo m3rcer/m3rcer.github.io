@@ -4,7 +4,7 @@ description: >- # site description
   Hacking, Security, Red Teaming, Malware Analysis and CTF's.
 lang: en-US # default lang
 timezone: Asia/Kolkata # set your timezone
-image: https://avatars.githubusercontent.com/u/81712403?s=400&u=b0458a3a7a7fa7f371ce4c0454b64d79895b4af5&v=4 # This image used for Open Graph more info https://ogp.me/
+image: https://www.hackthebox.eu/storage/avatars/e4abecc17091b98d976c7847213b784a.png?v=1 # This image used for Open Graph more info https://ogp.me/
 repo: https://github.com/m3rcer/m3rcer.github.io # site repo [optional]
 mode: dark # default theme "dark" | "light"
 
@@ -12,13 +12,13 @@ mode: dark # default theme "dark" | "light"
 author:
   name: m3rcer # author name
   bio: >- # tell to the world
-    23 - Red Teaming <3.
+    23 - "Welcome to the top of the food chain.".
   username: m3rcer # general username
   github: m3rcer # github username
   #twitter: twitter_username # twitter username
   #facebook: facebook_username # facebook username
   #email: your-email@email.com # email adress
-  HackTheBox: https://app.hackthebox.eu/profile/179007 # change with your own avatar
+  #HackTheBox: https://app.hackthebox.eu/profile/179007 # change with your own avatar
 
 # URL settings
 url: "https://m3rcer.netlify.app" #

@@ -8,8 +8,9 @@ comments: false
 
 23 Year old.
 
-"Huh. Welcome to the top of the food chain."
+Wheris Prototype 3.
 
+"You could say I'm... symptomatic."
 
 **HMU:**
 
