@@ -23,7 +23,7 @@ author:
 # URL settings
 url: "https://m3rcer.netlify.app" #
 baseurl:
-permalink: /:title/
+permalink: /:categories/:title/
 google_analytics: # leave it blank if not wish
 fb_appid:
 
