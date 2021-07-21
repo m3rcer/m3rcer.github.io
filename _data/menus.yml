@@ -12,7 +12,7 @@
 
 - title: CTF
   url: /CTF/
-  external: True
+  external: false
 
 # Example:
 # - title: github

@@ -1,3 +1,11 @@
+---
+title: HackTheBox - Atom Writeup
+date: 2021-05-08 09:45:47 +07:00
+#modified: 20-08-29 09:24:47 +07:00
+#tags: [blog, netlify, jekyll, github]
+description: HackTheBox Atom in depth Writeup.
+---
+
 <h1 align="center"> HTB Atom - Writeup - May 8 2021</h1>
 
 <p align="center">
