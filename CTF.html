@@ -15,7 +15,8 @@ comments: false
 
 <ul id="search-results"></ul>
 
-{%- for post in site.posts.ctf -%}
+{%- for post in site.posts -%}
+	{% for post.path in 'ctf' %}
 	  {%- capture current_year -%}{{ post.date | date: "%Y" }}{%- endcapture -%}
 	  {%- unless current_year == previous_year -%}
 	    <h2>{{ current_year }}</h2>
@@ -26,4 +27,5 @@ comments: false
 	      <a href="{{ post.url }}">{{ post.title | escape }}</a>
 	    </h3> 
 	  </article>
+	{%- endfor -%}
 {%- endfor -%}
