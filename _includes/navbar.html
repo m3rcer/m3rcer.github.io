@@ -160,21 +160,6 @@
       </svg>
     </a>
 
-    <input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
-
-    <div class="sidebar" id="sidebar">
-      <nav class="sidebar-nav">
-       <h3 class="category-topic">Topics/</h3>
-        {% assign sortedCategories = site.categories | sort %}
-        {% for category in sortedCategories %}
-         {% assign cat4url = category[0] | remove:' ' | downcase %}
-         <a class="sidebar-nav-item" href="{{site.baseurl}}/category/{{cat4url}}">
-            {{category[0]}}
-         </a>
-        {% endfor %}
-      </nav>
-
-    </div>
 
     <div class="trigger">
       <div class="trigger-container">
@@ -201,6 +186,7 @@
         {%- else -%}
           <a class="menu-link {% if url == '/' %}active{% endif %}" href="/">home</a>
           <a class="menu-link {% if url == '/about/' %}active{% endif %}" href="/about">about</a>
+          <a class="menu-link {% if url == '/category/' %}active{% endif %}" href="/category">categories</a>
         {%- endif -%}
         <a class="menu-link rss" href="/feed.xml">
           <svg
