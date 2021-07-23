@@ -8,7 +8,7 @@ description: TryHackMe OverPass1 Writeup.
 ---
 
 
-<h1 align="center"> TryHackMe OverPass - Writeup - May 9 2021 </h1>
+<h1 align="center"> TryHackMe OverPass - Writeup</h1>
 
 <p align="center">
  <img src="https://i.imgur.com/LPggi78.png">
