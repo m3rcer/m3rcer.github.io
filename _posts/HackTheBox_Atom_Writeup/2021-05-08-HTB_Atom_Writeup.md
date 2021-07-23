@@ -1,6 +1,7 @@
 ---
 title: HackTheBox - Atom Writeup
 date: 2021-05-08 09:45:47 +07:00
+categories: ctf
 #modified: 20-08-29 09:24:47 +07:00
 #tags: [blog, netlify, jekyll, github]
 description: HackTheBox Atom in depth Writeup.
@@ -12,12 +13,16 @@ description: HackTheBox Atom in depth Writeup.
  <img src="https://www.hackthebox.eu/storage/avatars/27ea1e1be5e83989ad5b6361773f4eaa.png">
 </p>
 
+<hr>
+
 Hello All! Its me **mercer98** back with another one .
 This is a fun little box w a medium difficulty. There's a few rabbit holes but other than that its quite straightforward . In my opinion i found the privesc a bit harder than the inital foothold . 
 
 *[Find the official link for HacktheBox - Atom here!](https://app.hackthebox.eu/machines/340)*
 
 Lets Begin!
+
+<hr>
 
 
 ### ENUMERATION
