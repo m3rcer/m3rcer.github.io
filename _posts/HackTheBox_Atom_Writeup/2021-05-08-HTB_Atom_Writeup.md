@@ -7,8 +7,6 @@ categories: ctf
 description: HackTheBox Atom Writeup.
 ---
 
-<h1 align="center"> HTB Atom - Writeup</h1>
-
 <p align="center">
  <img src="https://www.hackthebox.eu/storage/avatars/27ea1e1be5e83989ad5b6361773f4eaa.png">
 </p>
@@ -24,17 +22,15 @@ Lets Begin!
 
 <hr>
 
-----------------------------------------------------------------------------------------------------
-
 ### ENUMERATION
 
 We kick it off w a usual nmap scan . In this case a default script and version scan w the verbose flag to see open ports on the fly without having to wait for the scan to finish.
 
-![Image](images/atom1.png)
+<img src="images/atom1.png" alt="">
 
 A full port scan reveals redis is active on port 6379 along w winrm at 5985 which shows we can probably use remoting with authentic creds.
 
-![Image](images/atom2.png)
+<img src="images/atom2.png" alt="">
 
 We start off by checking port 80:
 We find a possible uname at th end of the pg : __MrR3boot@atom.htb__
@@ -45,13 +41,13 @@ Directory Bruteforcing w gobuster results in nothing too great so moving on!
 
 **Enumerating redis:**
 
-![Image](images/atom7.png)
+<img src="images/atom7.png" alt="">
 
 Much cant be enumerated since redis requires auth . Checking the format of auth shows it requires only the pass. We could attempt to brute force the pass if nothing turns up from smb.
 
 **Enumerating smb:**
 
-![Image](images/atom3.png)
+<img src="images/atom3.png" alt="">
 
 Smbmap shows use we have access to 2 shares amongst which IPC$ is the default and can be used for named pipe enum using enum4linux later .
 Software_Updates seems interesting as we have right access too to it.
@@ -59,7 +55,7 @@ Software_Updates seems interesting as we have right access too to it.
 
 Using smbclient to connect to the share:
 
-![Image](images/atom4.png)
+<img src="images/atom4.png" alt="">
 
 The other folders are empty so be grap the pdf. Looking at the pdf given we infer 2 things:
 
@@ -74,11 +70,9 @@ In short is a vuln caused my and unescaped variable . We can trigger a parse err
 
 The exploit bypasses inbuilt signature checks.
 
-![Image](images/atom5.png)
+<img src="images/atom5.png" alt="">
 
-![Image](images/atom6.png)
-
-
+<img src="images/atom6.png" alt="">
 ----------------------------------------------------------------------------------------------------
 
 ### FOOTHOLD
@@ -87,15 +81,15 @@ The exploit bypasses inbuilt signature checks.
 
 - Generate an msfvenom payload of choice . I generated a rev https exe. and then rename it with a single quote.
 
-![Image](images/atom8.png)
+<img src="images/atom8.png" alt="">
 
 - I renamed the file to d'payload.exe
 
-![Image](images/atom10.png)
+<img src="images/atom10.png" alt="">
 
 - Calculate the hash using the prescribed syntax : 
 
-![Image](images/atom9.png)
+<img src="images/atom9.png" alt="">
 
 
 - Setup a listener on msfconsole to catch your shell using multi/handler.
@@ -113,7 +107,7 @@ sha512: a/xp95BNvRKGxbxRZv+1LOEIs9uaSX6wGz6ip+RDX2XjNkTFVJbwIZ9T21SN40sq/78zYZmb
 - Finally put the update file in one of the client folders on the share using smbclient.
 Wait for about 15-20 secs and let the update happen . You will recieve a meterpreter shell!
 
-![Image](images/atom11.png)
+<img src="images/atom11.png" alt="">
 
 Congrats We now have a reverse shell. 
 
@@ -134,7 +128,7 @@ Retrieve contents of the file to see your flag!
 
 Begin by dropping winpeas on the box.
 
-![Image](images/atom12.png)
+<img src="images/atom12.png" alt="">
 
 Run it...
 
@@ -142,22 +136,22 @@ Details found :
 
 - Jasons creds :
 
-![Image](images/atom13.jpg)
+<img src="images/atom13.jpg" alt="">
 
 Dosent allow winrm remoting but...
 
 - A user guide pdf which we might have a look at if needed .... 
 
-![Image](images/atom17.png)
+<img src="images/atom17.png" alt="">
 
 
 - Since we already know redis was on ... I found its conf file . Looks juicy . Lets have a look:
 
-![Image](images/atom14.png)
+<img src="images/atom14.png" alt="">
 
 - We found the pass for redis. 
 
-![Image](images/atom15.jpg)
+<img src="images/atom15.jpg" alt="">
 
 
 
@@ -194,7 +188,7 @@ View the keys by:
 `get pk:urn:user:e8e29158-d70d-44b1-a1ba-4949d52790a0`
 
 
-![Image](images/atom16.jpg)
+<img src="images/atom16.jpg" alt="">
 
 
 - We now have the administrator hash ! RightOn!
@@ -202,7 +196,7 @@ View the keys by:
 
 Ater looking a lot on how to decrypt the hash i decided to look back at the "User guide.pdf" to look for clues and i found :
 
-![Image](images/atom18.png)
+<img src="images/atom18.png" alt="">
 
 Googling around made me figure that portable-kanban stores the settings for the enc pass.
 
@@ -228,7 +222,7 @@ except:
 
 - Run the script , i/p your hash and get the decrypted hash. 
 
-![Image](images/atom20.jpg)
+<img src="images/atom20.jpg" alt="">
 
 
 We now finally have the password of admin. 
@@ -236,7 +230,7 @@ We now finally have the password of admin.
 Lets try winrm again using these creds.... 
 
 
-![Image](images/atom19.jpg)
+<img src="images/atom19.jpg" alt="">
 
 **GETTING Root.txt**
 
