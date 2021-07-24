@@ -30,7 +30,9 @@ We kick it off w a usual nmap scan . In this case a default script and version s
 
 `sudo nmap -sC -sV 10.10.x.x -v`
 
-<img src="images/overpass1.png" alt="">
+<p align="center">
+ <img src="images/overpass1.png">
+</p>
 
 
 We start off by checking port 80:
@@ -43,7 +45,9 @@ Next we use gobuster to perform basic directory bruteforcing .
 `gobuster dir -u http://10.10.48.29 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 70 -o gobuster_main.out -x html`
 
 
-<img src="images/overpass2.png" alt="">
+<p align="center">
+ <img src="images/overpass2.png">
+</p>
 
 We found a the admin login panel from here at **/admin**
 
@@ -62,11 +66,15 @@ Moving to look for something unique.
 
 Looking at the admin login page source we see -->
 
-<img src="images/overpass3.png" alt=""> 
+<p align="center">
+ <img src="images/overpass3.png">
+</p> 
 
 It hints to login.js . Looking at login.js to see for default creds or some vulns we find a vulnerable set of code... 
 
-<img src="images/overpass4.png" alt=""> 
+<p align="center">
+ <img src="images/overpass4.png">
+</p> 
 
 In the given funtion the code says that if the server responds w "Incorrect Credentials" dont allow access to the admin panel .
 
@@ -82,25 +90,33 @@ Follow these steps:
 
 - Head back to the admin panel and enter **administrator:password**.
 
-<img src="images/overpass5.png" alt=""> 
+<p align="center">
+ <img src="images/overpass5.png">
+</p> 
 
 - Switch back to burp and forward the request.
 
 - Now change the server response to match my response . Basically we remove the inccorect credentials part which casues login.js to execute the else part of the code which is a succesfull login . Changing the status code from 200 to 301/302 to redirect us back to the admin page.
 
-<img src="images/overpass6.png" alt=""> 
+<p align="center">
+ <img src="images/overpass6.png">
+</p> 
 
 - Turn intercept off.
 
 - And like magic we've logged in !
 
-<img src="images/overpass7.png" alt=""> 
+<p align="center">
+ <img src="images/overpass7.png">
+</p> 
 
 Next we see we find an encrypted key w a hint that its crackable w a wordlist. And that it belongs to james.
 
 We next use ssh2john to convert it into a format that can be cracked by john .
 
-<img src="images/overpass8.png" alt=""> 
+<p align="center">
+ <img src="images/overpass8.png">
+</p> 
 
 Next we crack it using :
 
@@ -118,7 +134,9 @@ Congrats!
 
 We run linpeas on the server to further enumerate..
 
-<img src="images/overpass10.png" alt="">
+<p align="center">
+ <img src="images/overpass10.png">
+</p>
 
 We notice that the contents of crontab has a script run by root every minute to curl the contents of buildscript.sh. 
 
@@ -130,9 +148,13 @@ Checking if the hosts file is writable we find it is ! Bingo!
 
 - We create the buildscipt.sh in the respective directory. Only we change the contents of buildscript.sh to give us a reverse shell.
 
-<img src="images/overpass11.png" alt=""> 
+<p align="center">
+ <img src="images/overpass11.png">
+</p> 
 
-<img src="images/overpass12.png" alt=""> 
+<p align="center">
+ <img src="images/overpass12.png">
+</p> 
 
 - Go back up the dir structure and start your python webserver.
 
@@ -140,13 +162,17 @@ Checking if the hosts file is writable we find it is ! Bingo!
 
 Save the file 
 
-<img src="images/overpass13.png" alt=""> 
+<p align="center">
+ <img src="images/overpass13.png">
+</p> 
 
 - Finally setup your nc listener as set in your script.
 
 - Wait for a minute and get a root shell!!!
 
-<img src="images/overpass14.png" alt=""> 
+<p align="center">
+ <img src="images/overpass14.png">
+</p> 
 
 Now retrieve your root.txt and pwn this box!
 

