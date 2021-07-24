@@ -26,9 +26,8 @@ Lets Begin!
 
 We kick it off w a usual nmap scan . In this case a default script and version scan w the verbose flag to see open ports on the fly without having to wait for the scan to finish.
 
-<p align="center">
- <img src="images/atom1.png">
-</p>
+![screenshot](/images/atom1.png)
+
 
 A full port scan reveals redis is active on port 6379 along w winrm at 5985 which shows we can probably use remoting with authentic creds.
 
