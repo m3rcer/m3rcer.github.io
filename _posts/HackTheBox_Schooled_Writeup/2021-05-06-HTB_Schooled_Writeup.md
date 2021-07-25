@@ -39,14 +39,14 @@ Lets Begin!
 We kick it off w a usual nmap scan . In this case a default script and version scan w the verbose flag to see open ports on the fly without having to wait for the scan to finish.
 
 <p align="left">
- <img src="imageschooled1.png">
+ <img src="images/schooled1.png">
 </p>
 
 
 Scanning for all ports just to be safe show mysql is running on port 33060.
 
 <p align="left">
- <img src="imageschooled2.png">
+ <img src="images/schooled2.png">
 </p>
 
 Trying to see if we can remotely access the database results in no access. 
@@ -56,14 +56,14 @@ Moving on! We begin by looking at the server at port 80 as always....
 Looking at page source suggests for adding an entry in hosts list . Add schooled.htb to your /etc/hosts and continue browsing the site . 
 
 <p align="left">
- <img src="imageschooled3.png">
+ <img src="images/schooled3.png">
 </p>
 
 
 Looking at the about us page . We discover The possble cms used - Moodle!
 
 <p align="left">
- <img src="imageschooled4.png">
+ <img src="images/schooled4.png">
 </p>
 
 
@@ -100,7 +100,7 @@ Using gobuster for vhost bruteforcing i found : *moodle.schooled.htb*
 Add moodle.schooled.htb to your /etc/hosts list and browse to it.
 
 <p align="left">
- <img src="imageschooled5.png">
+ <img src="images/schooled5.png">
 </p>
 
 Visiting the page lets us signup without a confirmation!
@@ -132,13 +132,13 @@ I setup my xss-server w this simple python script ..... you can use a basic pyth
 - paste it in the user settings section
 
 <p align="left">
- <img src="imageschooled6.png">
+ <img src="images/schooled6.png">
 </p>
 
 wait for a few seconds and recieve the teachers cookie on your xss-server.
 
 <p align="left">
- <img src="imageschooled7.png">
+ <img src="images/schooled7.png">
 </p>
 
 - Copy this cookie --> Inspect Element --> Storage --> replace MoodleSession's value to the cookie --> refresh the pg/ F5 to. You're Now Manuel Phillips - Teacher!
@@ -166,7 +166,7 @@ Click on the Enroll Users option and enroll Lianne carter. Switch on intercept i
 Changed these params to match: userlist%5B%5D=24&roletoassign=1. (Changing user id to teachers id == 24 and changing role to admin == 1)
 
 <p align="left">
- <img src="imageschooled8.png">
+ <img src="images/schooled8.png">
 </p>
 
 Send the request and stop intercept after.
@@ -174,7 +174,7 @@ Send the request and stop intercept after.
 - From here click on Lianne carter's profile from the below list. Note to see the diff of and Administration button on the side .
 
 <p align="left">
- <img src="imageschooled9.png">
+ <img src="images/schooled9.png">
 </p>
 
 Click on it and now we have higher privs!
@@ -184,7 +184,7 @@ Click on it and now we have higher privs!
 - Click on Users --> define roles --> Click on the 'edit' icon in the manager role. Turn intercept on before you do and add the payload from the poc described . Forward to request to get full privs!
 
 <p align="left">
- <img src="imageschooled10.png">
+ <img src="images/schooled10.png">
 </p>
 
 - Next grab rce.zip from [here](https://github.com/HoangKien1020/Moodle_RCE)
@@ -212,7 +212,7 @@ Poking around and looking for config files , we find the apache dir and moodle d
 Checking the file **config.php** in dir:
 
 <p align="left">
- <img src="imageschooled11.jpg">
+ <img src="images/schooled11.jpg">
 </p>
 
 
@@ -232,7 +232,7 @@ then:
 
 
 <p align="left">
- <img src="imageschooled12.png">
+ <img src="images/schooled12.png">
 </p>
 
 Jamie's account here is of interest as he is one of the users on the box.
@@ -243,7 +243,7 @@ use your favorite cracker to crack this one .
 Im using john the ripper for this instance
 
 <p align="left">
- <img src="imageschooled13.jpg">
+ <img src="images/schooled13.jpg">
 </p>
 
 
@@ -262,7 +262,7 @@ Get user.txt!
 Performing a basic sudo -l give us:
 
 <p align="left">
- <img src="imageschooled14.png">
+ <img src="images/schooled14.png">
 </p>
 
 Poking around the internet and doing some good research on what the command is we find that it is a distinct binary that is replaced by the bootstrapped binary during the initial installation process.
@@ -315,12 +315,12 @@ pkg create -m ${STAGEDIR}/ -r ${STAGEDIR}/ -p ${STAGEDIR}/plist -o .
 - Run : ***sudo /usr/sbin/pkg install --no-repo-update mypackage-1.0_5.txz*** (no repo update to stop it from check from an online source) and start a listener.
 
 <p align="left">
- <img src="imageschooled15.png">
+ <img src="images/schooled15.png">
 </p>
 
 
 <p align="left">
- <img src="imageschooled16.png">
+ <img src="images/schooled16.png">
 </p>
 
 

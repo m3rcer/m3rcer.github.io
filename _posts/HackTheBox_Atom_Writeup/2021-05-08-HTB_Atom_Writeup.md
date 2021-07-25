@@ -32,7 +32,7 @@ We kick it off w a usual nmap scan . In this case a default script and version s
 A full port scan reveals redis is active on port 6379 along w winrm at 5985 which shows we can probably use remoting with authentic creds.
 
 <p align="left">
- <img src="imageatom2.png">
+ <img src="images/atom2.png">
 </p>
 
 We start off by checking port 80:
@@ -45,7 +45,7 @@ Directory Bruteforcing w gobuster results in nothing too great so moving on!
 **Enumerating redis:**
 
 <p align="left">
- <img src="imageatom7.png">
+ <img src="images/atom7.png">
 </p>
 
 Much cant be enumerated since redis requires auth . Checking the format of auth shows it requires only the pass. We could attempt to brute force the pass if nothing turns up from smb.
@@ -53,7 +53,7 @@ Much cant be enumerated since redis requires auth . Checking the format of auth 
 **Enumerating smb:**
 
 <p align="left">
- <img src="imageatom3.png">
+ <img src="images/atom3.png">
 </p>
 
 Smbmap shows use we have access to 2 shares amongst which IPC$ is the default and can be used for named pipe enum using enum4linux later .
@@ -63,7 +63,7 @@ Software_Updates seems interesting as we have right access too to it.
 Using smbclient to connect to the share:
 
 <p align="left">
- <img src="imageatom4.png">
+ <img src="images/atom4.png">
 </p>
 
 The other folders are empty so be grap the pdf. Looking at the pdf given we infer 2 things:
@@ -80,11 +80,11 @@ In short is a vuln caused my and unescaped variable . We can trigger a parse err
 The exploit bypasses inbuilt signature checks.
 
 <p align="left">
- <img src="imageatom5.png">
+ <img src="images/atom5.png">
 </p>
 
 <p align="left">
- <img src="imageatom6.png">
+ <img src="images/atom6.png">
 </p>
 ----------------------------------------------------------------------------------------------------
 
@@ -95,19 +95,19 @@ The exploit bypasses inbuilt signature checks.
 - Generate an msfvenom payload of choice . I generated a rev https exe. and then rename it with a single quote.
 
 <p align="left">
- <img src="imageatom8.png">
+ <img src="images/atom8.png">
 </p>
 
 - I renamed the file to d'payload.exe
 
 <p align="left">
- <img src="imageatom10.png">
+ <img src="images/atom10.png">
 </p>
 
 - Calculate the hash using the prescribed syntax : 
 
 <p align="left">
- <img src="imageatom9.png">
+ <img src="images/atom9.png">
 </p>
 
 
@@ -127,7 +127,7 @@ sha512: a/xp95BNvRKGxbxRZv+1LOEIs9uaSX6wGz6ip+RDX2XjNkTFVJbwIZ9T21SN40sq/78zYZmb
 Wait for about 15-20 secs and let the update happen . You will recieve a meterpreter shell!
 
 <p align="left">
- <img src="imageatom11.png">
+ <img src="images/atom11.png">
 </p>
 
 Congrats We now have a reverse shell. 
@@ -150,7 +150,7 @@ Retrieve contents of the file to see your flag!
 Begin by dropping winpeas on the box.
 
 <p align="left">
- <img src="imageatom12.png">
+ <img src="images/atom12.png">
 </p>
 
 Run it...
@@ -160,7 +160,7 @@ Details found :
 - Jasons creds :
 
 <p align="left">
- <img src="imageatom13.jpg">
+ <img src="images/atom13.jpg">
 </p>
 
 Dosent allow winrm remoting but...
@@ -168,20 +168,20 @@ Dosent allow winrm remoting but...
 - A user guide pdf which we might have a look at if needed .... 
 
 <p align="left">
- <img src="imageatom17.png">
+ <img src="images/atom17.png">
 </p>
 
 
 - Since we already know redis was on ... I found its conf file . Looks juicy . Lets have a look:
 
 <p align="left">
- <img src="imageatom14.png">
+ <img src="images/atom14.png">
 </p>
 
 - We found the pass for redis. 
 
 <p align="left">
- <img src="imageatom15.jpg">
+ <img src="images/atom15.jpg">
 </p>
 
 
@@ -220,7 +220,7 @@ View the keys by:
 
 
 <p align="left">
- <img src="imageatom16.jpg">
+ <img src="images/atom16.jpg">
 </p>
 
 
@@ -230,7 +230,7 @@ View the keys by:
 Ater looking a lot on how to decrypt the hash i decided to look back at the "User guide.pdf" to look for clues and i found :
 
 <p align="left">
- <img src="imageatom18.png">
+ <img src="images/atom18.png">
 </p>
 
 Googling around made me figure that portable-kanban stores the settings for the enc pass.
@@ -259,7 +259,7 @@ except:
 - Run the script , i/p your hash and get the decrypted hash. 
 
 <p align="left">
- <img src="imageatom20.jpg">
+ <img src="images/atom20.jpg">
 </p>
 
 
@@ -269,7 +269,7 @@ Lets try winrm again using these creds....
 
 
 <p align="left">
- <img src="imageatom19.jpg">
+ <img src="images/atom19.jpg">
 </p>
 
 **GETTING Root.txt**
