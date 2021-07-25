@@ -7,15 +7,12 @@ categories: ctf
 description: HackTheBox Schooled Writeup.
 ---
 
+<h1 align="center"> HTB Schooled - Writeup</h1>
+
 <p align="center">
  <img src="https://www.hackthebox.eu/storage/avatars/3e2a599fda2f510f3a5f2146fae928ee.png">
 </p>
 
-
-
-
-
-<hr>
 
 Its me **m3rcer**, and get ready to be schooled trying this one!
 In my opinion its a  medium box w a good realistic feel . The foothold is quite challenging but much will be learnt in the process.
@@ -25,12 +22,8 @@ In my opinion its a  medium box w a good realistic feel . The foothold is quite 
 
 Lets Begin!
 
-<hr>
+
 ----------------------------------------------------------------------------------------------------
-
-
-
-
 
 
 
@@ -38,16 +31,13 @@ Lets Begin!
 
 We kick it off w a usual nmap scan . In this case a default script and version scan w the verbose flag to see open ports on the fly without having to wait for the scan to finish.
 
-<p align="left">
- <img src="images/schooled1.png">
-</p>
+ 
+![Image](images/schooled1.png)
 
 
 Scanning for all ports just to be safe show mysql is running on port 33060.
 
-<p align="left">
- <img src="images/schooled2.png">
-</p>
+![Image](images/schooled2.png)
 
 Trying to see if we can remotely access the database results in no access. 
 
@@ -55,16 +45,12 @@ Moving on! We begin by looking at the server at port 80 as always....
 
 Looking at page source suggests for adding an entry in hosts list . Add schooled.htb to your /etc/hosts and continue browsing the site . 
 
-<p align="left">
- <img src="images/schooled3.png">
-</p>
+![Image](images/schooled3.png)
 
 
 Looking at the about us page . We discover The possble cms used - Moodle!
 
-<p align="left">
- <img src="images/schooled4.png">
-</p>
+![image](images/schooled4.png)
 
 
 
@@ -72,10 +58,9 @@ Looking at searchsploit and exploitdb a bunch of exploits are found . Will check
 
 
 Looking at the Teachers page , we find a bunch of possible unames and roles. 
+Added them to user.list
 
-Added the following to my user.list file.
-
-```
+```bash
 Jane Higgins :- Scientific Research lecturer
 Lianne Carter:- Manager and English Teacher
 Manuel Phillips:- Mathematics Teacher
@@ -83,7 +68,7 @@ Jamie Borham:- Information Technology lecturer
 ```
 
 
-Directory bruteforcing w Gobuster and such dosen't result in anything too useful.
+Directory bruteforcing w Gobuster and such dosent result in anything too useful.
 
 So far info discovered:
 
@@ -95,13 +80,12 @@ From wappalyzer: Php 7.4.15, Apache2, Bootstrap 4.1.0
 Nothing seems too useful so far ... No admin / login panel was found yet, the above info suggests one may exist. Hmmmm... A possible vhost?
 
 
+
 Using gobuster for vhost bruteforcing i found : *moodle.schooled.htb*
 
 Add moodle.schooled.htb to your /etc/hosts list and browse to it.
 
-<p align="left">
- <img src="images/schooled5.png">
-</p>
+![image](images/schooled5.png)
 
 Visiting the page lets us signup without a confirmation!
 
@@ -114,6 +98,7 @@ Possible xss?
 On Looking for the Moodle versions and [CVE] we got 2 major.
 
 Looking at the announcement section Manuel Phillips hints at the MoodleNet Profile in the user settings section. Maybe an xss is possible here? 
+
 
 ----------------------------------------------------------------------------------------------------
 
@@ -131,21 +116,18 @@ I setup my xss-server w this simple python script ..... you can use a basic pyth
 
 - paste it in the user settings section
 
-<p align="left">
- <img src="images/schooled6.png">
-</p>
+![image](images/schooled6.png)
 
 wait for a few seconds and recieve the teachers cookie on your xss-server.
 
-<p align="left">
- <img src="images/schooled7.png">
-</p>
+![image](images/schooled7.png)
 
 - Copy this cookie --> Inspect Element --> Storage --> replace MoodleSession's value to the cookie --> refresh the pg/ F5 to. You're Now Manuel Phillips - Teacher!
 
 ----------------------------------------------------------------------------------------------------
 
-### PRIVESC: to MANAGER --> ADMIN!**
+
+### PRIVESC to MANAGER --> ADMIN!
 
 After poking around quite a bit , nothing seems to be in favor. As quite a bit has been enumerated and nothing else left but look back at exploitdb and moodles cve's. 
 
@@ -163,19 +145,16 @@ Steps to perform this privesc:
 Click on the Enroll Users option and enroll Lianne carter. Switch on intercept in burp and intercept the passed request.
 
 - Send the request to repeater and change the following 2 values to match that of your current teacher(id=24).
+
 Changed these params to match: userlist%5B%5D=24&roletoassign=1. (Changing user id to teachers id == 24 and changing role to admin == 1)
 
-<p align="left">
- <img src="images/schooled8.png">
-</p>
+![image](images/schooled8.png)
 
 Send the request and stop intercept after.
 
 - From here click on Lianne carter's profile from the below list. Note to see the diff of and Administration button on the side .
 
-<p align="left">
- <img src="images/schooled9.png">
-</p>
+![image](images/schooled9.png)
 
 Click on it and now we have higher privs!
 
@@ -183,13 +162,11 @@ Click on it and now we have higher privs!
 
 - Click on Users --> define roles --> Click on the 'edit' icon in the manager role. Turn intercept on before you do and add the payload from the poc described . Forward to request to get full privs!
 
-<p align="left">
- <img src="images/schooled10.png">
-</p>
+![image](images/schooled10.png)
 
 - Next grab rce.zip from [here](https://github.com/HoangKien1020/Moodle_RCE)
 
-- unzip the file . modify block_rce.php file to a standard php reverse shell of your choosing. zip back the contents using zip -r -q lala.zip rce
+- Unzip the file . Modify block_rce.php file to a standard php reverse shell of your choosing. Zip back the contents using zip -r -q lala.zip rce
 
 - Click on install plugin after upload --> continue --> You will see a screen w current information . Dont go past it . Time to trigger the rce !
 
@@ -211,40 +188,37 @@ Poking around and looking for config files , we find the apache dir and moodle d
 
 Checking the file **config.php** in dir:
 
-<p align="left">
- <img src="images/schooled11.jpg">
-</p>
+![image](images/schooled11.jpg)
 
 
-We get db creds as  *moodle:P################0* 
+We get db creds as  *moodle:P################0* .
 
-We notice that mysql dosent exist in PATH. We find mysql using the basic find command : **find / -name mysql 2> /dev/null**
-Mysql is at /usr/local/bin/mysql
+We notice that mysql dosent exist in PATH. We find mysql using the basic find command : `find / -name mysql 2> /dev/null`
+
+Mysql is at '/usr/local/bin/mysql'.
 
 We perform 3 basic queries now to enumerate the db: 
 
-Fist cd to /usr/local/bin 
-then:
+First cd to /usr/local/bin.
+
+Then:
 
 - mysql -u moodle -pPlaybookMaster2020 -e 'show databases;' --> infer moodle as the db name.
 - mysql -u moodle -pPlaybookMaster2020 -e 'use moodle; show tables;'  --> we infer mdl_user could be juicy.
 - mysql -u moodle -pPlaybookMaster2020 -e 'use moodle; select * from mdl_user;' --> db creds dump. 
 
 
-<p align="left">
- <img src="images/schooled12.png">
-</p>
+![image](images/schooled12.png)
 
 Jamie's account here is of interest as he is one of the users on the box.
+
 This hash is a bcrypt hash.
 
-use your favorite cracker to crack this one .
+Use your favorite cracker to crack this one .
 
 Im using john the ripper for this instance
 
-<p align="left">
- <img src="images/schooled13.jpg">
-</p>
+![image](images/schooled13.jpg)
 
 
 We finally found Jamies creds : 
@@ -255,15 +229,13 @@ We can now ssh over w these creds :
 Get user.txt!
 
 
-----------------------------------------------------------------------------------------------------
 
-### Final Privesc: To ROOT
+
+**To ROOT:**
 
 Performing a basic sudo -l give us:
 
-<p align="left">
- <img src="images/schooled14.png">
-</p>
+![image](images/schooled14.png)
 
 Poking around the internet and doing some good research on what the command is we find that it is a distinct binary that is replaced by the bootstrapped binary during the initial installation process.
 
@@ -314,14 +286,10 @@ pkg create -m ${STAGEDIR}/ -r ${STAGEDIR}/ -p ${STAGEDIR}/plist -o .
 - execute the script and note to see a package made named : mypackage-1.0_5.txz.
 - Run : ***sudo /usr/sbin/pkg install --no-repo-update mypackage-1.0_5.txz*** (no repo update to stop it from check from an online source) and start a listener.
 
-<p align="left">
- <img src="images/schooled15.png">
-</p>
+![image](images/schooled15.png)
 
 
-<p align="left">
- <img src="images/schooled16.png">
-</p>
+![image](images/schooled16.png)
 
 
 You now have root.
@@ -331,4 +299,6 @@ Did you get schooled??
 
 
 ## Bookmark my page to check ctf writeups on the regular!
+
+
 
