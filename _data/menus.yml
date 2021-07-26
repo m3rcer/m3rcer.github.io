@@ -19,6 +19,10 @@
   url: /RedTeaming/
   external: false
 
+- title: Code
+  url: /Code/
+  external: false
+
 # Example:
 # - title: github
 #   url: https://github.com/piharpi/jekyll-klise
