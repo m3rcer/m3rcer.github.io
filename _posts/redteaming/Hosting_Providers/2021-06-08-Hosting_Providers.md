@@ -44,6 +44,6 @@ Do they accept entry and exit relays ? Tor relays for added anonymity?
 - Cryptocurrency Support: If you want your payment terms to be anonymous. 
 _Payment in Monero is truly anonymous and powerfull when operating over a cli_.
 
-**Some vps providers i recommend and have experience with them:** FLokinet, Cockbox, njalla , vpsbg.eu, nicevps.net.
+**Some vps providers i recommend and have experience with:** FLokinet, Cockbox, njalla , vpsbg.eu, nicevps.net.
 
 _Host Safe!_  
