@@ -1,5 +1,5 @@
 ---
-title: MAC-Changer
+title: A MAC Address Changer
 date: 2021-06-02 10:45:47 +07:00
 categories: python
 #modified: 20-08-29 09:24:47 +07:00
@@ -7,7 +7,7 @@ categories: python
 description: A Python MAC-Changer.
 ---
 
-<p align="center">
+<p align="left">
  <img src="https://pics.me.me/thumb_airport-wifi-expires-me-changes-my-mac-address-airport-wifi-56785626.png">
 </p>
 
