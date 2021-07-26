@@ -1,7 +1,7 @@
 ---
 title: MAC-Changer
 date: 2021-06-02 10:45:47 +07:00
-categories: Code_Python
+categories: python
 #modified: 20-08-29 09:24:47 +07:00
 #tags: [blog, netlify, jekyll, github]
 description: A Python MAC-Changer.
