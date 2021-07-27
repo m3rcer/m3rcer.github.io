@@ -82,4 +82,4 @@ print_result(scan_result)
 
 ### Output:
 
-![Image](network_discovery.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/coding/python/Network_discovery/network_discovery.png)
