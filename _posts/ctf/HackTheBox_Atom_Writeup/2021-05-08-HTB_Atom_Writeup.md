@@ -1,7 +1,7 @@
 ---
 title: HackTheBox - Atom Writeup
 date: 2021-05-08 09:45:47 +07:00
-categories: ctf
+categories: hackthebox
 #modified: 20-08-29 09:24:47 +07:00
 #tags: [blog, netlify, jekyll, github]
 description: HackTheBox Atom Writeup.
