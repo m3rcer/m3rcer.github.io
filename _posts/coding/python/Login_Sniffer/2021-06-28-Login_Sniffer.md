@@ -7,6 +7,11 @@ categories: python
 description: A program to sniff Credentials.
 ---
 
+
+<p align="left">
+ <img src="https://i.kym-cdn.com/photos/images/facebook/001/651/265/287.jpg">
+</p>
+
 ## This is a python script that sniffs for URL's/Login creds on a specific interface. When coupled with the previous ARPSpoof program this program can be used to remotely sniff traffic between the ARPSpoofed victims.
 
 **In this example we ARP poison/spoof the connection between the target Windows system(192.168.0.117) and the gateway router(192.168.0.1) to remotely sniff any creds/urls visited by the victim.**
@@ -94,8 +99,8 @@ sniff(options.interface)
 
 __Attacker:__
 
-![Image](sniff.png)
+![Image](https://raw.githubusercontent.com/m3rcer/Python-Hax/main/Login_Sniffer/sniff.png?token=ATPNKE6VJYKIR2UA7GBRUDDBAHOOU)
 
 __Victim:__
 
-![Image](sniff2.png)
+![Image](https://raw.githubusercontent.com/m3rcer/Python-Hax/main/Login_Sniffer/sniff2.png?token=ATPNKE2O7UMH6NZPEUAWOFTBAHOPK)
