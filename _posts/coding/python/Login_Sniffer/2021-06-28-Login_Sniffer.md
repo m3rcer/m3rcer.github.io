@@ -1,6 +1,6 @@
 ---
 title: A Credential/Url sniffer program
-date: 2021-06-04 09:45:47 +07:00
+date: 2021-06-28 09:45:47 +07:00
 categories: python
 #modified: 20-08-29 09:24:47 +07:00
 #tags: [blog, netlify, jekyll, github]
@@ -99,8 +99,8 @@ sniff(options.interface)
 
 __Attacker:__
 
-![Image](https://raw.githubusercontent.com/m3rcer/Python-Hax/main/Login_Sniffer/sniff.png?token=ATPNKE6VJYKIR2UA7GBRUDDBAHOOU)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/coding/python/Login_Sniffer/sniff.png)
 
 __Victim:__
 
-![Image](https://raw.githubusercontent.com/m3rcer/Python-Hax/main/Login_Sniffer/sniff2.png?token=ATPNKE2O7UMH6NZPEUAWOFTBAHOPK)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/coding/python/Login_Sniffer/sniff2.png)
