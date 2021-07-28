@@ -118,11 +118,11 @@ except KeyboardInterrupt:
 
 __Attacker:__
 
-![Image](https://raw.githubusercontent.com/m3rcer/Python-Hax/main/DnsSpoofer/arpspoof1.png?token=ATPNKE4BLAZIKS64OQSBQ73BAHOCU)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/coding/python/DnsSpoofer/arpspoof1.png)
 
-![Image](https://raw.githubusercontent.com/m3rcer/Python-Hax/main/DnsSpoofer/dnspoof1.png?token=ATPNKE32IUDTV5H5F4LCP5LBAHODI)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/coding/python/DnsSpoofer/dnspoof1.png)
 
 __Victim:__
 
-![Image](https://raw.githubusercontent.com/m3rcer/Python-Hax/main/DnsSpoofer/dnspoof2.png?token=ATPNKE4M74PG7J4X7LYHT43BAHOD4)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/coding/python/DnsSpoofer/dnspoof2.png)
 
