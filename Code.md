@@ -7,4 +7,4 @@ comments: false
 ---
 
 
-# [Python Programs]("/subcategories/python/")
+# [Python Programs](/subcategories/python)
