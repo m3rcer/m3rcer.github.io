@@ -1,10 +1,10 @@
 ---
-title: A Credential/Url sniffer program
+title: A Code Injector program
 date: 2021-07-29 09:45:47 +07:00
 categories: python_101
 #modified: 20-08-29 09:24:47 +07:00
 #tags: [blog, netlify, jekyll, github]
-description: A program to sniff Credentials.
+description: A program to injects arbitary code  into the response of a HTTP request.
 ---
 
 
@@ -14,7 +14,7 @@ description: A program to sniff Credentials.
 
 
 
-## This is a python script that injects arbitary code (JS,HTML,PHP...) into the response of HTTP request.
+## This is a python script that injects arbitary code (JS,HTML,PHP...) into the response of a HTTP request.
 
 * The program works only on HTTP sites.
 
@@ -135,16 +135,16 @@ except KeyboardInterrupt:
 
 _Attacker:_
 
-![Image](code_inject3.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/coding/python/CodeInjector/code_inject3.png)
 
-![Image](code_inject4.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/coding/python/CodeInjector/code_inject4.png)
 
 
 _Victim:_
 
-![Image](code_inject1.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/coding/python/CodeInjector/code_inject1.png)
 
-![Image](code_inject2.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/coding/python/CodeInjector/code_inject2.png)
 
-![Image](code_inject5.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/coding/python/CodeInjector/code_inject5.png)
 
