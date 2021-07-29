@@ -1,3 +1,18 @@
+---
+title: A File Intercept/Replace program
+date: 2021-07-10 09:45:47 +07:00
+categories: python_101
+#modified: 20-08-29 09:24:47 +07:00
+#tags: [blog, netlify, jekyll, github]
+description: A program to intercept and replace a download to a malicious one.
+---
+
+
+<p align="left">
+ <img src="https://www.itaintboring.com/wp-content/uploads/2020/12/image-51.png">
+</p>
+
+
 ## This is a python script that intercepts an exe or a common file type download and replaces it with a malicious one of choice.
 
 - We modify the response rather than the request, as to modify the request a manual 3-way handshake must be initiated to begin with.
@@ -103,8 +118,8 @@ except KeyboardInterrupt:
 
 _Victim:_ 
 
-![Image](intercept1.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/coding/python/File_Interceptor/intercept1.png)
 
 _Attacker:_
 
-![Image](intercept2.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/coding/python/File_Interceptor/intercept2.png)

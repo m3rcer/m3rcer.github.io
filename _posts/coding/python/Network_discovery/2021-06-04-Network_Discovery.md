@@ -7,6 +7,8 @@ categories: python_101
 description: A Network/Host Discovery Program.
 ---
 
+
+
 <p align="left">
  <img src="https://bournetocode.com/projects/GCSE_Computing_Fundamentals/pages/img/computer-network.jpg">
 </p>
