@@ -10,7 +10,6 @@ comments: false
  <img src="https://media1.tenor.com/images/8c32683376bc6f74e1fdca7ea63f69e3/tenor.gif?itemid=22337320">
 </p>
 
-
 {%- for post in site.categories.RedTeaming -%}
 	  {%- capture current_year -%}{{ post.date | date: "%Y" }}{%- endcapture -%}
 	  {%- unless current_year == previous_year -%}

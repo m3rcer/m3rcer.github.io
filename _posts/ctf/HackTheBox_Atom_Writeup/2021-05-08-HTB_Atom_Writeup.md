@@ -24,7 +24,7 @@ Lets Begin!
 
 ### ENUMERATION
 
-We kick it off w a usual nmap scan . In this case a default script and version scan w the verbose flag to see open ports on the fly without having to wait for the scan to finish.
+We kick it off with a usual nmap scan . In this case a default script and version scan w the verbose flag to see open ports on the fly without having to wait for the scan to finish.
 
 ![Image](images/atom1.png)
 
