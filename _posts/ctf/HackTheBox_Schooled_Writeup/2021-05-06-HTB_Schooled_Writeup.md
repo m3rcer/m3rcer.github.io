@@ -10,7 +10,7 @@ description: HackTheBox Schooled Writeup.
 <h1 align="center"> HTB Schooled - Writeup</h1>
 
 <p align="center">
- <img src="https://www.hackthebox.eu/storage/avatars/3e2a599fda2f510f3a5f2146fae928ee.png)">
+ <img src="https://www.hackthebox.eu/storage/avatars/3e2a599fda2f510f3a5f2146fae928ee.png">
 </p>
 
 
