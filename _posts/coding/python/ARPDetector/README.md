@@ -7,6 +7,10 @@ categories: python_101
 description: A python script that detects ARP Cache Poisoning.
 ---
 
+<p align="left">
+ <img src="https://www.memecreator.org/static/images/memes/3007699.jpg">
+</p>
+
 ## This is a python script that detects ARP Cache Poisoning.
 
 - This script sniffs for ARP responses and compares the 'hwsrc' attribute of the response to the original MAC address (found using the previously defined 'get_mac()' module), and if any changes were detected would confirm ARP Cache Poisoning.
