@@ -1,3 +1,12 @@
+---
+title: ARP-Poison-Detector
+date: 2021-08-14 09:45:47 +07:00
+categories: python_101
+#modified: 20-08-29 09:24:47 +07:00
+#tags: [blog, netlify, jekyll, github]
+description: A python script that detects ARP Cache Poisoning.
+---
+
 ## This is a python script that detects ARP Cache Poisoning.
 
 - This script sniffs for ARP responses and compares the 'hwsrc' attribute of the response to the original MAC address (found using the previously defined 'get_mac()' module), and if any changes were detected would confirm ARP Cache Poisoning.

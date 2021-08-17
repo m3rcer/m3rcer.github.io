@@ -1,4 +1,15 @@
-## Bypassing HTTPS
+---
+title: Bypassing HTTPS
+date: 2021-08-07 09:45:47 +07:00
+categories: python_101
+#modified: 20-08-29 09:24:47 +07:00
+#tags: [blog, netlify, jekyll, github]
+description: A guide to Bypass HTTPS enabled sites.
+---
+
+<p align="left">
+ <img src="https://www.meme-arsenal.com/memes/6916d6688be5030280132d59bce29143.jpg">
+</p>
 
 - The simplest way to make all the programs work and intercept HTTPS communcations is by using a program called "sslstrip by moxie0".
 
