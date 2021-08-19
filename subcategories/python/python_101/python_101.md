@@ -6,6 +6,15 @@ excerpt: All post.
 comments: false
 ---
 
+
+<p align="center">
+ <img src="https://www.codeitbro.com/wp-content/uploads/2020/07/funny-python-meme-9-write-10-lines-of-code.jpg">
+</p>
+
+https://www.codeitbro.com/wp-content/uploads/2020/07/funny-python-meme-9-write-10-lines-of-code.jpg
+
+
+
 {%- for post in site.categories.python_101 reversed -%}
 	  {%- capture current_year -%}{{ post.date | date: "%Y" }}{%- endcapture -%}
 	  {%- unless current_year == previous_year -%}
