@@ -6,7 +6,7 @@ excerpt: All post.
 comments: false
 ---
 
-{%- for post in site.categories.python_101 -%}
+{%- for post in site.categories.python_101 reversed -%}
 	  {%- capture current_year -%}{{ post.date | date: "%Y" }}{%- endcapture -%}
 	  {%- unless current_year == previous_year -%}
 	    <h2>{{ current_year }}</h2>
