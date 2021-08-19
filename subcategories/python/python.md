@@ -1,6 +1,6 @@
 ---
 title: Python Hive
-permalink: /subcategories/python/python
+permalink: /subcategories/python/python.md
 layout: page
 excerpt: All post.
 comments: false

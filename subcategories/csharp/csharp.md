@@ -1,6 +1,6 @@
 ---
 title: CSharp Craft
-permalink: /subcategories/csharp/csharp
+permalink: /subcategories/csharp/csharp.md
 layout: page
 excerpt: All post.
 comments: false
