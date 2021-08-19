@@ -1,6 +1,6 @@
 ---
-title: Python Hive
-permalink: /subcategories/python/
+title: CSharp Craft
+permalink: /subcategories/csharp/csharp
 layout: page
 excerpt: All post.
 comments: false
@@ -8,14 +8,12 @@ comments: false
 
 
 <p align="center">
- <img src="https://media.giphy.com/media/LMt9638dO8dftAjtco/source.gif" width="200" height="200">
+ <img src="https://user-images.githubusercontent.com/29004603/75462714-9dd79b80-59bf-11ea-8e6b-575765733340.png" width="300" height="200">
 </p>
 
+# Grey Hat C#
 
-<h1>Python 101 For Hackers</h1>
-
-
-{%- for post in site.categories.python_101 -%}
+{%- for post in site.categories.grayhatc -%}
 	  {%- capture current_year -%}{{ post.date | date: "%Y" }}{%- endcapture -%}
 	  {%- unless current_year == previous_year -%}
 	    <h2>{{ current_year }}</h2>
@@ -27,3 +25,4 @@ comments: false
 	    </h3> 
 	  </article>
 {%- endfor -%}
+
