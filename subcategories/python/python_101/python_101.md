@@ -1,6 +1,6 @@
 ---
 title: Python 101 For Hackers
-permalink: /subcategories/python/python_101/python_101.md
+permalink: /subcategories/python/python_101/python_101
 layout: page
 excerpt: All post.
 comments: false
