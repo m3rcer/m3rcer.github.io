@@ -26,6 +26,7 @@ comments: false
 
 ### 1. Introductory scripts.
 
+
 {%- for post in site.categories.grayhatc_ch1 -%}
 	  <article class="post-item">
 	    <h3 class="post-item-title">
@@ -34,9 +35,7 @@ comments: false
 	  </article>
 {%- endfor -%}
 
-- [Writing a basic hello world program in C#.](IntroScripts/hello/README.md)
 
-- [Implementing an Abstract class with the override method and an Interface.](IntroScripts/abstract/README.md)
 
 - [Implementing a class using a Delegate and referencing through Anonymous methods.](IntroScripts/anonymous/README.md)
 
