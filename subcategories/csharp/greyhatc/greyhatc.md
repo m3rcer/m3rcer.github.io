@@ -1,6 +1,6 @@
 ---
 title: Grey Hat C#
-permalink: /subcategories/python/python_101/python_101
+permalink: /subcategories/csharp/greyhatc/greyhatc
 layout: page
 excerpt: All post.
 comments: false

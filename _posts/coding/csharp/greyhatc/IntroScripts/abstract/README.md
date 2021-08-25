@@ -1,3 +1,13 @@
+---
+title: Implementing an Abstract class with the override method and an Interface.
+date: 2021-05-29 11:45:47 +07:00
+categories: greyhatc_intro
+#modified: 20-08-29 09:24:47 +07:00
+#tags: [blog, netlify, jekyll, github]
+description: Implementing an Abstract class with the override method and an Interface.
+---
+
+
 ## Here is an example that represents a public servant data structure for public servants using abstract and override methods. 
 
 - Classes and interfaces can have properties(variables that get/set values) or methods(functions that execute on the class/interface).
@@ -146,4 +156,4 @@ namespace ch1_the_fighters
 
 ### Output:
 
-![Image](abstract.png)	  
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/coding/csharp/greyhatc/IntroScripts/abstract/abstract.png)	  
