@@ -27,7 +27,7 @@ comments: false
 ### 1. Introductory scripts.
 
 
-{%- for post in site.categories.grayhatc_ch1 -%}
+{%- for post in site.categories.grayhatcch1 -%}
 	  <article class="post-item">
 	    <h3 class="post-item-title">
 	      <a href="{{ post.url }}">{{ post.title | escape }}</a>
