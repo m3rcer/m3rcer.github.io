@@ -53,18 +53,6 @@ comments: false
 {%- endfor -%}
 
 
-
-- [Creating a mutational fuzzer to fuzz GET requests for possible sqli errors.](Ch2/Get_sql_fuzzer/README.md)
-
-- [Creating a mutational fuzzer to fuzz POST requests for possible sqli errors.](Ch2/Post_sql_fuzzer/README.md)
-
-- [Creating a mutational fuzzer to fuzz JSON requests for possible sqli errors.](Ch2/Json_sql_fuzzer/README.md)
-
-- [Creating a UNION based mutational fuzzer to dump the database.](Ch2/UNION_sql_fuzzer/README.md)
-
-- [Creating a Blind/Boolean based mutational fuzzer to dump the database.](Ch2/Boolean_blind_sql_fuzzer/README.md)
-
-
 ### 3. Fuzzing SOAP endpoints.
 
 - [Creating a mutational fuzzer to programatically parse SOAP definitions and fuzz SOAP endpoints for possible sqli errors.](Ch3/README.md)
