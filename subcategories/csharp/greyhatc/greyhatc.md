@@ -29,7 +29,6 @@ comments: false
 {%- for post in site.categories.greyhatcch1 -%}
 	  {%- capture current_year -%}{{ post.date | date: "%Y" }}{%- endcapture -%}
 	  {%- unless current_year == previous_year -%}
-	    <h2>{{ current_year }}</h2>
 	    {%- assign previous_year = current_year -%}
 	  {%- endunless -%}
 	  <article class="post-item">
@@ -38,12 +37,6 @@ comments: false
 	    </h3> 
 	  </article>
 {%- endfor -%}
-
-
-- [Implementing a class using a Delegate and referencing through Anonymous methods.](IntroScripts/anonymous/README.md)
-
-- [Using OS commands using the P/Invoke Method.](IntroScripts/pinvoke/README.md)
-
 
 ### 2. Fuzzing and exploiting sql/xss.
 

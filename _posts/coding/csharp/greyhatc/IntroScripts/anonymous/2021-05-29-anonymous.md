@@ -1,3 +1,13 @@
+---
+title: Using a Delegate and referencing through Anonymous methods.
+date: 2021-05-29 12:45:47 +07:00
+categories: greyhatcch1
+#modified: 20-08-29 09:24:47 +07:00
+#tags: [blog, netlify, jekyll, github]
+description: Using a Delegate and referencing through Anonymous methods.
+---
+
+
 ## Here is the same example as before for the public servant class but altered to use delegates and anonymous methods.
 
 - Instead of overriding a Base Abstract class's methods to define it in a sublcass we can use Delegates. Delegates is an object created that holds a reference to the method that is created . 
@@ -156,4 +166,4 @@ namespace ch1_the_fighters
 
 ### Output:
 
-![Image](anonymous.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/coding/csharp/greyhatc/IntroScripts/anonymous/anonymous.png)
