@@ -26,7 +26,7 @@ comments: false
 
 
 <h1>1. Introductory scripts.</h1>
-{%- for post in site.categories.greyhatcch1 -%}
+{%- for post in site.categories.greyhatcch1 reversed-%}
 	  {%- capture current_year -%}{{ post.date | date: "%Y" }}{%- endcapture -%}
 	  {%- unless current_year == previous_year -%}
 	    {%- assign previous_year = current_year -%}
@@ -38,7 +38,21 @@ comments: false
 	  </article>
 {%- endfor -%}
 
-### 2. Fuzzing and exploiting sql/xss.
+
+<h1>2. Fuzzing and exploiting sql/xss.</h1>
+{%- for post in site.categories.greyhatcch2 reversed-%}
+	  {%- capture current_year -%}{{ post.date | date: "%Y" }}{%- endcapture -%}
+	  {%- unless current_year == previous_year -%}
+	    {%- assign previous_year = current_year -%}
+	  {%- endunless -%}
+	  <article class="post-item">
+	    <h3 class="post-item-title">
+	      <a href="{{ post.url }}">{{ post.title | escape }}</a>
+	    </h3> 
+	  </article>
+{%- endfor -%}
+
+
 
 - [Creating a mutational fuzzer to fuzz GET requests for possible sqli errors.](Ch2/Get_sql_fuzzer/README.md)
 
