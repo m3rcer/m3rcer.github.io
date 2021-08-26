@@ -24,17 +24,20 @@ comments: false
 
 ## Contents:
 
-### 1. Introductory scripts.
 
-
-{%- for post in site.categories.grayhatcch1 -%}
+<h1>1. Introductory scripts.</h1>
+{%- for post in site.categories.greyhatcch1 -%}
+	  {%- capture current_year -%}{{ post.date | date: "%Y" }}{%- endcapture -%}
+	  {%- unless current_year == previous_year -%}
+	    <h2>{{ current_year }}</h2>
+	    {%- assign previous_year = current_year -%}
+	  {%- endunless -%}
 	  <article class="post-item">
 	    <h3 class="post-item-title">
 	      <a href="{{ post.url }}">{{ post.title | escape }}</a>
 	    </h3> 
 	  </article>
 {%- endfor -%}
-
 
 
 - [Implementing a class using a Delegate and referencing through Anonymous methods.](IntroScripts/anonymous/README.md)
