@@ -1,3 +1,10 @@
+---
+title: WSDL Class
+permalink: /permalinks/SOAP_fuzzer/wsdl.md
+date: 2021-06-29 11:45:47 +07:00
+categories: greyhatcch3
+---
+
 ## This class encompasses the WSDL document working it's way from top to bottom of the WSDL document layout and passes execution to the defined subclasses for parsing.
 
 - We create Namespaces and add to them using XmlNamespaceManager() and  the AddNamespace() method.

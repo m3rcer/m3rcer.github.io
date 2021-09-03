@@ -1,6 +1,6 @@
 ---
 title: Parsing subclasses
-permalink: /permalinks/SOAP_fuzzer/parse
+permalink: /permalinks/SOAP_fuzzer/parse.md
 date: 2021-06-29 11:45:47 +07:00
 categories: greyhatcch3
 ---
