@@ -23,9 +23,9 @@ _The program is divided into component classes for easier code management_.
 
 _(Click to view each code block)_
 
-[The WSDL Class](/permalinks/SOAP_fuzzer/wsdl) - Encompasses the WSLD document.
+[The WSDL Class](/SOAP_fuzzer/wsdl) - Encompasses the WSLD document.
 
-[Parsing subclasses](/permalinks/SOAP_fuzzer/parse) - Parse the WSDL defintions.
+[Parsing subclasses](/SOAP_fuzzer/parse) - Parse the WSDL defintions.
 
 >SoapType subclass
    
@@ -35,7 +35,7 @@ _(Click to view each code block)_
    
 >SoapBinding sublcass 
 
-[The MAIN class](/permalinks/SOAP_fuzzer/main) - Fuzz data in WSDL
+[The MAIN class](/SOAP_fuzzer/main) - Fuzz data in WSDL
 
 ### OUTPUT:
 

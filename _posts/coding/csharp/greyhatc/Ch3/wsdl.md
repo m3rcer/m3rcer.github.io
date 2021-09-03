@@ -1,7 +1,6 @@
 ---
 title: WSDL Class
-permalink: /permalinks/SOAP_fuzzer/wsdl
-date: 2021-06-29 11:45:47 +07:00
+permalink: /SOAP_fuzzer/wsdl
 categories: greyhatcch3
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Main Class
-permalink: /permalinks/SOAP_fuzzer/main
+permalink: /SOAP_fuzzer/main
 categories: greyhatcch3
 ---
 
