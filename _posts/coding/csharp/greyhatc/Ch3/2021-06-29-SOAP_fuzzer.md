@@ -1,6 +1,5 @@
 ---
 title: Creating a mutational fuzzer to programatically parse SOAP definitions and fuzz SOAP endpoints for possible sqli errors.
-permalink: /permalinks/SOAP_fuzzer
 date: 2021-06-29 11:45:47 +07:00
 categories: greyhatcch3
 #modified: 20-08-29 09:24:47 +07:00
@@ -24,9 +23,9 @@ _The program is divided into component classes for easier code management_.
 
 _(Click to view each code block)_
 
-[The WSDL Class](/permalinks/SOAP_fuzzer/wsdl.md) - Encompasses the WSLD document.
+[The WSDL Class](/permalinks/SOAP_fuzzer/wsdl) - Encompasses the WSLD document.
 
-[Parsing subclasses](/permalinks/SOAP_fuzzer/parse.md) - Parse the WSDL defintions.
+[Parsing subclasses](/permalinks/SOAP_fuzzer/parse) - Parse the WSDL defintions.
 
 >SoapType subclass
    
@@ -36,7 +35,7 @@ _(Click to view each code block)_
    
 >SoapBinding sublcass 
 
-[The MAIN class](/permalinks/SOAP_fuzzer/main.md) - Fuzz data in WSDL
+[The MAIN class](/permalinks/SOAP_fuzzer/main) - Fuzz data in WSDL
 
 ### OUTPUT:
 
