@@ -1,0 +1,6 @@
+M:\Tools\VisualStudio\Projects\WSDL_Fuzzer\WSDL_Fuzzer\obj\Debug\WSDL_Fuzzer.csproj.AssemblyReference.cache
+M:\Tools\VisualStudio\Projects\WSDL_Fuzzer\WSDL_Fuzzer\obj\Debug\WSDL_Fuzzer.csproj.CoreCompileInputs.cache
+M:\Tools\VisualStudio\Projects\WSDL_Fuzzer\WSDL_Fuzzer\bin\Debug\WSDL_Fuzzer.pdb
+M:\Tools\VisualStudio\Projects\WSDL_Fuzzer\WSDL_Fuzzer\obj\Debug\WSDL_Fuzzer.pdb
+M:\Tools\VisualStudio\Projects\WSDL_Fuzzer\WSDL_Fuzzer\bin\Debug\WSDL_Fuzzer.exe
+M:\Tools\VisualStudio\Projects\WSDL_Fuzzer\WSDL_Fuzzer\obj\Debug\WSDL_Fuzzer.exe
