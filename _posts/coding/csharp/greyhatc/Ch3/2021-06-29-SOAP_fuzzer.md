@@ -25,7 +25,7 @@ _(Click to view each code block)_
 
 [The WSDL Class](https://github.com/m3rcer/m3rcer.github.io/blob/master/_posts/coding/csharp/greyhatc/Ch3/wsdl.md) - Encompasses the WSLD document.
 
- [Parsing subclasses](parse.md) - Parse the WSDL defintions.
+[Parsing subclasses](https://github.com/m3rcer/m3rcer.github.io/blob/master/_posts/coding/csharp/greyhatc/Ch3/parse.md) - Parse the WSDL defintions.
    >SoapType subclass
    
 >SoapMessage subclass
