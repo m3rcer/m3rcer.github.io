@@ -11,7 +11,7 @@ comments: false
 </p>
 
 
-# [C#](/subcategories/csharp/csharp)
+# [CSharp](/subcategories/csharp/csharp)
 
 # [Python](/subcategories/python/python)
 
