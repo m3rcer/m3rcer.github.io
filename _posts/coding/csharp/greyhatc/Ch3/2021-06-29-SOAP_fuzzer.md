@@ -1,7 +1,7 @@
 ---
 title: Creating a mutational fuzzer to programatically parse SOAP definitions and fuzz SOAP endpoints for possible sqli errors.
 date: 2021-06-29 11:45:47 +07:00
-categories: greyhatcch2
+categories: greyhatcch3
 #modified: 20-08-29 09:24:47 +07:00
 #tags: [blog, netlify, jekyll, github]
 description: Creating a mutational fuzzer to programatically parse SOAP definitions and fuzz SOAP endpoints for possible sqli errors.
