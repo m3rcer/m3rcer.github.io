@@ -1,3 +1,12 @@
+---
+title: Parsing subclasses
+permalink: /permalinks/SOAP_fuzzer/parse
+date: 2021-06-29 11:45:47 +07:00
+categories: greyhatcch3
+---
+
+
+
 ## These defined subclasses parse the WSDL defintions and return back the parsed values to the WSDL class and its respective definitions.
 
 - We use the Attributes property on the nodes passed into the constructor to retrieve the node’s specific attributes.

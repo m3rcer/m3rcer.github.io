@@ -66,9 +66,6 @@ comments: false
 {%- endfor -%}
 
 
-### 3. Fuzzing SOAP endpoints.
-
-- [Creating a mutational fuzzer to programatically parse SOAP definitions and fuzz SOAP endpoints for possible sqli errors.](Ch3/README.md)
 
 ### 4. Writing Connect-Back, Binding and Metasploit payloads.
 

@@ -1,3 +1,10 @@
+---
+title: Main Class
+permalink: /permalinks/SOAP_fuzzer/main
+date: 2021-06-29 11:45:47 +07:00
+categories: greyhatcch3
+---
+
 ## The MAIN class uses all the parsed data from the WSDL class to interact and fuzz the data in the WSDL using sub-methods.
 
 - We use the Query (LINQ) Single() method to select a single object that corresponds to the definied definition.
