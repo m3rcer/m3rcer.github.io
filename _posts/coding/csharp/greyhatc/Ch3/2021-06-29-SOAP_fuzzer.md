@@ -11,7 +11,7 @@ description: Creating a mutational fuzzer to programatically parse SOAP definiti
 
 ## This Program implements XML classes from core libraries programatically parsing WSDL into its respective components and finds endpoints to fuzz via the HTTP/SOAP protocol to find relevant SQL injection vulnerabilities.
 
-_[View/Download the Visual Studio Project](https://github.com/m3rcer/m3rcer.github.io/master/_posts/coding/csharp/greyhatc/Ch3/vs)_
+_[View/Download the Visual Studio Project](https://github.com/m3rcer/m3rcer.github.io/tree/master/_posts/coding/csharp/greyhatc/Ch3/vs)_
 
 __WSDL Document layout:__
 
@@ -23,18 +23,18 @@ _The program is divided into component classes for easier code management_.
 
 _(Click to view each code block)_
 
-1. [The WSDL Class](wsdl.md) - Encompasses the WSLD document.
+[The WSDL Class](https://github.com/m3rcer/m3rcer.github.io/blob/master/_posts/coding/csharp/greyhatc/Ch3/wsdl.md) - Encompasses the WSLD document.
 
-2. [Parsing subclasses](parse.md) - Parse the WSDL defintions.
+ [Parsing subclasses](parse.md) - Parse the WSDL defintions.
    >SoapType subclass
    
-   >SoapMessage subclass
+>SoapMessage subclass
    
-   >SoapPortType subclass
+>SoapPortType subclass
    
-   >SoapBinding sublcass 
+>SoapBinding sublcass 
 
-3. [The MAIN class](main.md) - Fuzz data in WSDL
+[The MAIN class](https://github.com/m3rcer/m3rcer.github.io/blob/master/_posts/coding/csharp/greyhatc/Ch3/main.md) - Fuzz data in WSDL
 
 ### OUTPUT:
 
