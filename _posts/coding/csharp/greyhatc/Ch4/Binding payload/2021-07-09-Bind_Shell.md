@@ -116,4 +116,4 @@ namespace Binding_Payload
 
 ## OUTPUT:
 
-![Image](bind_shell.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/coding/csharp/greyhatc/Ch4/Binding%20payload/bind_shell.png)
