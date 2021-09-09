@@ -1,0 +1,9 @@
+M:\Tools\VisualStudio\Projects\Automating-Nessus\Automating-Nessus\bin\Debug\Automating-Nessus.exe
+M:\Tools\VisualStudio\Projects\Automating-Nessus\Automating-Nessus\bin\Debug\Automating-Nessus.pdb
+M:\Tools\VisualStudio\Projects\Automating-Nessus\Automating-Nessus\bin\Debug\Newtonsoft.Json.dll
+M:\Tools\VisualStudio\Projects\Automating-Nessus\Automating-Nessus\bin\Debug\Newtonsoft.Json.xml
+M:\Tools\VisualStudio\Projects\Automating-Nessus\Automating-Nessus\obj\Debug\Automating-Nessus.csproj.AssemblyReference.cache
+M:\Tools\VisualStudio\Projects\Automating-Nessus\Automating-Nessus\obj\Debug\Automating-Nessus.csproj.CoreCompileInputs.cache
+M:\Tools\VisualStudio\Projects\Automating-Nessus\Automating-Nessus\obj\Debug\Automating-Nessus.csproj.CopyComplete
+M:\Tools\VisualStudio\Projects\Automating-Nessus\Automating-Nessus\obj\Debug\Automating-Nessus.exe
+M:\Tools\VisualStudio\Projects\Automating-Nessus\Automating-Nessus\obj\Debug\Automating-Nessus.pdb
