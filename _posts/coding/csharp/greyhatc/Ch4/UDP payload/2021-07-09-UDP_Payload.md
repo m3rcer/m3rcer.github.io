@@ -1,5 +1,5 @@
 ---
-title: Creating a UDP listener and payload. 
+title: Creating a UDP payload and a listener to implement a UDP remote connection as an alternate channel of communication. 
 date: 2021-07-09 12:50:47 +07:00
 categories: greyhatcch4
 #modified: 20-08-29 09:24:47 +07:00

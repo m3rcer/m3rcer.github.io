@@ -1,5 +1,5 @@
 ---
-title: Writing a Bind Shell.
+title: Writing a program which creates a listener on the target host and allows an attacker to connect to it remotely.
 date: 2021-07-09 09:45:47 +07:00
 categories: greyhatcch4
 #modified: 20-08-29 09:24:47 +07:00
