@@ -1,3 +1,13 @@
+---
+title: Executing native payloads as unmanaged code on both linux and windows. 
+date: 2021-07-09 12:45:47 +07:00
+categories: greyhatcch4
+#modified: 20-08-29 09:24:47 +07:00
+#tags: [blog, netlify, jekyll, github]
+description: Executing native payloads as unmanaged code on both linux and windows.
+---
+
+
 ## We write a program to execute native payloads as unmanaged code on both linux and windows. (using metasploit)
 
 - We integrate the previous program to run native windows payloads along with some libs and conditions for handling linux execution:

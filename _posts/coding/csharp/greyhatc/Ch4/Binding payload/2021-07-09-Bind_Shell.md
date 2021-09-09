@@ -1,3 +1,13 @@
+---
+title: Writing a Bind Shell.
+date: 2021-07-09 09:45:47 +07:00
+categories: greyhatcch4
+#modified: 20-08-29 09:24:47 +07:00
+#tags: [blog, netlify, jekyll, github]
+description: BindShell.
+---
+
+
 ## We write a program which creates a listener on the target host and allows an attacker to connect to it remotely.
 
 - We use the TCPListener class here instead to create a listener.

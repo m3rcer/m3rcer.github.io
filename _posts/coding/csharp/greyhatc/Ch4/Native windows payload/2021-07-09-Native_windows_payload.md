@@ -1,3 +1,14 @@
+---
+title: Executing native windows payloads as unmanaged code. 
+date: 2021-07-09 11:45:47 +07:00
+categories: greyhatcch4
+#modified: 20-08-29 09:24:47 +07:00
+#tags: [blog, netlify, jekyll, github]
+description: Executing native windows payloads as unmanaged code.
+---
+
+
+
 ## We write a program to execute native windows payloads as unmanaged code. (using metasploit)
 
 - Msf payloads generated in 32/64bit assembly code is called unmanaged code, where you compile C# code into a dll or exe it is referred to as managed code. The difference betweeen the two is that unmanaged code requires mono/.NET to run whereas managed can be run directly.

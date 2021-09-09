@@ -1,3 +1,12 @@
+---
+title: Creating a UDP listener and payload. 
+date: 2021-07-09 12:50:47 +07:00
+categories: greyhatcch4
+#modified: 20-08-29 09:24:47 +07:00
+#tags: [blog, netlify, jekyll, github]
+description: Creating a UDP listener and payload.
+---
+
 ## We write a program to create a UDP payload and a listener to implement a UDP remote connection as an alternate channel of communication.
 
 - UDP payloads/listeners can be used as an alternate channel of communication in monitored environments and are not heavily scrutinized. It is a connectionless protocol with no overhead to ensure deliverability hence it is blazingly fast.
@@ -176,8 +185,8 @@ namespace UDP_listener
 
 ### Attacker -->
 
-![Image](udp_listener.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/coding/csharp/greyhatc/Ch4/UDP%20payload/udp_listener.png)
 
 ### Target Victim -->
 
-![Image](udp_payload.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/coding/csharp/greyhatc/Ch4/UDP%20payload/udp_payload.png)

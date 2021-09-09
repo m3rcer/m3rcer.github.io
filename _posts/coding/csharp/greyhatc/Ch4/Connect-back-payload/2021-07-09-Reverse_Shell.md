@@ -1,3 +1,13 @@
+---
+title: Writing a Reverse Shell.
+date: 2021-07-09 10:45:47 +07:00
+categories: greyhatcch4
+#modified: 20-08-29 09:24:47 +07:00
+#tags: [blog, netlify, jekyll, github]
+description: Reverse Shell.
+---
+
+
 ## We write a program which allows an attacker to start a listener and listen for a connection back from a victim host.
 
 - We use the following classes:
