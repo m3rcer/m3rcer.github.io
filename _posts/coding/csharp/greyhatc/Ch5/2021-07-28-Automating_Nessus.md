@@ -1,3 +1,13 @@
+---
+title: Automating Nessus
+date: 2021-07-28 09:50:47 +07:00
+categories: greyhatcch5
+#modified: 20-08-29 09:24:47 +07:00
+#tags: [blog, netlify, jekyll, github]
+description: Automating Nessus.
+---
+
+
 ## This Program helps automate aspects of the Nessus API to build classes to perform unauthenticated vulnerability scans against target hosts on a network.
 
 _[View/Download the Visual Studio Project](https://github.com/m3rcer/C-Sharp-Hax/tree/main/Ch5/vs)_
@@ -14,11 +24,11 @@ I tried looking for Nessus versions < 7.0 as only versions prior 7.0 would work 
 
 **Class Components:**
 
-1. [The NessusSession Class.](NessusSession.md)
+1. [The NessusSession Class.](/permalinks/Nessus/NessusSession.md)
 
-2. [The NessusManager Class](NessusManager.md)
+2. [The NessusManager Class](/permalinks/Nessus/NessusManager.md)
 
-3. [The Main Class.](Main.md)
+3. [The Main Class.](/permalinks/Nessus/Main.md)
 
 
 ### Output:
