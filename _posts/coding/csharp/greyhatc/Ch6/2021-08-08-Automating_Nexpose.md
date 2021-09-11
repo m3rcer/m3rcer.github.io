@@ -25,11 +25,11 @@ separate phases of the scan: running , integrating , and finished . Once the sca
 
 **Class Components:**
 
-1. [The NexposeSession Class](/permalinks/Nessus/NexposeSession)
+1. [The NexposeSession Class](/permalinks/Nexpose/NexposeSession)
 
-2. [The NexposeManager Class](/permalinks/Nessus/NexposeManager)
+2. [The NexposeManager Class](/permalinks/Nexpose/NexposeManager)
 
-3. [The Main Class](/permalinks/Nessus/Main)
+3. [The Main Class](/permalinks/Nexpose/Main)
 
 
 ### Output:
