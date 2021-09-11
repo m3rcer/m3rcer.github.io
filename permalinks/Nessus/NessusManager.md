@@ -1,5 +1,5 @@
 ---
-title: Main Class
+title: Nessus Manager class
 permalink: /permalinks/Nessus/NessusManager
 categories: greyhatcch5
 ---

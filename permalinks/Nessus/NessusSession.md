@@ -1,5 +1,5 @@
 ---
-title: Main Class
+title: Nessus Session class
 permalink: /permalinks/Nessus/NessusSession
 categories: greyhatcch5
 ---

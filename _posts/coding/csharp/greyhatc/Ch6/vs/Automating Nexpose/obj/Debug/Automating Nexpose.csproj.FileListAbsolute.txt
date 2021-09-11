@@ -1,0 +1,13 @@
+M:\Tools\VisualStudio\Projects\Automating Nexpose\Automating Nexpose\bin\Debug\Automating Nexpose.exe
+M:\Tools\VisualStudio\Projects\Automating Nexpose\Automating Nexpose\bin\Debug\Automating Nexpose.pdb
+M:\Tools\VisualStudio\Projects\Automating Nexpose\Automating Nexpose\bin\Debug\System.Diagnostics.EventLog.dll
+M:\Tools\VisualStudio\Projects\Automating Nexpose\Automating Nexpose\bin\Debug\System.Security.Principal.Windows.dll
+M:\Tools\VisualStudio\Projects\Automating Nexpose\Automating Nexpose\bin\Debug\System.ServiceProcess.ServiceController.dll
+M:\Tools\VisualStudio\Projects\Automating Nexpose\Automating Nexpose\bin\Debug\System.Diagnostics.EventLog.xml
+M:\Tools\VisualStudio\Projects\Automating Nexpose\Automating Nexpose\bin\Debug\System.Security.Principal.Windows.xml
+M:\Tools\VisualStudio\Projects\Automating Nexpose\Automating Nexpose\bin\Debug\System.ServiceProcess.ServiceController.xml
+M:\Tools\VisualStudio\Projects\Automating Nexpose\Automating Nexpose\obj\Debug\Automating Nexpose.csproj.CoreCompileInputs.cache
+M:\Tools\VisualStudio\Projects\Automating Nexpose\Automating Nexpose\obj\Debug\Automating Nexpose.csproj.CopyComplete
+M:\Tools\VisualStudio\Projects\Automating Nexpose\Automating Nexpose\obj\Debug\Automating Nexpose.exe
+M:\Tools\VisualStudio\Projects\Automating Nexpose\Automating Nexpose\obj\Debug\Automating Nexpose.pdb
+M:\Tools\VisualStudio\Projects\Automating Nexpose\Automating Nexpose\obj\Debug\Automating Nexpose.csproj.AssemblyReference.cache

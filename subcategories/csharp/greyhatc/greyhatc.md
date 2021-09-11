@@ -92,6 +92,32 @@ comments: false
 	  </article>
 {%- endfor -%}
 
+<h1>5. Automating Nexpose.</h1>
+{%- for post in site.categories.greyhatcch6 reversed-%}
+	  {%- capture current_year -%}{{ post.date | date: "%Y" }}{%- endcapture -%}
+	  {%- unless current_year == previous_year -%}
+	    {%- assign previous_year = current_year -%}
+	  {%- endunless -%}
+	  <article class="post-item">
+	    <h3 class="post-item-title">
+	      <a href="{{ post.url }}">{{ post.title | escape }}</a>
+	    </h3> 
+	  </article>
+{%- endfor -%}
+
+
+<h1>6. Automating OpenVAS.</h1>
+{%- for post in site.categories.greyhatcch7 reversed-%}
+	  {%- capture current_year -%}{{ post.date | date: "%Y" }}{%- endcapture -%}
+	  {%- unless current_year == previous_year -%}
+	    {%- assign previous_year = current_year -%}
+	  {%- endunless -%}
+	  <article class="post-item">
+	    <h3 class="post-item-title">
+	      <a href="{{ post.url }}">{{ post.title | escape }}</a>
+	    </h3> 
+	  </article>
+{%- endfor -%}
 
 
 ### 6. Automating Nexpose 
