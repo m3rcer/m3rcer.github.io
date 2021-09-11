@@ -92,7 +92,7 @@ comments: false
 	  </article>
 {%- endfor -%}
 
-<h1>5. Automating Nexpose.</h1>
+<h1>6. Automating Nexpose.</h1>
 {%- for post in site.categories.greyhatcch6 reversed-%}
 	  {%- capture current_year -%}{{ post.date | date: "%Y" }}{%- endcapture -%}
 	  {%- unless current_year == previous_year -%}
@@ -106,7 +106,7 @@ comments: false
 {%- endfor -%}
 
 
-<h1>6. Automating OpenVAS.</h1>
+<h1>7. Automating OpenVAS.</h1>
 {%- for post in site.categories.greyhatcch7 reversed-%}
 	  {%- capture current_year -%}{{ post.date | date: "%Y" }}{%- endcapture -%}
 	  {%- unless current_year == previous_year -%}
@@ -119,11 +119,3 @@ comments: false
 	  </article>
 {%- endfor -%}
 
-
-### 6. Automating Nexpose 
-
-- [Nexpose API Automation](https://github.com/m3rcer/C-Sharp-Hax/blob/main/Ch6/README.md)
-
-### 7. Automating OpenVAS 
-
-- [Nexpose API Automation](https://github.com/m3rcer/C-Sharp-Hax/blob/main/Ch7/README.md)
