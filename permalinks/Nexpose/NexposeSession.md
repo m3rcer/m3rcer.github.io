@@ -1,6 +1,6 @@
 ---
 title: Nexpose Session class
-permalink: /permalinks/Nexpose/NessusSession
+permalink: /permalinks/Nexpose/NexposeSession
 categories: greyhatcch6
 ---
 
