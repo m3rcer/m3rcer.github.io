@@ -24,11 +24,11 @@ I tried looking for Nessus versions < 7.0 as only versions prior 7.0 would work 
 
 **Class Components:**
 
-1. [The NessusSession Class.](/permalinks/Nessus/NessusSession.md)
+1. [The NessusSession Class.](/permalinks/Nessus/NessusSession)
 
-2. [The NessusManager Class](/permalinks/Nessus/NessusManager.md)
+2. [The NessusManager Class](/permalinks/Nessus/NessusManager)
 
-3. [The Main Class.](/permalinks/Nessus/Main.md)
+3. [The Main Class.](/permalinks/Nessus/Main)
 
 
 ### Output:
