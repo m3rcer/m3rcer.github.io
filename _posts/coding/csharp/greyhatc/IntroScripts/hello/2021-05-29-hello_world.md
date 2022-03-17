@@ -11,13 +11,13 @@ description: Writing a basic hello world program in C#.
 
 ## This is a basic program printing hello world and the time using core built-in classes.
 
-- The System namespace allows us to access libraries in a program.
+* The System namespace allows us to access libraries in a program.
 
-- Namespaces declare where our classes live in.
+* Namespaces declare where our classes live in.
 
-- DateTime is a core C# class for dealing with dates.
+* DateTime is a core C# class for dealing with dates.
 
-- Compile the source code on linux using the Mono compiler (mcs).
+* Compile the source code on linux using the Mono compiler (mcs).
 
 
 ### Code:
