@@ -5,6 +5,7 @@ categories: greyhatcch1
 #modified: 20-08-29 09:24:47 +07:00
 #tags: [blog, netlify, jekyll, github]
 description: Writing a basic hello world program in C#.
+layout: post
 ---
 
 
@@ -14,7 +15,7 @@ description: Writing a basic hello world program in C#.
 
 * The System namespace allows us to access libraries in a program.
 
-- Namespaces declare where our classes live in.
+* Namespaces declare where our classes live in.
 
 * DateTime is a core C# class for dealing with dates.
 
