@@ -14,9 +14,7 @@ comments: false
 </p>
 
 * [View/Download(*I do not own this*)](https://drive.google.com/file/d/0B4hhbFaItiPxY0FNbG4ycFNxcXM/view?resourcekey=0-IyY1FRkKjxsaz8tZQpxLuw)
-
 * Support the Authors(Brandon Perry, Matt Graeber) and grab a copy yourself if u can. 
-
 * For hacker's with a mild understanding of programming like python / C++ and an urge to develop C# skills for Red Teaming and creating the latest offensive hacking tradecraft.
 
 \*_Not complete yet, under active dev_*
