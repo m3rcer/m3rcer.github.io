@@ -10,11 +10,9 @@ description: Using a Delegate and referencing through Anonymous methods.
 
 ## Here is the same example as before for the public servant class but altered to use delegates and anonymous methods.
 
-- Instead of overriding a Base Abstract class's methods to define it in a sublcass we can use Delegates. Delegates is an object created that holds a reference to the method that is created . 
-
-  In this case we create a delegate in the parent class which is refernced by subclasses through anonymous methods to dynamically assign ("DriveToPlaceOfInterest" method) the method in the respective sublcasses.
-
-- This is an alternative to the "abstract class - override" method .
+- Instead of overriding a Base Abstract class's methods to define it in a sublcass we can use Delegates. Delegates is an object created that holds a reference to the method that is created. 
+  - In this case we create a delegate in the parent class which is refernced by subclasses through anonymous methods to dynamically assign ("DriveToPlaceOfInterest" method) the method in the respective sublcasses.
+- This is an alternative to the "abstract class - override" method.
 
 
 ### Code:
