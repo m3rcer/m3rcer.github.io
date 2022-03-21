@@ -16,13 +16,10 @@ description: A Network/Host Discovery Program.
 
 ## This is a python script that discovers all hosts online on the network using the scapy module by manually crafting and parsing the responses.
 
-- We implement argarse instead of the optparse module as optparse is deprecated and they are identical in usage.
-
-- Use of the scapy module to craft packets with a custom ether, arp part.
-
+- We implement `argarse` instead of the `optparse` module as `optparse` is deprecated and they are identical in usage.
+- Use of the `scapy` module to craft packets with a custom ether, arp part.
 - Iterating over nested data structures (in this case a nested dict in a list).
-
-- Use show(), summary() methods to view and debug crafted scapy packets. 
+- Use `show()`, `summary()` methods to view and debug crafted scapy packets. 
 
 ### Code:
 
