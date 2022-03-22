@@ -12,8 +12,6 @@ comments: false
 </p>
 
 
-
-
 {%- for post in site.categories.python_101 reversed -%}
 	  {%- capture current_year -%}{{ post.date | date: "%Y" }}{%- endcapture -%}
 	  {%- unless current_year == previous_year -%}
