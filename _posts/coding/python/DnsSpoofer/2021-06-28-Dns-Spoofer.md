@@ -17,16 +17,13 @@ description: Poison DNS responses.
 
 - We use `IPTABLES` to build a **queue** to intercept traffic. Based on INPUT(inboud traffic),OUTPUT(outbound traffic) and FORWARD(traffic from remote hosts).
 The program automatically runs these commands, if it dosen't work for some reason, run the following commands to build a queue alongside when running the program -
-    
     > `iptables -I INPUT -j NFQUEUE --queue-num 0` --> Intercept Queue for inbound traffic
     
     > `iptables -I OUTPUT -j NFQUEUE --queue-num 0` --> Intercept Queue for outbound traffic
     
     > `iptables --flush` --> flush rules after completion
-
 - We filter the traffic like an intercepting proxy would to filter and modify DNS responses for the target site to redirect the victim to a malicious site of the attackers choosing. Many avenues of attacks can be performed like browser hooking, cookie stealing etc.
 - To spoof a remote victim replace the 2nd iptables command, ARP Poison the victim to redirect all DNS traffic through our host machine and proceed as above:
-    
     > `iptables -I FORWARD -j NFQUEUE --queue-num 0` -->  Intercept Queue for inbound traffic
 
 ### CODE:
