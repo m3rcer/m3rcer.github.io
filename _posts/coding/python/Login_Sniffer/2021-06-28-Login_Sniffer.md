@@ -16,11 +16,9 @@ description: A program to sniff Credentials.
 
 **In this example we ARP poison/spoof the connection between the target Windows system(192.168.0.117) and the gateway router(192.168.0.1) to remotely sniff any creds/urls visited by the victim.**
 
-* Used the scapy_http module to interact with HTTP layers and filter them as needed.
-
-* Implemented scapy.sniff() function to sniff traffic and filter with BPF's(Berkley Packet Filters).
-
-* Byte object conversion to string using str() and decode() functions for cross-compatibility with python3.
+* Used the `scapy_http` module to interact with HTTP layers and filter them as needed.
+* Implemented `scapy.sniff()` function to sniff traffic and filter with *BPF's(Berkley Packet Filters)*.
+* Byte object conversion to string using `str()` and `decode()` functions for cross-compatibility with python3.
 
 
 
