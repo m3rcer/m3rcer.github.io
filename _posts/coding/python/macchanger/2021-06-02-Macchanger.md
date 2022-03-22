@@ -15,9 +15,9 @@ description: A Python MAC-Changer.
 ## This is a basic python script for changing the Mac Address on a unix/linux system implementing core concepts of python used at large by the community.  
 
  
-- Implementing the subprocess module to interact and use os commands in a secure manner.
-- Implementing the optparse module to initialize options with ease and parse them according to functions. 
-- Implementing the re module along wiht pythex to build basic regex to find patterns like the mac_address in this case.
+- Implementing the `subprocess` module to interact and use os commands in a secure manner.
+- Implementing the `optparse` module to initialize options with ease and parse them according to functions. 
+- Implementing the `re` module along wiht pythex to build basic regex to find patterns like the mac_address in this case.
 - Cross compatibility for python2/3.
 - Basic error handling and added functionality.
 
