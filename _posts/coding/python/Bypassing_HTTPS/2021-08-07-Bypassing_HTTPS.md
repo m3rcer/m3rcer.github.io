@@ -10,31 +10,28 @@ description: A guide to Bypass HTTPS enabled sites.
 <p align="left">
  <img src="https://www.meme-arsenal.com/memes/6916d6688be5030280132d59bce29143.jpg">
 </p>
-
 - The simplest way to make all the programs work and intercept HTTPS communcations is by using a program called [sslstrip by moxie0](https://github.com/moxie0/sslstrip).
 - Basically `sslstrip` listens on `port 10000` and strips any HTTPS coms and downgrades it to HTTP. We can use this to become the MITM as we used to by using our ArpSpoof Program and redirect any requests from the victim onto `sslstrip` and the onto the server. 
   Sslstrip communicates with the end endpoint server using HTTPS , recieves the response and downgrades HTTPS --> HTTP, then modifies the request as needed in the (Code Injector, File Interceptor Program) response and delivers it to the client in downgraded HTTP. 
 
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/coding/python/Bypassing_HTTPS/https-1.png)
 
-_Sslstrip repo: https://github.com/moxie0/sslstrip_
-
 ## Steps to perform sslstrip:
 
 1. Run your ArpSpoof Program to ARP poison victim and become MITM.
 2. Set your machine into forwarding mode:
-   - `sudo echo "1" > /proc/sys/net/ipv4/ip_forward`
+   `sudo echo "1" > /proc/sys/net/ipv4/ip_forward`
 2. Setup your `iptable queues` if any . (Most of my programs use queues to intercept and modify the traffic like burp)
-   - `iptables -I OUTPUT -j NFQUEUE --queue-num 0`
-   - `iptables -I INPUT -j NFQUEUE --queue-num 0`
+   `iptables -I OUTPUT -j NFQUEUE --queue-num 0`
+   `iptables -I INPUT -j NFQUEUE --queue-num 0`
 3. Change your programs as follows:
-  - `Sport` and `dport` values = `sslstrip` port (`port 10000`).
-  - Check for redundant loops between sslstrip and your iptable queues.
-  - If response is sent in `HTTP/1.1` fields such as `Content-Length` will not be sent in a single response but as chunks. Change this to `HTTP/1.0` to recieve it as a whole single repsonse.
+  `Sport` and `dport` values = `sslstrip` port (`port 10000`).
+  Check for redundant loops between sslstrip and your iptable queues.
+  If response is sent in `HTTP/1.1` fields such as `Content-Length` will not be sent in a single response but as chunks. Change this to `HTTP/1.0` to recieve it as a whole single repsonse.
 4. Run `sslstrip`.
-   - `python sslstrip.py`
+   `python sslstrip.py`
 5. Redirect all packets from the victim source traffic onto your made iptable queues (port 80) and finallu over to sslstrip (port 10000) using the following iptables command:
-   - ` iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port 10000`
+   `iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port 10000`
 
 __Traffic Flow:__ _victim <--> Attacker iptable queues <--> sslstrip <..> target server._
 
