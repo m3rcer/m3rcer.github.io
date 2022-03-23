@@ -13,7 +13,7 @@ description: A python script that detects ARP Cache Poisoning.
 
 ## This is a python script that detects ARP Cache Poisoning.
 
-- This script sniffs for ARP responses and compares the 'hwsrc' attribute of the response to the original MAC address (found using the previously defined 'get_mac()' module), and if any changes were detected would confirm ARP Cache Poisoning.
+- This script sniffs for ARP responses and compares the `hwsrc` attribute of the response to the original MAC address (found using the previously defined `get_mac()` module), and if any changes were detected would confirm ARP Cache Poisoning.
 
 
 ### Code:

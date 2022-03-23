@@ -17,19 +17,14 @@ description: A program to injects arbitary code  into the response of a HTTP req
 ## This is a python script that injects arbitary code (JS,HTML,PHP...) into the response of a HTTP request.
 
 * The program works only on HTTP sites.
-
 * We use IPTABLES to build a queue to intercept traffic. Based on INPUT(inboud traffic),OUTPUT(outbound traffic) and FORWARD(traffic from remote hosts).
 The program automatically runs these commands, if it dosen't work for some reason, run the following commands to build a queue alongside when running the program -
-
-> `iptables -I INPUT -j NFQUEUE --queue-num 0` --> Intercept Queue for inbound traffic.
-
-> `iptables -I OUTPUT -j NFQUEUE --queue-num 0` --> Intercept Queue for outbound traffic.
-
-> `iptables --flush` --> flush rules after completion.
-
+    > `iptables -I INPUT -j NFQUEUE --queue-num 0` --> Intercept Queue for inbound traffic.
+   
+    > `iptables -I OUTPUT -j NFQUEUE --queue-num 0` --> Intercept Queue for outbound traffic.
+    
+    > `iptables --flush` --> flush rules after completion.
 * We filter the traffic like an intercepting proxy would to filter and modify HTTP responses for the target site to inject our malicious script just before the __\<body\>__ tag of the HTML response source. Many avenues of attacks can be performed like browser hooking, cookie stealing etc by using external frameworks like BEEF.
-
-
 * While altering the response one thing to note is that the injected code gets cut off due to the "Content-Length" limitations. Hence we alter the Content-Length too by adding the length of the injected code to the original Content-Length.
 
 

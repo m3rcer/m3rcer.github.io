@@ -16,9 +16,7 @@ description: A program to intercept and replace a download to a malicious one.
 ## This is a python script that intercepts an exe or a common file type download and replaces it with a malicious one of choice.
 
 - We modify the response rather than the request, as to modify the request a manual 3-way handshake must be initiated to begin with.
-
 - We check if the sequence number of the request is equal to the acknowledgement number of the response. If so the request corresponds to that particular matching response.
-
 - We modify response using the __HTTP 301 redirect__ to our chosen attacker host.
 
 ### CODE:
