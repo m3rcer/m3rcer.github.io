@@ -6,11 +6,9 @@ categories: python_101
 #tags: [blog, netlify, jekyll, github]
 ---
 
-## This script invokes all methods and classes used by the keylogger.
-
+# This script invokes all methods and classes used by the keylogger.
 
 - We make the code modular and much easy to read seperating the keylogger class and main files. 
-
 - We use this class to invoke methods from the keylogger class to log and report.
 
 

@@ -9,13 +9,9 @@ categories: python_101
 ## This script includes all methods and classes used by the keylogger.
 
 -  Each function within a class is termed a method.
-
 -  When instantiating an object instance as a class, automatically the methods are invoked and hence the first attribute of each method is named "self".
-
 -  Call objects defined within a class using : "self.obj".
-
 -  A Constructor is automatically executed when a class is created.
-
 -  An Attribute is a variable that can be used within the whole class and by its respective methods. (This is a secure alternative to using global definitions.)
 
 
