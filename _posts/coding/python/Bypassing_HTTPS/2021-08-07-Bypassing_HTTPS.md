@@ -10,8 +10,7 @@ description: A guide to Bypass HTTPS enabled sites.
 <p align="left">
  <img src="https://www.meme-arsenal.com/memes/6916d6688be5030280132d59bce29143.jpg">
 </p>
-- The simplest way to make all the programs work and intercept HTTPS communcations is by using a program called [sslstrip by moxie0](https://github.com/moxie0/sslstrip).
-- Basically `sslstrip` listens on `port 10000` and strips any HTTPS coms and downgrades it to HTTP. We can use this to become the MITM as we used to by using our ArpSpoof Program and redirect any requests from the victim onto `sslstrip` and the onto the server. 
+- The simplest way to make all the programs work and intercept HTTPS communcations is by using a program called [sslstrip by moxie0](https://github.com/moxie0/sslstrip). Basically `sslstrip` listens on `port 10000` and strips any HTTPS coms and downgrades it to HTTP. We can use this to become the MITM as we used to by using our ArpSpoof Program and redirect any requests from the victim onto `sslstrip` and the onto the server. 
   Sslstrip communicates with the end endpoint server using HTTPS , recieves the response and downgrades HTTPS --> HTTP, then modifies the request as needed in the (Code Injector, File Interceptor Program) response and delivers it to the client in downgraded HTTP. 
 
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/coding/python/Bypassing_HTTPS/https-1.png)
@@ -28,7 +27,7 @@ description: A guide to Bypass HTTPS enabled sites.
   `Sport` and `dport` values = `sslstrip` port (`port 10000`).
   Check for redundant loops between sslstrip and your iptable queues.
   If response is sent in `HTTP/1.1` fields such as `Content-Length` will not be sent in a single response but as chunks. Change this to `HTTP/1.0` to recieve it as a whole single repsonse.
-4. Run `sslstrip`.
+4. Run `sslstrip`:
    `python sslstrip.py`
 5. Redirect all packets from the victim source traffic onto your made iptable queues (port 80) and finallu over to sslstrip (port 10000) using the following iptables command:
    `iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port 10000`
@@ -47,7 +46,7 @@ __Traffic Flow:__ _victim <--> Attacker iptable queues <--> sslstrip <..> target
 ### 1. File Interceptor
 
 _[Source](https://github.com/m3rcer/Python-Hax/blob/main/File_Interceptor/README.md)_
-- We changed the sport and dport definitions to match sslstrip's port definitions (port 10000).
+- We changed the `sport` and `dport` definitions to match sslstrip's port definitions (port 10000).
 - If an 'exe' were replaced by an 'exe' it would cause a bug where a redundant loop between the iptable queues and sslstrip would be caused. To manage it we check if the replaced 'exe' url matches the requested 'exe' in the request, and only if it dosen't the download is replaced with the new 'exe'. 
 
 
@@ -147,7 +146,7 @@ except KeyboardInterrupt:
 ### 2. Code Injector:
 
 _[Source](https://github.com/m3rcer/Python-Hax/blob/main/CodeInjector/README.md)_
-- We changed the sport and dport definitions to match sslstrip's port definitions (port 10000).
+- We changed the `sport` and `dport` definitions to match sslstrip's port definitions (port 10000).
 - We replaced the load for the request from "HTTP/1.1 to HTTP/1.0" to get the response as a whole and not chunked.
 
 ```python
