@@ -104,7 +104,7 @@ Get ready to be schooled trying this one!
 
 - Poking around and looking for config files, we find the apache and moodle data directory as `usr/local/www/apache24/data/moodle/`.
 - Checking the contents of the **config.php** file in dir:
-    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled11..jpg)
+    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled11.jpg)
 - We get database creds as *moodle:P################0* .
 - Notice that mysql dosent exist in PATH. We find mysql using the basic find command: `find / -name mysql 2> /dev/null`
 - Mysql is at `/usr/local/bin/mysql`.
@@ -119,7 +119,7 @@ Get ready to be schooled trying this one!
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled12.png)
 - Jamie's account here is of interest as he is one of the users on the box.
 - This hash is a `bcrypt hash`.
-- Usejohn the ripper to crack the hash:
+- Use john the ripper to crack the hash:
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled13.jpg)
 - Jamies creds: *jamie:!#####x*
 - Now ssh over with these creds.
