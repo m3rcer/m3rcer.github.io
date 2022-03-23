@@ -10,7 +10,8 @@ description: A guide to Bypass HTTPS enabled sites.
 <p align="left">
  <img src="https://www.meme-arsenal.com/memes/6916d6688be5030280132d59bce29143.jpg">
 </p>
-- The simplest way to make all the programs work and intercept HTTPS communcations is by using a program called [sslstrip by moxie0](https://github.com/moxie0/sslstrip). Basically `sslstrip` listens on `port 10000` and strips any HTTPS coms and downgrades it to HTTP. We can use this to become the MITM as we used to by using our ArpSpoof Program and redirect any requests from the victim onto `sslstrip` and the onto the server. 
+
+The simplest way to make all the programs work and intercept HTTPS communcations is by using a program called [sslstrip by moxie0](https://github.com/moxie0/sslstrip). Basically `sslstrip` listens on `port 10000` and strips any HTTPS coms and downgrades it to HTTP. We can use this to become the MITM as we used to by using our ArpSpoof Program and redirect any requests from the victim onto `sslstrip` and the onto the server. 
   Sslstrip communicates with the end endpoint server using HTTPS , recieves the response and downgrades HTTPS --> HTTP, then modifies the request as needed in the (Code Injector, File Interceptor Program) response and delivers it to the client in downgraded HTTP. 
 
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/coding/python/Bypassing_HTTPS/https-1.png)
