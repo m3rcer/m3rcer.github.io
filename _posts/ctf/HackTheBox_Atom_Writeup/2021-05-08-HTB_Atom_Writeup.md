@@ -72,7 +72,6 @@ description: HackTheBox Atom Writeup.
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom11.png)
 - A getuid command confirms we are `ATOM\jason`.
 - Retrive `user.txt` from jason's dekstop folder.
-
 ***GETTING root.txt***
 - Enumerate the host with winpeas.
 - Begin by dropping winpeas on the box.
