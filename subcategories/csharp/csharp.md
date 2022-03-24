@@ -7,13 +7,11 @@ comments: false
 ---
 
 
-```
            _  ___   _   _          _   _    _  
     |\ |  |_   |   |_)  _)   /\   |_)  _)  |_) 
  o  | \|  |_   |   | \  _)  /--\  |    _)  | \ 
                                                
-                                                                                     
-```
+
 
 
 # [Grey Hat C#](/subcategories/csharp/greyhatc/greyhatc)
