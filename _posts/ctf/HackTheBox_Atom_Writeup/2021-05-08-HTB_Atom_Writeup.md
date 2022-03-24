@@ -73,10 +73,8 @@ description: HackTheBox Atom Writeup.
 - A getuid command confirms we are `ATOM\jason`.
 - Retrive `user.txt` from jason's dekstop folder.
 ***GETTING root.txt***
-- Enumerate the host with winpeas.
-- Begin by dropping winpeas on the box.
+- Enumerate the host with winpeas. Begin by dropping winpeas on the box.
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom12.png)
-
 - Jason's credentials do not allow `winrm` remoting. A user guide pdf exists which we might have a look at if needed.
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom13.jpg)
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom17.png)
