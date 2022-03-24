@@ -12,7 +12,7 @@ description: Automating Nessus.
 
 _[View/Download the Visual Studio Project](https://github.com/m3rcer/C-Sharp-Hax/tree/main/Ch5/vs)_
 
-* REST (representational state transfer) is a way of accessing and interacting with resources (such as user accounts or vulnerability scans) on the server, usually over HTTP, using a variety of HTTP methods(GET, POST, DELETE, and PUT).
+REST (representational state transfer) is a way of accessing and interacting with resources (such as user accounts or vulnerability scans) on the server, usually over HTTP, using a variety of HTTP methods(GET, POST, DELETE, and PUT).
 
 _Note:_ 
 _The REST API to automate scans was removed from Nesssus 7.0 and above. If you need to launch scans in an automated way, you would have to upgrade to Tenable.io or Tenable.sc which have full API integrations. 
@@ -25,10 +25,8 @@ I tried looking for Nessus versions < 7.0 as only versions prior 7.0 would work 
 **Class Components:**
 
 1. [The NessusSession Class.](/permalinks/Nessus/NessusSession)
-
 2. [The NessusManager Class](/permalinks/Nessus/NessusManager)
-
-3. [The Main Class.](/permalinks/Nessus/Main)
+3. [The Main Class](/permalinks/Nessus/Main)
 
 
 ### Output:

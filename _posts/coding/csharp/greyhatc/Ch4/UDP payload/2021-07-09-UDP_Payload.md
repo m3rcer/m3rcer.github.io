@@ -10,11 +10,8 @@ description: Creating a UDP listener and payload.
 ## We write a program to create a UDP payload and a listener to implement a UDP remote connection as an alternate channel of communication.
 
 - UDP payloads/listeners can be used as an alternate channel of communication in monitored environments and are not heavily scrutinized. It is a connectionless protocol with no overhead to ensure deliverability hence it is blazingly fast.
-
-- We use the UdpClient and Socket classes over UDP. 
-
+- We use the `UdpClient` and `Socket` classes over UDP. 
 - Both the attacker and victim machines will need to listen for UDP broadcasts as well as maintain a socket to broadcast data to another computer.
-
 - The code on the target machine will listen on a UDP port for commands, execute them and return the output to the attacker's UDP socket, while the attacker maintains a listener and socket to execute pass these commands.
 
 ## CODE:

@@ -12,8 +12,7 @@ description: Automating OpenVAS.
 
 _[View/Download the Visual Studio Project](https://github.com/m3rcer/C-Sharp-Hax/tree/main/Ch7/vs)_
 
-_Note: 
-This program was made for the OpenVAS Scanner v6.0.2. The current version of this writing is 21.4.2. v6.0.2 utilized xml, whereas 21.4.2 utilizes json to interact with the API._
+_Note: This program was made for the OpenVAS Scanner v6.0.2. The current version of this writing is 21.4.2. v6.0.2 utilized xml, whereas 21.4.2 utilizes json to interact with the API._
 
 
 ### Code:
@@ -21,9 +20,7 @@ This program was made for the OpenVAS Scanner v6.0.2. The current version of thi
 **Class Components:**
 
 1. [The OpenVASsession Class](/permalinks/OpenVas/OpenVASSession)
-
 2. [The OpenVASManager Class](/permalinks/OpenVas/OpenVASManager)
-
 3. [The Main Class](/permalinks/OpenVas/Main)
 
 

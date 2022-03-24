@@ -8,9 +8,8 @@ categories: greyhatcch3
 
 ## These defined subclasses parse the WSDL defintions and return back the parsed values to the WSDL class and its respective definitions.
 
-- We use the Attributes property on the nodes passed into the constructor to retrieve the node’s specific attributes.
-
-- We use the FirstChild property and the ChildNodes property to determine and enumerate the list of child nodes available.
+- We use the `Attribute`s property on the nodes passed into the constructor to retrieve the node’s specific attributes.
+- We use the `FirstChild` property and the `ChildNodes` property to determine and enumerate the list of child nodes available.
 
 ### 1. SoapType Parser class:
 

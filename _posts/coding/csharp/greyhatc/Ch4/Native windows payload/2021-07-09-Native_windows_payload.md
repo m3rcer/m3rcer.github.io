@@ -12,17 +12,12 @@ description: Executing native windows payloads as unmanaged code.
 ## We write a program to execute native windows payloads as unmanaged code. (using metasploit)
 
 - Msf payloads generated in 32/64bit assembly code is called unmanaged code, where you compile C# code into a dll or exe it is referred to as managed code. The difference betweeen the two is that unmanaged code requires mono/.NET to run whereas managed can be run directly.
-
-- To execute unmanaged assembly code within a managed environment we'll use the .NET's P/Invoke to import and run the VirtualAlloc() function from Kernel32.dll. (lets us allocate memory) 
-
-- We use the DllImport attribute to look for a lib at runtime.
-
+- To execute unmanaged assembly code within a managed environment we'll use the .NET's `P/Invoke` to import and run the `VirtualAlloc()` function from `Kernel32.dll`. (lets us allocate memory) 
+- We use the `DllImport` attribute to look for a lib at runtime.
 - We generate our unmanaged code(pop calc.exe) using:
+	> `msfvenom -p windows/x64/exec -f csharp CMD=calc.exe` - `x64`
 
-	> `msfvenom -p windows/x64/exec -f csharp CMD=calc.exe` -x64
-
-	> `msfvenom -p windows/exec -f csharp CMD=calc.exe` -x86
-
+	> `msfvenom -p windows/exec -f csharp CMD=calc.exe` - `x86`
 
 ### CODE:
 

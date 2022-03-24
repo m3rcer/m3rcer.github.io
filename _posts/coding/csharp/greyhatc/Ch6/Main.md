@@ -1,11 +1,9 @@
 ## The Main Method shows how to implement NessusSession and NessusManager classes to run a scan and generate a PDF report of the scan.
 
 * We begin our automation by first disabling SSL certificate verification. Once we have an authenticated session and a manager, we can begin interacting with the Nessus server.
-
 * To scan a single IP we an empty string as the second element.
-
-* To generate a report, we pass the site ID to the GetPdfSiteReport() method. We then
-we use WriteAllBytes() to save the PDF report to the user’s Desktop directory with the site’s ID as the filename along with a .pdf extension.
+* To generate a report, we pass the site ID to the `GetPdfSiteReport()` method. We then
+we use `WriteAllBytes()` to save the PDF report to the user’s Desktop directory with the site’s ID as the filename along with a `.pdf` extension.
 
 ```csharp
 using System;

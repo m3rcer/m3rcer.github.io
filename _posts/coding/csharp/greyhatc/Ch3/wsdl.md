@@ -6,9 +6,8 @@ categories: greyhatcch3
 
 ## This class encompasses the WSDL document working it's way from top to bottom of the WSDL document layout and passes execution to the defined subclasses for parsing.
 
-- We create Namespaces and add to them using XmlNamespaceManager() and  the AddNamespace() method.
-
-- We use XPath query to enumerate all the SOAP typenodes from the document using the SelectNodes() method.
+- We create Namespaces and add to them using `XmlNamespaceManager()` and  the `AddNamespace()` method.
+- We use `XPath` query to enumerate all the SOAP typenodes from the document using the `SelectNodes()` method.
 
 ## CODE:
 

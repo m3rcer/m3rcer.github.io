@@ -15,10 +15,10 @@ _[View/Download the Visual Studio Project](https://github.com/m3rcer/C-Sharp-Hax
 _Note: 
 This program was made for the Nexpose API v1.1/v1.2. The current version of this writing is v3. v1.1/v1.2 utilized xml, whereas v3 utilizes json to interact with the API. I couldn't find a depreacted running version of Nexpose running these prior version nonetheless the program works as expected._
 
-- When you start a vulnerability scan in Nexpose, you scan a site which is a collection os hosts/assets on the network. 
+When you start a vulnerability scan in Nexpose, you scan a site which is a collection os hosts/assets on the network. 
 Sites are further classified into static and dynamic, we will be focussing on the static site which holds a list of hosts you can only change by reconfiguring the site.
 
-- Notice in the output that Nexpose is returning at least three scan statuses, which are
+Notice in the output that Nexpose is returning at least three scan statuses, which are
 separate phases of the scan: running , integrating , and finished . Once the scan finishes, our PDF report is written to the user’s Desktop, as expected.
 
 ### Code:
@@ -26,9 +26,7 @@ separate phases of the scan: running , integrating , and finished . Once the sca
 **Class Components:**
 
 1. [The NexposeSession Class](/permalinks/Nexpose/NexposeSession)
-
 2. [The NexposeManager Class](/permalinks/Nexpose/NexposeManager)
-
 3. [The Main Class](/permalinks/Nexpose/Main)
 
 

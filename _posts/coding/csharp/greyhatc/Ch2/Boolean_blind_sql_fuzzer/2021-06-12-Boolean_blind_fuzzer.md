@@ -14,7 +14,7 @@ _This exploit is more complicated than the UNION based sql fuzzer and requires m
 - We use the:
   > `RLIKE function` to match values with a regular expression which can be used like an 'if-else' statement for true/false queries.
   
-  > Couple "CASE WHEN" statements in the RLIKE function for the 'if-else' functionality.
+  > Couple "CASE WHEN" statements in the `RLIKE function` for the 'if-else' functionality.
   
   > `COUNT(*) function` to return an integer for the number of rows in a table.
   

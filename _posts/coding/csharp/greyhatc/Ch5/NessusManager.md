@@ -1,13 +1,9 @@
 ## We use the NessusManager Class to wrap common API calls and functionality for Nessus in easy-to-use methods we can call later.
 
-* The NessusManager class implements IDisposable so that we can use NessusSession to interact with the Nessus API and log out automatically if necessary.
-
-* Nessus is preconfigured with a few different scan policies. We’ll sort through these policies using
-GetScanPolicies().
-
-* We create a scan by using the returned policy ID in the CreatScan() method. 
-
-* Once we’ve created the scan with CreateScan(), we’ll pass its ID to the StartScan() method, which will create a POST request and return the JSON response telling us whether the scan was launched.
+* The NessusManager class implements `IDisposable `so that we can use NessusSession to interact with the Nessus API and log out automatically if necessary.
+* Nessus is preconfigured with a few different scan policies. We’ll sort through these policies using `GetScanPolicies()`.
+* We create a scan by using the returned policy ID in the `CreatScan()` method. 
+* Once we’ve created the scan with `CreateScan()`, we’ll pass its ID to the `StartScan()` method, which will create a POST request and return the JSON response telling us whether the scan was launched.
 
 
 ### Code: 

@@ -1,15 +1,10 @@
 ## To automate sending commands and receiving responses from Nessus, we’ll create a session with the NessusSession class and execute API commands.
 
-* We implement the IDisposable interface when the currently instantiated class in the using statement is disposed during garbage collection.
-
-* We create a JObject to hold the credentials passed in as arguments.
-
+* We implement the `IDisposable` interface when the currently instantiated class in the using statement is disposed during garbage collection.
+* We create a `JObject` to hold the credentials passed in as arguments.
 * When we receive the authentication token, we assign its value to the Token property , assign the Authenticated property to true, and return true to the caller method.
-
-* In the MakeRequest() method, we test whether the user supplied an authentication token in JObject. If so, we assign the HTTP request header X-Cookie to the value of the token parameter.
-
-* The LogOut() method tests whether we’re authenticated with the Nessus server. If so, we call
-MakeRequest() by passing DELETE as the HTTP method; /session as the URI; and the authentication token, which sends a DELETE HTTP request to the Nessus server, effectively logging us out.
+* In the` MakeRequest()` method, we test whether the user supplied an authentication token in `JObject`. If so, we assign the HTTP request header X-Cookie to the value of the token parameter.
+* The `LogOut()` method tests whether we’re authenticated with the Nessus server. If so, we call `MakeRequest()` by passing `DELETE` as the HTTP method; `/session` as the URI; and the authentication token, which sends a `DELETE` HTTP request to the Nessus server, effectively logging us out.
 
 
 ### Code:

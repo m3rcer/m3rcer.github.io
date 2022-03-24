@@ -11,17 +11,14 @@ description: Reverse Shell.
 ## We write a program which allows an attacker to start a listener and listen for a connection back from a victim host.
 
 - We use the following classes:
+    > `TCPClient` - to create a new TCPClient object.
 
-> TCPClient - to create a new TCPClient object.
+    > `Stream` - to create a stream to read/wrtie to.
 
-> Stream - to create a stream to read/wrtie to.
+    > `StreamReader` - read commands from incoming stream.
 
-> StreamReader - read commands from incoming stream.
-
-> Process and ProcessStartInfo(add/control certain options in Process()) - run commands from an attacker using a new process.
-
-- We use the Split method to split commands into their respective filenames and arguments.
-
+    > `Process` and `ProcessStartInfo`(add/control certain options in `Process()`) - run commands from an attacker using a new process.
+- We use the `Split()` method to split commands into their respective filenames and arguments.
 - Helps in evasion, egress traffic from a victim host is less scrutinized.
 
 ## Code:

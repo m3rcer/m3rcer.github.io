@@ -1,10 +1,8 @@
 ## We use the OpenVASManager Class to wrap common API calls and functionality for OpenVAS to create and manage various OpenVAS scans.
 
-- We then implement GetVersion() to get the version of OpenVAS.
-
-- The GetScanConfigurations() method passes the `<get_configs />` command to OpenVAS and returns the response.
-
-- Once the scan finishes, we call GetTaskResults() by passing in the task ID; then we save and print the XMLdocument containing the scan results to the console screen.
+- We then implement `GetVersion()` to get the version of OpenVAS.
+- The `GetScanConfigurations()` method passes the `<get_configs />` command to OpenVAS and returns the response.
+- Once the scan finishes, we call `GetTaskResults()` by passing in the task ID; then we save and print the XMLdocument containing the scan results to the console screen.
 
 ### Code:
 

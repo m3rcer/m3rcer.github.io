@@ -1,10 +1,9 @@
 ## The Main Method implements the NessusSession and NessusManager classes to run a scan and print the results.
 
 * We begin our automation by first disabling SSL certificate verification. Once we have an authenticated session and a manager, we can begin interacting with the Nessus server.
-
 * As we iterate over the scan policies, we check whether the name of the current scan policy
-equals the string basic and then  call CreateScan() and we store its response in a JObject. We then pull the scan ID out of the JObjectso that we can pass the scan ID to StartScan() to start the scan.
-We use GetScan() to monitor the scan by passing it the scan ID, storing the result in a JObject.
+equals the string basic and then  call `CreateScan()` and we store its response in a JObject. We then pull the scan ID out of the JObjectso that we can pass the scan ID to `StartScan()` to start the scan.
+* We use `GetScan()` to monitor the scan by passing it the scan ID, storing the result in a `JObject`.
 
 _Note: A null object is returned when we create the scan as discussed,  automation for scans was removed versions 7.0 prior._
 

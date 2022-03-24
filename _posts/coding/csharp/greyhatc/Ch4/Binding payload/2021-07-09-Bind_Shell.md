@@ -10,10 +10,8 @@ description: BindShell.
 
 ## We write a program which creates a listener on the target host and allows an attacker to connect to it remotely.
 
-- We use the TCPListener class here instead to create a listener.
-
-- Begin the listener using the Start() method.
-
+- We use the `TCPListener` class here instead to create a listener.
+- Begin the listener using the `Start()` method.
 - Maintain persistence.
 
 ## CODE:

@@ -11,11 +11,9 @@ description: Executing native payloads as unmanaged code on both linux and windo
 ## We write a program to execute native payloads as unmanaged code on both linux and windows. (using metasploit)
 
 - We integrate the previous program to run native windows payloads along with some libs and conditions for handling linux execution:
+	> We added libraries from `libc` to execute os cmds on linux.
 
-	> We added libraries from libc to execute os cmds on linux.
-
-	> Added an else-if statement to check if its a linux system and execute payloads according to its architecture in the code block.
-
+	> Added an `else-if` statement to check if its a linux system and execute payloads according to its architecture in the code block.
 - _Note: If SeLinux is enabled it restricts RWX memory allocation. Try using Ubuntu._
 
 ### CODE:
@@ -146,5 +144,4 @@ namespace msf_payload_using_Csharp
 ## OUTPUT:
 
 1. _Calc.exe Popped!_ - Windows
-
 2. _whoami run_ - UNIX 
