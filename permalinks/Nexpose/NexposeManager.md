@@ -6,19 +6,13 @@ categories: greyhatcch6
 
 ## We use the NexposeManager Class to wrap common API calls and functionality for Nexpose to create and manage various Nexpose scan sites.
 
-* The NexposeManager class implements IDisposable so that we can use NexposeSession to interact with the Nexpose API and log out automatically if necessary.
-
-* The GetSystemInformation() method makes a basic SystemInformation API request to print the Nexpose server information.
-
-* The CreateOrUpdateSite() method helps create/save a scan site with assets.
-
-* The ScanSite() method starts a scan.
-
-* The GetScanStatus() method helps retrieve the scan status.
-
-* The GetPdfSiteReport() method creates a PDF site report.
-
-* The DeleteSite() method deletes the created target scan site.
+* The NexposeManager class implements `IDisposable` so that we can use NexposeSession to interact with the Nexpose API and log out automatically if necessary.
+* The `GetSystemInformation()` method makes a basic SystemInformation API request to print the Nexpose server information.
+* The `CreateOrUpdateSite()` method helps create/save a scan site with assets.
+* The `ScanSite()` method starts a scan.
+* The `GetScanStatus()` method helps retrieve the scan status.
+* The `GetPdfSiteReport()` method creates a PDF site report.
+* The `DeleteSite()` method deletes the created target scan site.
 
 
 ### CODE:

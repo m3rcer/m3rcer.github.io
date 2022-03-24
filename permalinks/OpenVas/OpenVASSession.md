@@ -7,8 +7,7 @@ categories: greyhatcch7
 ## To automate sending commands and receiving responses from OpenVAS, we’ll create a session with the OpenVASSession class and execute API commands.
 
 - We setup a TCP stream to send and recieve commands. 
-
-- We implement the IDisposable interface when the currently instantiated class in the using statement is disposed during garbage collection.
+- We implement the `IDisposable` interface when the currently instantiated class in the using statement is disposed during garbage collection.
 
 ### Code:
 

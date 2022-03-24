@@ -6,11 +6,9 @@ categories: greyhatcch3
 
 ## The MAIN class uses all the parsed data from the WSDL class to interact and fuzz the data in the WSDL using sub-methods.
 
-- We use the Query (LINQ) Single() method to select a single object that corresponds to the definied definition.
-
-- Use the HTTPWebRequest and StreamReader methods as defined in previous programs.
-
-- Create WSDL definitions using XNameSpace, XElement for fuzzing SOAP endpoints.
+- We use the Query (LINQ) `Single()` method to select a single object that corresponds to the definied definition.
+- Use the `HTTPWebRequest` and `StreamReader` methods as defined in previous programs.
+- Create WSDL definitions using `XNameSpace`, `XElement` for fuzzing SOAP endpoints.
 
 ### CODE:
 

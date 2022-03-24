@@ -6,14 +6,10 @@ categories: greyhatcch6
 
 ## To automate sending commands and receiving responses from Nexpose, we’ll create a session with the NexposeSession class and execute API commands.
 
-* We implement the IDisposable interface when the currently instantiated class in the using statement is disposed during garbage collection.
-
-
-* Nexpose "multipart/mixed" responses always use the string "--AxB9s13299asdjvbA" to seperate HTTP params.
-
-* The LogOut() method tests whether we’re authenticated with the Nexpose server.
-
-* The NexposeAPIVersion() method finds the API version. (version 1.1 by default, current version 3.0)
+* We implement the `IDisposable` interface when the currently instantiated class in the using statement is disposed during garbage collection.
+* Nexpose `multipart/mixed` responses always use the string `--AxB9s13299asdjvbA` to seperate HTTP params.
+* The `LogOut()` method tests whether we’re authenticated with the Nexpose server.
+* The `NexposeAPIVersion()` method finds the API version. (version 1.1 by default, current version 3.0)
 
 ### Code:
 
