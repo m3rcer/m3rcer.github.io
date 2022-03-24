@@ -7,11 +7,9 @@ comments: false
 ---
 
 
-           _  ___   _   _          _   _    _  
-    |\ |  |_   |   |_)  _)   /\   |_)  _)  |_) 
- o  | \|  |_   |   | \  _)  /--\  |    _)  | \ 
-                                               
-
+<p align="center">
+ <img src="https://i.redd.it/vr9eks81cx351.png">
+</p>
 
 
 # [Grey Hat C#](/subcategories/csharp/greyhatc/greyhatc)
