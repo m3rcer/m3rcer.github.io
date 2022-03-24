@@ -93,7 +93,7 @@ description: HackTheBox Atom Writeup.
     3. Retrive info on the keyspace using:
     `info keyspace`
     4. We see that there is one databse - number 0 which has 4 keys. View the keys using: `keys *`
-    5. - We see a bunch of keys. Retrieve the first or last, it might most likely be the administrator's key: `get pk:urn:user:e8e29158-d70d-44b1-a1ba-4949d52790a0`
+    5. We see a bunch of keys. Retrieve the first or last, it might most likely be the administrator's key: `get pk:urn:user:e8e29158-d70d-44b1-a1ba-4949d52790a0`
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom16.jpg)
 
 - We now have the administrator hash.
