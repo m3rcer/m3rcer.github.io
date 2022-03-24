@@ -9,7 +9,7 @@ comments: false
  <img src="https://media.tenor.com/images/8e432c1704f1c338bd7ed05d3321411d/tenor.gif">
 </p>
 
-<h1>HackTheBox:</h1>
+<h1>HackTheBox</h1>
 {%- for post in site.categories.hackthebox -%}
 	  {%- capture current_year -%}{{ post.date | date: "%Y" }}{%- endcapture -%}
 	  {%- unless current_year == previous_year -%}
