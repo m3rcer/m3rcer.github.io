@@ -8,7 +8,7 @@ comments: false
 
 
 <p align="center">
-  <img src="https://www.codeitbro.com/wp-content/uploads/2020/07/funny-python-meme-9-write-10-lines-of-code.jpg" />
+ <img src="https://c.tenor.com/jqaxUvgEZoAAAAAi/animal-dancing.gif">
 </p>
 
 
