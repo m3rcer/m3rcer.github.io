@@ -54,7 +54,6 @@ description: HackTheBox Atom Writeup.
 ## POST EXPLOITATION
 
 ***GETTING user.txt***
-Perform did the following to recreate the vulnerability.
 - Generate an msfvenom payload of choice . Generate a reverse https executable and then rename it with single quotes.
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom8.png)
 - Rename the file to `d'payload.exe`.
