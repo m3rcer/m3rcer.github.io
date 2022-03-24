@@ -12,17 +12,16 @@ description: Creating a Blind/Boolean based mutational fuzzer to dump the databa
 _This exploit is more complicated than the UNION based sql fuzzer and requires much more time to retrieve the data._
 
 - We use the:
-  > RLIKE function to match values with a regular expression which can be used like an 'if-else' statement for true/false queries.
+  > `RLIKE function` to match values with a regular expression which can be used like an 'if-else' statement for true/false queries.
   
   > Couple "CASE WHEN" statements in the RLIKE function for the 'if-else' functionality.
   
-  > COUNT(\*) function to return an integer for the number of rows in a table.
+  > `COUNT(*) function` to return an integer for the number of rows in a table.
   
-  > MID() function returns a particular substring depending on the starting index and length to return.
+  > `MID() function` returns a particular substring depending on the starting index and length to return.
   
-  > ORD() function converts a given input into an integer equivalent for matching data.
-
-- The "GetString()" method from the "Encoding.ASCII" class to convert the array of bytes returned into a human readable string.
+  > `ORD() function` converts a given input into an integer equivalent for matching data.
+- The `GetString() method` from the "Encoding.ASCII" class to convert the array of bytes returned into a human readable string.
 
 
 

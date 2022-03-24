@@ -10,18 +10,12 @@ description: Creating a mutational fuzzer to fuzz POST requests for possible sql
 ## This Program is a basic mutational fuzzer as before that will fuzz POST requests to generate errors to validate a possible sql vulnerability.
 
 - We use Burp Suite to intercept and save the POST request(Add Item to cart) to a file to implement in the program. 
-
-- We start by using the ReadAllLines() method instead of ReadAllText() as it automatically splits at newlines in the file(to split the POST request).
-
-- We use System.Text.StringBuilder() method to build strings instead of using the '+=' operator to build strings as the StringBuilder method creates only one object in memory resulting in less memory overhead.
-
+- We start by using the `ReadAllLines() method` instead of `ReadAllText()` as it automatically splits at newlines in the file(to split the POST request).
+- We use `System.Text.StringBuilder()` method to build strings instead of using the '+=' operator to build strings as the `StringBuilder method` creates only one object in memory resulting in less memory overhead.
 - We append "\r\n" to the request else the server will hang.
-
-- We use System.Net.Sockets.Socket to build a socket for a already generated http request.
-
-- We create the rhost by passing the ip to IpEndPoint() method.
-
-- We use SocketType.Stream to tell that it is a streaming socket and Address.Family as InterNetwork to use IPV4.
+- We use `System.Net.Sockets.Socket` to build a socket for a already generated http request.
+- We create the rhost by passing the ip to `IpEndPoint() method`.
+- We use `SocketType.Stream` to tell that it is a streaming socket and `Address.Family` as `InterNetwork` to use `IPV4`.
 
 
 ### Code:

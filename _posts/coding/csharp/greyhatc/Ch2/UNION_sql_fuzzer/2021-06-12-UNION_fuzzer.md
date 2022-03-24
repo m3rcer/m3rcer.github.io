@@ -10,15 +10,12 @@ description: Creating a UNION based mutational fuzzer to dump the database.
 ## This Program is a UNION-Based mutational fuzzer that will use UNION based queries to pull out the db in a single http request.
 
 _UNION injection is faster than boolean based/blind injection_.
-
 - 2 major aspects are required for a succesfull UNION injection - Balance out the number of columns using SELECT statements and programatically find the data using regex.
-
 - We use the:
-  > SELECT function to balance out columns.
+  > `SELECT function` to balance out columns.
   
-  > CONCAT function to surround the data with padding we care about.
-
-- We use the "Regex" class and the "MatchCollection" class using the "System.Text.RegularExpressions" namespace to find and match the surrounding padded data from the CONCAT() function and extract the data in between.
+  > `CONCAT function` to surround the data with padding we care about.
+- We use the "Regex" class and the `MatchCollection` class using the `System.Text.RegularExpressions` namespace to find and match the surrounding padded data from the `CONCAT() function` and extract the data in between.
 
 ### Code Block:
 

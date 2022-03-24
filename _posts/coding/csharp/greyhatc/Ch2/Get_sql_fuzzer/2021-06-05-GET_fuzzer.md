@@ -10,21 +10,14 @@ description: Creating a mutational fuzzer to fuzz GET requests for possible sqli
 ## This Program is a basic mutational fuzzer that will fuzz GET requests to generate errors to validate a possible sql/xss vulnerability.
 
 - A fuzzer attempts to find errors in software by sending malformed data. There are 2 general types:
-  
   > Mutational Fuzzer - taint data in a known-good with bad without regard for the protocol or structure of data.
   
   > Generational Fuzzer -  taint data in a known-good with bad taking regard for the nuances of the protocol or structure of data.
-
 _Note: We use BadStore from VulnHub for this Chapter to test our tools against._
-
-- We use the static Create() method from the WebRequest class to make a http type object by passing in the url which is casted back to the HttpWebRequest object .
+- We use the static `Create() method` from the `WebRequest class` to make a `http` type object by passing in the url which is casted back to the `HttpWebRequest` object .
   The method is instantiated to be set to "GET".
-
-- Instantiated objects can be used in the context of a using block to implement a Dispose() method at the end of scope. This helps manage scope and prevent resource leaks of objects.
-
-
-- The StreamReader class is used to save the response and the ReadToEnd() method to read data till EOL.
-
+- Instantiated objects can be used in the context of a using block to implement a `Dispose() method` at the end of scope. This helps manage scope and prevent resource leaks of objects.
+- The `StreamReader class` is used to save the response and the `ReadToEnd() method` to read data till EOL.
 
 ### Code Block: 
 
