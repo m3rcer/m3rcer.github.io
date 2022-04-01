@@ -24,12 +24,27 @@ description: Various attack prototypes for Constrained Delegation Abuse
 - To perform the delegation, we ultimately need the TGT of the principal (**machine or user**) trusted for delegation. We can extract it from a machine (Rubeus dump) or request one using the NTLM / AES keys (Mimikatz `sekurlsa::ekeys` + Rubeus `asktgt`).
 1. Enumerate users/computers with constrained Delegation
 	- In Bloodhound: 
-		- Users `MATCH (c:User), (t:Computer), p=((c)-[:AllowedToDelegate]->(t)) RETURN p`
-		- Computers: `MATCH (c:Computer), (t:Computer), p=((c)-[:AllowedToDelegate]->(t)) RETURN p`
+		- Users:
+		```
+		MATCH (c:User), (t:Computer), p=((c)-[:AllowedToDelegate]->(t)) RETURN p
+		```
+		- Computers: 
+		```
+		MATCH (c:Computer), (t:Computer), p=((c)-[:AllowedToDelegate]->(t)) RETURN p
+		````
 	- In Powerview:
-		- Users: `Get-DomainUser –TrustedToAuth`
-		- Computers: `Get-DomainComputer –TrustedToAuth`
-	- Using ADModule enumerate both computers and users: ```Get-ADObject -Filter {msDS-AllowedToDelegateTo -ne "$null"} -Properties msDS-AllowedToDelegateTo```
+		- Users: 
+		```
+		Get-DomainUser –TrustedToAuth
+		```
+		- Computers:
+		```
+		Get-DomainComputer –TrustedToAuth
+		```
+	- Using ADModule enumerate both computers and users: 
+	```
+	Get-ADObject -Filter {msDS-AllowedToDelegateTo -ne "$null"} -Properties msDS-AllowedToDelegateTo
+	```
 > NOTE: Constrained delegation can be configured on user accounts as well as computer accounts.  Make sure you search for both.
 
 ------------------------------------------------------
