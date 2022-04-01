@@ -11,12 +11,11 @@ description: Various attack prototypes for Constrained Delegation Abuse
 
 - [Attack Variants](#attack-variants)
 	- [Basic Constrained Delegation Exploitation](#Basic-Constrained-Delegation-Exploitation)
-	- [Alternate Service Name Abuse](#Alternate-Service-Name-Abuse)
-	- [Bronze Bit Attack](#Bronze-Bit-Attack)
-	- [Abusing Resource Based Constrained Delegation](#Abusing-Resource-Based-Constrained-Delegation)
-- [OPSEC](#OPSEC)
-- [Resources](#Resources)
-
+	- [Alternate Service Name Abuse](#alternate-service-name-abuse)
+	- [Bronze Bit Attack](#bronze-bit-attack)
+	- [Abusing Resource Based Constrained Delegation](#abusing-resource-based-constrained-delegation)
+- [OPSEC](#opsec)
+- [Resources](#resources)
 
 - **Constrained Delegation** was soon released after unconstrained delegation as a safer means for services to perform Kerberos delegation. It aims to restrict the services to which the server can act on behalf of a user. It no longer allows the server to cache the TGTs of other users, but allows it to request a TGS for another user with its own TGT.
 - To impersonate the user, *Service for User (S4U)* extensions are used which provides two extensions:
