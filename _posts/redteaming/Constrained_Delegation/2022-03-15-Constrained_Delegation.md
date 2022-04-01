@@ -32,7 +32,7 @@ description: Various attack prototypes for Constrained Delegation Abuse
 		```
 		MATCH (c:Computer), (t:Computer), p=((c)-[:AllowedToDelegate]->(t)) RETURN p
 		````
-	- In Powerview:
+	- Using Powerview:
 		- Users: 
 		```
 		Get-DomainUser –TrustedToAuth
