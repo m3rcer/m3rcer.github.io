@@ -1,3 +1,10 @@
+---
+title: Starting Point
+permalink: /permalinks/PhishOPS/Starting_Point
+categories: RedTeaming
+---
+
+
 <h1 align="center">Starting Point</h1> 
 
 **This section gives a short brief to understand various implementations to achieve spam filter bypasses.**

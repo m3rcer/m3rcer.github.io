@@ -1,4 +1,11 @@
-<h1 align="center">Building a Phishing Server locally.</h1>
+---
+title: Building a Local Phishing Server 
+permalink: /permalinks/PhishOPS/local-smtp
+categories: RedTeaming
+---
+
+
+<h1 align="center">Building and Configuring a Phishing Server on a local VPS.</h1>
 
 **This Blog details the practical aspect of setting up a SMTP phishing server from scratch. Refer to the [Starting Point Section](Starting_Point.md) before going further to gain a brief understanding before starting off.**
 

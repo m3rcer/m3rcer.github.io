@@ -1,3 +1,11 @@
+---
+title: Engaging Relays Directly
+permalink: /permalinks/PhishOPS/direct-smtp
+categories: RedTeaming
+---
+
+
+
 <h1 align="center">Engaging and pentesting various SMTP relays directly</h1>
 
 

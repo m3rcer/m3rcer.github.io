@@ -1,3 +1,9 @@
+---
+title: Spoofing and Evasion 
+permalink: /permalinks/PhishOPS/PhishNSpoof
+categories: RedTeaming
+---
+
 <h1 align="center">Spoofing and Evasion</h1> 
 
 <p align="center">
