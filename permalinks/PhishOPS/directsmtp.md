@@ -1,6 +1,6 @@
 ---
 title: Engaging Relays Directly
-permalink: /permalinks/PhishOPS/direct-smtp
+permalink: /permalinks/PhishOPS/directsmtp
 categories: RedTeaming
 ---
 

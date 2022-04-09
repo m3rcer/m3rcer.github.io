@@ -1,6 +1,6 @@
 ---
 title: External Cloud Relays
-permalink: /permalinks/PhishOPS/Cloud-smtp
+permalink: /permalinks/PhishOPS/Cloudsmtp
 categories: RedTeaming
 ---
 

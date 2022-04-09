@@ -1,6 +1,6 @@
 ---
 title: Starting Point
-permalink: /permalinks/PhishOPS/Starting_Point
+permalink: /permalinks/PhishOPS/StartingPoint
 categories: RedTeaming
 ---
 
