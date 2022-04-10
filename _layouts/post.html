@@ -45,18 +45,18 @@
           <h1 class="header-title" align="center" itemprop="headline">{{ page.title | escape }}</h1>
           {% if page.date %}
           <div class="post-meta">
-            <time datetime="{{ page.date | date_to_xmlschema }}"  align="center" itemprop="datePublished" align="center">
+            <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
               {{ page.date | date: "%b %d, %Y" }}
             </time>
             <span itemprop="author" itemscope itemtype="https://schema.org/Person">
-              <span  align="center" itemprop="name" align="center">{{ site.author.name }}</span>
+              <span itemprop="name">{{ site.author.name }}</span>
             </span>
-            <time hidden datetime="{{ page.modified | date_to_xmlschema }}" itemprop="dateModified" align="center">
+            <time hidden datetime="{{ page.modified | date_to_xmlschema }}" itemprop="dateModified">
               {{ page.date | date: "%b %d, %Y" }}
             </time>
-            <span hidden align="center" itemprop="publisher" itemtype="Person">{{ site.author.name }}</span>
-            <span hidden align="center" itemprop="image">{{ page.image }}</span>
-            <span hidden align="center" itemprop="mainEntityOfPage">{{ page.excerpt }}</span>
+            <span hidden itemprop="publisher" itemtype="Person">{{ site.author.name }}</span>
+            <span hidden itemprop="image">{{ page.image }}</span>
+            <span hidden itemprop="mainEntityOfPage">{{ page.excerpt }}</span>
           </div>
           {% endif %}
         </header>
