@@ -5,35 +5,32 @@ categories: RedTeaming
 ---
 
 
-<h1 align="center">Building and Configuring a Phishing Server on a local VPS.</h1>
+<h1 align="center">Building and Configuring a Phishing Server on a VPS locally</h1>
 
-**This Blog details the practical aspect of setting up a SMTP phishing server from scratch. Refer to the [Starting Point Section](Starting_Point.md) before going further to gain a brief understanding before starting off.**
+**This Blog details the practical aspect of setting up a SMTP phishing server to bypass modern MTA spam filters from scratch. Refer the [Starting_Point section here](Starting_Point.md) to gain a brief understanding of MTA filter bypasses before setting up the server.**
 
 ***I will be breaking this into 3 broad stages.***
-
 1. Setting up a Message Transport System (MTS) aka SMTP server (Postfix). 
-
 2. Setting up an IMAP server (Dovecot), configuring TLS Encryption and configuring a Desktop client.
-
 3. Setup SPF/DKIM records with postfix for improved/best delivery.
 
-__Note: For this example i'ved used the following and would recommend the same-->__
+__For this blog I've used the following and would recommend something similar__
 
-  * Ubuntu 20.04LTS as my distro.
+  * `Ubuntu 20.04LTS` as my distro.
 
-  * Gmail as the testing mail service.
+  * `Gmail` as the testing mail service.
 
-  * Namecheap as my domain hosting provider.
+  * `Namecheap` as my domain hosting provider.
 
-  * Thunderbird as my desktop client for testing.
+  * `Thunderbird` as my desktop client for testing.
 
-  * GoPhish/CobaltStrike as my phish client.
+  * `GoPhish/CobaltStrik`e as my phish client.
 
-  * Disabled any firewall rules against ports 25,587,80,443,465,143,993,110,995.              
+  * Disabled any firewall rules against ports `25,587,80,443,465,143,993,110,995`.              
 
 _________________________________________________________________________________________________
 
-## __STAGE 1__ : 
+## __STAGE 1__ 
 
 ## Setting up a Message Transport System (MTS) aka SMTP server (Postfix). 
 

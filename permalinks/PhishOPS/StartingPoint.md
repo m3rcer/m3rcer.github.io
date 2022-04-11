@@ -7,9 +7,7 @@ categories: RedTeaming
 
 <h1 align="center">Starting Point</h1> 
 
-**This section gives a short brief to understand various implementations to achieve spam filter bypasses.**
-
-This is an overall gist of good practices. 
+**This section gives short brief understanding to the requirements needed to bypass modern MTA spam filters.**
 
 _________________________________________________________________________________________________
 
