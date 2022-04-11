@@ -44,15 +44,10 @@
           {% endif %}
           {% if page.date %}
           <h1 class="header-title" align="center" itemprop="headline">{{ page.title | escape }}</h1>
-          <h6 style="color: darkgrey;" align="center">
+          <h5 style="color: darkgrey;" align="center">
             <time datetime="{{ page.date | date_to_xmlschema }}" style="float: center;" itemprop="datePublished">{{ page.date | date: "%b %d, %Y" }}</time>
             </span>
-          </h6>
-          <h7 style="color: darkgrey;" align="center">
-            <span itemprop="author" itemscope itemtype="https://schema.org/Person">
-              <span itemprop="name">{{ site.author.name }}</span>
-            </span>
-          </h7>
+          </h5>
           <div class="post-meta">
             <time hidden datetime="{{ page.modified | date_to_xmlschema }}" itemprop="dateModified">
               {{ page.date | date: "%b %d, %Y" }}
