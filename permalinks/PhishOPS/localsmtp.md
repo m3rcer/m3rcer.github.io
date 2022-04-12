@@ -21,8 +21,11 @@ __For this blog I've used the following and would recommend something similar__
 ## Index
 
 **I will be breaking this build into 3 broad stages.**
-1. [Setting up a Message Transport System (MTS) aka SMTP server (Postfix)](#setting-up-a-message-transport-system-mts-aka-smtp-server-postfix) 
+1. [Setting up a Message Transport System (MTS) aka SMTP server (Postfix)](#setting-up-a-message-transport-system-mts-aka-smtp-server-postfix)
+  - [Set Hostname and DNS records](#set-hostname-and-dns-records)
+
 2. [Install an IMAP server (Dovecot), configuring TLS Encryption and configuring a Desktop client](#install-an-imap-server-dovecot--enable-tls-encryption-and-setup-a-desktop-client)
+
 3. [Setup SPF/DKIM records with postfix for improved/best delivery](#setting-up-spf-and-dkim-with-postfix)
 
 
@@ -42,7 +45,7 @@ We will configure postfix for a single domain in this tutorial.
 
 Before we install postfix note to do the following before. 
 
-### Set Hostname and DNS records.
+### Set Hostname and DNS records
 
 Postfix uses the server’s hostname to identify itself when communicating with other MTAs. A hostname could be a single word or a FQDN.
 
