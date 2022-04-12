@@ -35,13 +35,11 @@ pre.highlight, pre {
   overflow-x: auto;
 
   > code {
-    width: 100%;
-    max-width: 100rem;
+    width: 90%;
     margin-left: auto;
     margin-right: auto;
     line-height: 1.5;
     display: block;
-    border: 0;
   }
 }
 
