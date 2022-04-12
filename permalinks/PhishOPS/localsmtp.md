@@ -59,9 +59,11 @@ Gracefully reboot your server using `init 6` after.
 
 **Set up DNS records:**
 MX records tell other MTA's that your mail server __mail.example.com__ is responsible for email delivery for your domain name.
+<body>
 {% highlight bash %}
 MX record    @           mail.example.com
 {% highlight ruby %}
+</body>
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/mx_record.png)
 
 An A record maps your FQDN to your IP address.
