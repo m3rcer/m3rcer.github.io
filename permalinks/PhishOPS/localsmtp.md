@@ -2,7 +2,7 @@
 title: Building a Local Phishing Server 
 permalink: /permalinks/PhishOPS/localsmtp
 categories: RedTeaming
-layout: page
+layout: post
 ---
 
 
@@ -59,11 +59,10 @@ Gracefully reboot your server using `init 6` after.
 
 **Set up DNS records:**
 MX records tell other MTA's that your mail server __mail.example.com__ is responsible for email delivery for your domain name.
-<pre>
-  <code class="ruby">
-    MX record    @           mail.example.com
-  </code>
-</pre>
+
+```
+MX record    @           mail.example.com
+```
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/mx_record.png)
 
 An A record maps your FQDN to your IP address.
