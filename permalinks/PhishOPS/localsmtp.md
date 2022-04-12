@@ -22,15 +22,15 @@ __For this blog I've used the following and would recommend something similar__
 
 **I will be breaking this build into 3 broad stages.**
 
-[**STAGE 1**](#stage-1)
+[STAGE 1](#stage-1)
 - [Setting up a Message Transport System (MTS) aka SMTP server (Postfix)](#setting-up-a-message-transport-system-mts-aka-smtp-server-postfix)
     - [Set Hostname and DNS records](#set-hostname-and-dns-records)
 
-[**STAGE 2**](#stage-2)
+[STAGE 2](#stage-2)
 - [Install an IMAP server (Dovecot), configuring TLS Encryption and configuring a Desktop client](#install-an-imap-server-dovecot--enable-tls-encryption-and-setup-a-desktop-client)
 
-[**STAGE 3**](#stage-3)
-[Setup SPF/DKIM records with postfix for improved/best delivery](#setting-up-spf-and-dkim-with-postfix)
+[STAGE 3](#stage-3)
+- [Setup SPF/DKIM records with postfix for improved/best delivery](#setting-up-spf-and-dkim-with-postfix)
 
 
 _________________________________________________________________________________________________
@@ -40,9 +40,7 @@ ________________________________________________________________________________
 ## Setting up a Message Transport System (MTS) aka SMTP server (Postfix). 
 
 Postfix is a light , easy to use MTS which serves 2 primary purposes:
-
 - Transporting email messages from a mail client/mail user agent (MUA) to a remote SMTP server.
- 
 - Accepts emails from other SMTP servers. 
 
 We will configure postfix for a single domain in this tutorial.
@@ -52,32 +50,24 @@ Before we install postfix note to do the following before.
 ### Set Hostname and DNS records
 
 Postfix uses the server’s hostname to identify itself when communicating with other MTAs. A hostname could be a single word or a FQDN.
+_Note: We will use example.com as our registered domain as an example domain here_.
 
-_Note: We will use example.com as our registered domain as an example here_.
-
-Make sure your hostnames set to a FQDN such as __mail.example.com__ by using the command:
-
-`sudo hostnamectl set-hostname mail.example.com`
+Make sure your hostnames set to a FQDN such as __mail.example.com__ by using the command: `sudo hostnamectl set-hostname mail.example.com`
 
 Gracefully reboot your server using `init 6` after.
 
 **Set up DNS records:**
-
 - MX records tell other MTA's that your mail server __mail.example.com__ is responsible for email delivery for your domain name.
-
-```
-MX record    @           mail.example.com
-```
-
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/mx_record.png)
+  ```
+  MX record    @           mail.example.com
+  ```
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/mx_record.png)
 
 - An A record maps your FQDN to your IP address.
-
-```
-mail.example.com        <ip-addr>
-```
-
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/a_record.png)
+  ```
+  mail.example.com        <ip-addr>
+  ```
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/a_record.png)
 
 
 ### Permanently disable ipv6 and uninstall unecessary services like exim .
@@ -109,7 +99,7 @@ Your PTR record does the inverse, ie maps your IP address back to your FQDN. Thi
 
 _This could be an option your hosting provider allows you to setup like how you did your domain records (cockbox.org uses this method ) or you'd have to probably contact support and they'd do it for you (flokinet works this way). Either case find a hosting provider that supports this . [ I've made a blog detailing various hosting providers that support these builds here](https://github.com/me4cer98/Hosting-providers-for-SMTP-builds)._
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/ptr_record.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/ptr_record.png)
 
 ### Installing Postfix
 
@@ -126,7 +116,7 @@ sudo apt-get install postfix -y
 This option allows Postfix to send emails to other MTAs and receive emails from other MTAs.
 
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_1.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_1.png)
 
 
 - Next enter your domain name when prompted for the system mail name as your domain name without __"mail"__ ie just __"example.com"__ . 
@@ -137,7 +127,7 @@ This ensures that your mail address naming convention would be in the form of -
 
 > [x]  name@mail.example.com  . 
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_2.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_2.png)
 
 Use a valid subdomain replacement if you would need to implement one , it will work. 
 
@@ -146,13 +136,13 @@ Once installation is complete a `/etc/postfix/main.cf` config file would be auto
 
 - Check your current Postfix version using `postconf mail_version`.
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_4.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_4.png)
 
 - Use 'Socket Statistics' - ss utility to check if postfix is running on port 25 succesfully.
 
 `sudo ss -lnpt | grep master`
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_3.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_3.png)
 
 If you'd like to view the various binaries shipped along with postfix check them out with `dpkg -L postfix | grep /usr/sbin/` .
 
@@ -173,7 +163,7 @@ If you see a status showing "Connected" --> outbound 25 works succesfully. Use "
 Head on over to your gmail inbox and open up the mail. 
 Click on the drop down below the "Printer icon" to the right as shown in the screenshot --> next click on "show original". --> next click on the "Copy to clipboard" button to copy all contents.
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_5.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_5.png)
 
 Head on over to https://spamcheck.postmarkapp.com/ and paste your contents in and check your spam score.
 
@@ -193,11 +183,11 @@ TLS encryption is mandatory and ensures secured delivery. *LetsEncrypt* offers a
 
 - Select your server as the Software and which distro your running on system. In my case as i said before im using apache2 and ubuntu20.04LTS.
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/certbot1.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/certbot1.png)
 
 Follow along the instructions to succesfully install certbot and when you reach an instruction such as `sudo certbot --apache` you will be prompted for the domains and subdomains to enable TLS on along with an administrative mail contact. Fill them as your hosting needs. 
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/certbot-setup2.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/certbot-setup2.png)
 
 You will then find your certificates in `/etc/letsencrypt/live/example.com/` .
 
@@ -228,7 +218,7 @@ submission     inet     n    -    y    -    -    SMTPd
   -o SMTPd_sasl_path=private/auth
 ```
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/tls1.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/tls1.png)
 
 This configuration enables the submission daemon of Postfix and requires TLS encryption so that we can later connect using a desktop client. This listens on port: 587 by default. 
 
@@ -278,7 +268,7 @@ SMTP_tls_mandatory_protocols = !SSLv2, !SSLv3, !TLSv1, !TLSv1.1
 SMTP_tls_protocols = !SSLv2, !SSLv3, !TLSv1, !TLSv1.1
 ```
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_6.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_6.png)
 
 Save and close the file. 
 
@@ -290,7 +280,7 @@ Now run the following command to verify if Postfix is listening on port 587 (por
 
 `sudo ss -lnpt | grep master`
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_7.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_7.png)
 
 
 ### Next, installing/configuring the IMAP Server - Dovecot:
@@ -322,7 +312,7 @@ Add/append the following line to enable both the IMAP and POP3 protocol.
 
 `protocols = imap pop3`
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_8.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_8.png)
 
 
 **Configuring the Mailbox Location**:
@@ -364,7 +354,7 @@ Add _lmtp_ to the supported protocols as before:
 
 (I've set all to run in this example.)
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_9.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_9.png)
 
 Save and close the file.
 
@@ -384,7 +374,7 @@ service lmtp {
 }
 ``` 
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_10.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_10.png)
 
 
 Now, edit the Postfix main configuration file.
@@ -410,7 +400,7 @@ Uncomment/add the following lines:
 
 - `disable_plaintext_auth = yes`
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_11.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_11.png)
 
 This will disable plaintext authentication when there’s no SSL/TLS encryption for added security and no fallback to vulnerable versions.
 
@@ -418,12 +408,12 @@ This will disable plaintext authentication when there’s no SSL/TLS encryption 
 
 This is required as we setup canonical mailbox users.
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_12.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_12.png)
 
 
 - `auth_mechanisms = plain` and change its value to --> `auth_mechanisms = plain login`
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_13.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_13.png)
 
 This only enables the PLAIN authentication mechanism.
 
@@ -459,9 +449,9 @@ ssl_cert = </etc/letsencrypt/live/example.com/fullchain.pem
 ssl_key = </etc/letsencrypt/live/example.com/privkey.pem
 ```
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_14.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_14.png)
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_15.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_15.png)
 
 
 ### Setting up SASL Authentication:
@@ -482,7 +472,7 @@ service auth {
     }
 }
 ```
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_16.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_16.png)
 
 Save and close the file.
 
@@ -509,7 +499,7 @@ Example: To auto-create the Trash folder in your client-->
 
 By default its good practice to enable common folders such as - "Drafts, Junk, Sent, Trash" for better usage and tracking of the mails sent and recieved.
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_17.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_17.png)
 
 Save the file and restart Postfix and Dovecot:
 
@@ -524,7 +514,7 @@ Dovecot will be listening on port 143 (IMAP) and 993 (IMAPS) .
 
 `systemctl status dovecot`
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_18.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_18.png)
 
 
 ### Finally , setting up the Desktop Email Client:
@@ -541,7 +531,7 @@ Run Thunderbird. You'd most likely see a popup stating to setup your mail accoun
 
 Click on Configure manually and setup as follows:
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_19.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_19.png)
 
 - Select the IMAP protocol; Enter mail.example.com as the server name; Choose port 143 and STARTTLS; Choose normal password as the authentication method.
 
@@ -576,7 +566,7 @@ TroubleShooting tips:
 
 Let's check our spam score:
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_38.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_38.png)
 
 Let's improve on this.
 
@@ -600,7 +590,7 @@ Get back to your respective domain management interface for DNS and create a new
 
 `TXT  @   v=spf1 mx ~all`
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_20.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_20.png)
 
 > v=spf1: indicates that this is an SPF record and the SPF record version we are using is SPF1.
 
@@ -613,7 +603,7 @@ Use the following command to verify you've succesfully added the record:
 
 `dig example.com txt +short`
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_21.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_21.png)
 
 **Configuring SPF Policy Agent**:
 
@@ -633,7 +623,7 @@ Now append the following to the end of the file:
 policyd-spf  unix  -       n       n       -       0       spawn
     user=policyd-spf argv=/usr/bin/policyd-spf
 ```
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_22.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_22.png)
 
 Save and close the file. Next, edit the Postfix main configuration file:
 
@@ -655,7 +645,7 @@ Save and close the file and restart Postfix.
 
 `sudo systemctl restart postfix`
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_23.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_23.png)
 
 When you receive an email from a domain that has an SPF record the next time, you can see the SPF check results in the raw email header. It would be as follows:
 
@@ -694,7 +684,7 @@ Background          yes
 DNSTimeout          5
 SignatureAlgorithm  rsa-sha256
 ```
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_24.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_24.png)
 
 
 > Add the following lines at the end of this file if you're on a different distro. (Note that On Ubuntu 20.04, this is already set)
@@ -719,7 +709,7 @@ ExternalIgnoreList  /etc/opendkim/trusted.hosts
 InternalHosts       /etc/opendkim/trusted.hosts
 ```
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_25.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_25.png)
 
 __Create Signing Table, Key Table and Trusted Hosts File:__
 
@@ -746,7 +736,7 @@ Replace example.com with your domain.
 
 `*@example.com    default._domainkey.example.com`
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_26.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_26.png)
 
 Save and close the file. Next create the key table.
 
@@ -758,7 +748,7 @@ Append the following:
 
 This tells the location of the private key.
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_27.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_27.png)
 
 Save and close the file. 
 
@@ -777,7 +767,7 @@ localhost
 
 Save and close the file.
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_28.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_28.png)
 
 
 ### Generate Private and Public Keypairs:
@@ -811,7 +801,7 @@ Now copy everything in the  between the parentheses and paste it creating a new 
 
 _Note: delete all double quotes and white spaces in the value field if any using some sed magic._
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_29.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_29.png)
 
 
 Finally, Lets test the DKIM Key:
@@ -858,7 +848,7 @@ Replace it with the following line. (If you can’t find the above line, then ad
 `Socket    local:/var/spool/postfix/opendkim/opendkim.sock`
 
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_30.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_30.png)
 
 Similarly, find the following line in the "/etc/default/opendkim" file:
 
@@ -870,7 +860,7 @@ Change it to:
 
 `SOCKET="local:/var/spool/postfix/opendkim/opendkim.sock"`
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_31.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_31.png)
 
 Save and close the file.
 
@@ -888,7 +878,7 @@ SMTPd_milters = local:opendkim/opendkim.sock
 non_SMTPd_milters = $SMTPd_milters
 ```
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_32.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_32.png)
 
 Save and close the file. Then restart Opendkim and the Postfix service:
 
@@ -905,31 +895,31 @@ ________________________________________________________________________________
 
 Gmail:
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_36.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_36.png)
 
 Yahoo:
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_37.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_37.png)
 
 
 2. **SPF and DKIM Check:**
 
 Send a test email from thunderbird/gophish or locally to your test Gmail Account and click on the drop down as before --> __show original__. 
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_33.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_33.png)
 
 
 3. **Email Score and Placement:**
 
 Go to https://www.mail-tester.com. You will see a unique email address. Send an email from your domain to this address and then check your score.
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_34.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_34.png)
 
 4. **SpamAssasin API:**
 
 Go back to https://spamcheck.postmarkapp.com/ as before. Go to __show original__ as before and click on the __copy to clipboard__ button to call the whole message and paste it in the Check score field on the site
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/postfix_install_35.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_35.png)
 
 
 _________________________________________________________________________________________________
