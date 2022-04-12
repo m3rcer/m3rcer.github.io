@@ -86,10 +86,10 @@ __To permanently disable ipv6 follow these steps (works on ubuntu20.04LTS n fam)
 
 `vi /etc/sysctl.conf`
 
-```bash
+`
 net.ipv6.conf.all.disable_ipv6=1
 net.ipv6.conf.default.disable_ipv6=1
-```
+`
 
 This works on ubuntu 20.04 , If it dosen't find an equivalent to disable ipv6 for your specific distro . 
 
