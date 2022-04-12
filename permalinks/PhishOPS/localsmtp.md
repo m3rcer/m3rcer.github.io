@@ -7,30 +7,28 @@ categories: RedTeaming
 
 <h1 align="center">Building and Configuring a Phishing Server on a VPS locally</h1>
 
-**This Blog details the practical aspect of setting up a SMTP phishing server to bypass modern MTA spam filters from scratch. Refer the [Starting_Point section here](Starting_Point.md) to gain a brief understanding of MTA filter bypasses before setting up the server.**
-
-***I will be breaking this into 3 broad stages.***
-1. Setting up a Message Transport System (MTS) aka SMTP server (Postfix). 
-2. Setting up an IMAP server (Dovecot), configuring TLS Encryption and configuring a Desktop client.
-3. Setup SPF/DKIM records with postfix for improved/best delivery.
+**This Blog details the practical aspect of setting up a SMTP phishing server (Ex: gophish, MS Exchange Server), configuring a dekstop client and setup security related checks such as SPF,DKIM,DMARC to bypass modern MTA spam filters from scratch. Refer the [Starting_Point section here](Starting_Point.md) to gain a brief understanding of MTA filter bypasses before setting up the server.**
 
 __For this blog I've used the following and would recommend something similar__
+* `Ubuntu 20.04LTS` as my distro.
+* `Gmail` as the testing mail service.
+* `Namecheap` as my domain hosting provider.
+* `Thunderbird` as my desktop client for testing.
+* `GoPhish/CobaltStrike` as my phish client.
+* Disabled any firewall rules against ports `25,587,80,443,465,143,993,110,995`.   
 
-  * `Ubuntu 20.04LTS` as my distro.
 
-  * `Gmail` as the testing mail service.
+## Index
 
-  * `Namecheap` as my domain hosting provider.
+**I will be breaking this build into 3 broad stages.**
+1. [Setting up a Message Transport System (MTS) aka SMTP server (Postfix)](#setting-up-a-message-transport-system-mts-aka-smtp-server-postfix) 
+2. [Install an IMAP server (Dovecot), configuring TLS Encryption and configuring a Desktop client](#install-an-imap-server-dovecot--enable-tls-encryption-and-setup-a-desktop-client)
+3. [Setup SPF/DKIM records with postfix for improved/best delivery](#setting-up-spf-and-dkim-with-postfix)
 
-  * `Thunderbird` as my desktop client for testing.
-
-  * `GoPhish/CobaltStrik`e as my phish client.
-
-  * Disabled any firewall rules against ports `25,587,80,443,465,143,993,110,995`.              
 
 _________________________________________________________________________________________________
 
-## __STAGE 1__ 
+## STAGE 1
 
 ## Setting up a Message Transport System (MTS) aka SMTP server (Postfix). 
 
