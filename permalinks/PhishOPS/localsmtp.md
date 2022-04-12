@@ -60,17 +60,15 @@ Make sure your hostnames set to a FQDN such as __mail.example.com__ by using the
 Gracefully reboot your server using `init 6` after.
 
 **Set up DNS records:**
-MX records tell other MTA's that your mail server __mail.example.com__ is responsible for email delivery for your domain name.
-
-```
-MX record    @           mail.example.com
-```
+- MX records tell other MTA's that your mail server __mail.example.com__ is responsible for email delivery for your domain name.
+  ```
+  MX record    @           mail.example.com
+  ```
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/mx_record.png)
-
-An A record maps your FQDN to your IP address.
-```
-mail.example.com        <ip-addr>
-```
+- An A record maps your FQDN to your IP address.
+  ```
+  mail.example.com        <ip-addr>
+  ```
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/a_record.png)
 
 
