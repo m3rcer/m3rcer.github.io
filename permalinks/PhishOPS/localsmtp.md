@@ -3,6 +3,8 @@ title: Building a Local Phishing Server
 permalink: /permalinks/PhishOPS/localsmtp
 categories: RedTeaming
 layout: post
+kramdown:
+  input: Kramdown
 ---
 
 
