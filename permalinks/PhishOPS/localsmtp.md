@@ -33,7 +33,9 @@ __For this blog I've used the following and would recommend something similar__
     - [Installing Postfix](#installing-postfix)
 
 [STAGE 2](#stage-2)
-- [Install an IMAP server (Dovecot), configuring TLS Encryption and configuring a Desktop client](#install-an-imap-server-dovecot--enable-tls-encryption-and-setup-a-desktop-client)
+- [Install an IMAP SERVER (Dovecot), enable TLS encryption and setup a Desktop client](#install-an-imap-server-dovecot-enable-tls-encryption-and-setup-a-desktop-client)
+  - [Getting TLS encryption and a certificate the easy way](#getting-tls-encryption-and-a-certificate-the-easy-way)
+  - [Enable Submission Service in Postfix](#enable-submission-service-in-postfix)
 
 [STAGE 3](#stage-3)
 - [Setup SPF/DKIM records with postfix for improved/best delivery](#setting-up-spf-and-dkim-with-postfix)
@@ -46,7 +48,9 @@ ________________________________________________________________________________
 ## Setting up a Message Transport System (MTS) aka SMTP server (Postfix)
 
 Postfix is a light , easy to use MTS which serves 2 primary purposes:
+
 - Transporting email messages from a mail client/mail user agent (MUA) to a remote SMTP server.
+
 - Accepts emails from other SMTP servers. 
 
 We will configure postfix for a single domain in this tutorial.
@@ -56,18 +60,21 @@ Before we install postfix note to do the following before.
 ### Set Hostname and DNS records
 
 Postfix uses the server’s hostname to identify itself when communicating with other MTAs. A hostname could be a single word or a FQDN.
-_Note: We will use `example.com` as our registered domain as an example domain here_.
+
+> *Note:* We will use `example.com` as our registered domain as an example domain here.
 
 Make sure your hostnames set to a FQDN such as __mail.example.com__ by using the command: `sudo hostnamectl set-hostname mail.example.com`
 
 Gracefully reboot your server using `init 6` after.
 
 **Set up DNS records:**
+
 - MX records tell other MTA's that your mail server __mail.example.com__ is responsible for email delivery for your domain name.
   ```
   MX record    @           mail.example.com
   ```
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/mx_record.png)
+
 - An A record maps your FQDN to your IP address.
   ```
   mail.example.com        <ip-addr>
@@ -78,13 +85,17 @@ Gracefully reboot your server using `init 6` after.
 ### Permanently disable ipv6 and uninstall unecessary services like exim
 
 Ipv6 is tricky to configure alongside ipv4 and just adds a weighted overhead. For instance, you'd have to create a seperate reverse DNS entries for both ipv6 along with ipv4 or else MTA's such as gmail mail servers are bound to reject you.
-__To permanently disable ipv6 follow these steps (works on ubuntu20.04LTS and family) :__
+
+__To permanently disable ipv6 follow these steps (works on ubuntu20.04LTS and family):__
+
 - Edit the **/etc/sysctl.conf** configuration file by adding the following lines: `vi /etc/sysctl.conf`
   ```
   net.ipv6.conf.all.disable_ipv6=1
   net.ipv6.conf.default.disable_ipv6=1
   ```
+
 - This works on ubuntu 20.04, If it dosen't find an equivalent to disable ipv6 for your specific distro. 
+
 - A recommened method would be using `grub` too.  Check this [article](https://itsfoss.com/disable-ipv6-ubuntu-linux/) for more details. 
 
 Also `exim` or any other mail services that come by default packaged with some distributions like debian 8 hinder the installation of another mail service. So uninstall any unwanted mail service of the kind if they exist on your distro prepackaged.
@@ -107,10 +118,12 @@ Install postfix:
   ```
 
 - While installation you will be asked to select a type for mail configuration. Select `Internet Site`.
+  
   - This option allows Postfix to send emails to other MTAs and receive emails from other MTAs.
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_1.png)
 
-- Next enter your domain name when prompted for the system mail (not the `mail.example.com` subdomain) that is __"example.com"__ . 
+- Next enter your domain name when prompted for the system mail (not the `mail.example.com` subdomain) that is __"example.com"__. 
+
 - This ensures that your mail address naming convention would be in the form of:
   
   > [-] name@example.com and not,
@@ -120,138 +133,133 @@ Install postfix:
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_2.png)
 
 Once installation is complete a `/etc/postfix/main.cf` config file would be automatically generated along with postfix starting up.
+
 - Check your current Postfix version using `postconf mail_version`.
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_4.png)
+
 - Use 'Socket Statistics' - `ss` utility to check if postfix is running on port 25 succesfully: `sudo ss -lnpt | grep master`
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_3.png)
+
 - If you'd like to view the various binaries shipped along with postfix check them out with `dpkg -L postfix | grep /usr/sbin/`.
 
 **Sendmail** is a binary place at `/usr/sbin/sendmail` which is compatible with postfix to send emails. Send out your first testmail to your test email account using: `echo "test email" | sendmail your-test-account@gmail.com`
+  
   - Or you could install `mailutils` using `sudo apt-get install mailutils` . Just type "mail" and follow along the prompts entering the required fields and hitting `Ctrl+D` once done to send the mail.
 
 > *Note:* The email might land through into your primary right away but could be potentially flagged by other stronger MTA's and their spam filters. 
 
 Incase your hosting provider has blocked outbound port 25, verify it using: `telnet gmail-SMTP-in.l.google.com 25`
+  
   - If you see a status showing `Connected --> outbound 25 works succesfully`. Use `quit` to quit the command.
+  
   - Head on over to your gmail inbox and open up the mail. 
+  
   - Click on the drop down below the "Printer icon" to the right as shown in the `screenshot --> next click on "show original". --> next click on the "Copy to clipboard" button` to copy all contents.
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_5.png)
+  
   - Head on over to https://spamcheck.postmarkapp.com/ and paste your contents in and check your `SpamAssasin` spam score.
+  
   - Check your deliverablity using [mail tester](https://mail-tester.com). My score here was about `5.5` here at the moment
-  _Note the score over each stage ._
 
 -------------------------------------------------------------------------------------------------
 
-## __STAGE 2__:
+## __STAGE 2__
 
-## Install an IMAP SERVER (Dovecot) , enable TLS encryption and setup a Desktop client.
+## Install an IMAP SERVER (Dovecot), enable TLS encryption and setup a Desktop client
 
-### Getting TLS encryption and a certificate the easy way:
+### Getting TLS encryption and a certificate the easy way
 
 TLS encryption is mandatory and ensures secured delivery. *LetsEncrypt* offers a free certificate with assisstance from their client - _certbot_.
 
 - Head on over to https://certbot.eff.org/. Click on  "Get Certbot instructions".
 
 - Select your server as the Software and which distro your running on system. In my case as i said before im using apache2 and ubuntu20.04LTS.
-
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/certbot1.png)
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/certbot1.png)
 
 Follow along the instructions to succesfully install certbot and when you reach an instruction such as `sudo certbot --apache` you will be prompted for the domains and subdomains to enable TLS on along with an administrative mail contact. Fill them as your hosting needs. 
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/certbot-setup2.png)
 
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/certbot-setup2.png)
+You will then find your certificates in `/etc/letsencrypt/live/example.com/`.
 
-You will then find your certificates in `/etc/letsencrypt/live/example.com/` .
-
-_Note: Use fullchain.pem as the supplied certificate and privkey.pem as the key . Fullchain.pem is a  concatenation of cert.pem and chain.pem in one file._
+_Note: Use `fullchain.pem` as the supplied certificate and `privkey.pem` as the key . Fullchain.pem is a concatenation of `cert.pem` and `chain.pem` in one file._
 
 All your TLS certificates will now be live and the config automatically replaced in your respective web servers config. Renew or set a cronjob to renew your certificates periodically as listed by certbot.
 
-### Enable Submission Service in Postfix:
+### Enable Submission Service in Postfix
 
 To send emails from a desktop email client, we need to enable the submission service of Postfix so that the email client can submit emails to Postfix SMTP server. 
 
-Edit the "master.cf" file using your favorite text editor as follows. Im using "vim" as my editor.
+- Edit the `master.cf` file using your favorite text editor as follows: `sudo vi /etc/postfix/master.cf`
 
-`sudo vi /etc/postfix/master.cf`
+- In the submission section, uncomment the `submission...` line and append the following lines(the 2nd line on) as stated here below it. This method ensures no bad tabs/spaces causing the config to error out. (Be careful editting this)
+  ```bash
+  submission     inet     n    -    y    -    -    SMTPd
+    -o syslog_name=postfix/submission
+    -o SMTPd_tls_security_level=encrypt
+    -o SMTPd_tls_wrappermode=no
+    -o SMTPd_sasl_auth_enable=yes
+    -o SMTPd_relay_restrictions=permit_sasl_authenticated,reject
+    -o SMTPd_recipient_restrictions=permit_mynetworks,permit_sasl_authenticated,reject
+    -o SMTPd_sasl_type=dovecot
+    -o SMTPd_sasl_path=private/auth
+  ```
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/tls1.png)
 
-In the submission section, uncomment the "submission..." line and  add the following lines(the 2nd line on) as stated here below it. 
-This method ensures no bad tabs/spaces causing the config to error out. (Be careful editting this)
+  - This configuration enables the submission daemon of Postfix and requires TLS encryption so that we can later connect using a desktop client. This listens on `port: 587` by default. 
 
-```bash
-submission     inet     n    -    y    -    -    SMTPd
-  -o syslog_name=postfix/submission
-  -o SMTPd_tls_security_level=encrypt
-  -o SMTPd_tls_wrappermode=no
-  -o SMTPd_sasl_auth_enable=yes
-  -o SMTPd_relay_restrictions=permit_sasl_authenticated,reject
-  -o SMTPd_recipient_restrictions=permit_mynetworks,permit_sasl_authenticated,reject
-  -o SMTPd_sasl_type=dovecot
-  -o SMTPd_sasl_path=private/auth
+- To use **Microsoft Outlook** as a desktop client listening over `port:465`. Then you need to do the same and enable the submission daemon over `port 465`.
+
+Uncomment the `SMTPs..` line as before and paste the follows below it:
+  ```bash
+  SMTPs     inet  n       -       y       -       -       SMTPd
+    -o syslog_name=postfix/SMTPs
+    -o SMTPd_tls_wrappermode=yes
+    -o SMTPd_sasl_auth_enable=yes
+    -o SMTPd_relay_restrictions=permit_sasl_authenticated,reject
+    -o SMTPd_recipient_restrictions=permit_mynetworks,permit_sasl_authenticated,reject
+    -o SMTPd_sasl_type=dovecot
+    -o SMTPd_sasl_path=private/auth
 ```
 
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/tls1.png)
+- Save and close the file.
 
-This configuration enables the submission daemon of Postfix and requires TLS encryption so that we can later connect using a desktop client. This listens on port: 587 by default. 
-
-To use Microsoft Outlook as a desktop client listening over port:465. Then you need to do the same and enable the submission daemon over port 465.
-
-Uncomment the "SMTPs.." line as before and paste the follows below it:
-
-```bash
-SMTPs     inet  n       -       y       -       -       SMTPd
-  -o syslog_name=postfix/SMTPs
-  -o SMTPd_tls_wrappermode=yes
-  -o SMTPd_sasl_auth_enable=yes
-  -o SMTPd_relay_restrictions=permit_sasl_authenticated,reject
-  -o SMTPd_recipient_restrictions=permit_mynetworks,permit_sasl_authenticated,reject
-  -o SMTPd_sasl_type=dovecot
-  -o SMTPd_sasl_path=private/auth
-```
-
-Save and close the file.
-
-Next, we need to specify the location of the previously before generated TLS certificate and private key in the Postfix config file. 
-To do this we need to edit the main.cf conf file.
-
-`sudo vi /etc/postfix/main.cf`
+- Next, we need to specify the location of the previously before generated TLS certificate and private key in the Postfix config file. To do this we need to edit the `main.cf` conf file: `sudo vi /etc/postfix/main.cf`
 
 _Delete/Comment-out any previous TLS parameters and edit the TLS parameters as follows._ 
 
- Add the TLS param code block from before and replace _SMTPd_tls_cert_file_ with the full path to your _fullchain.pem_. Or just replace _example.com_ with your domain name if you're using Ubuntu like me.
+- Add the TLS param code block from before and replace `SMTPd_tls_cert_file` with the full path to your `fullchain.pem`. Or just replace `example.com` with your domain name if you're using Ubuntu like me.
+  ```bash
+  #Enable TLS Encryption when Postfix receives incoming emails
+  SMTPd_tls_cert_file=/etc/letsencrypt/live/example.com/fullchain.pem
+  SMTPd_tls_key_file=/etc/letsencrypt/live/example.com/privkey.pem
+  SMTPd_tls_security_level=may 
+  SMTPd_tls_loglevel = 1
+  SMTPd_tls_session_cache_database = btree:${data_directory}/SMTPd_scache
 
-```bash
-#Enable TLS Encryption when Postfix receives incoming emails
-SMTPd_tls_cert_file=/etc/letsencrypt/live/example.com/fullchain.pem
-SMTPd_tls_key_file=/etc/letsencrypt/live/example.com/privkey.pem
-SMTPd_tls_security_level=may 
-SMTPd_tls_loglevel = 1
-SMTPd_tls_session_cache_database = btree:${data_directory}/SMTPd_scache
+  #Enable TLS Encryption when Postfix sends outgoing emails
+  SMTP_tls_security_level = may
+  SMTP_tls_loglevel = 1
+  SMTP_tls_session_cache_database = btree:${data_directory}/SMTP_scache
 
-#Enable TLS Encryption when Postfix sends outgoing emails
-SMTP_tls_security_level = may
-SMTP_tls_loglevel = 1
-SMTP_tls_session_cache_database = btree:${data_directory}/SMTP_scache
+  #Enforce TLSv1.3 or TLSv1.2
+  SMTPd_tls_mandatory_protocols = !SSLv2, !SSLv3, !TLSv1, !TLSv1.1
+  SMTPd_tls_protocols = !SSLv2, !SSLv3, !TLSv1, !TLSv1.1
+  SMTP_tls_mandatory_protocols = !SSLv2, !SSLv3, !TLSv1, !TLSv1.1
+  SMTP_tls_protocols = !SSLv2, !SSLv3, !TLSv1, !TLSv1.1
+  ```
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_6.png)
 
-#Enforce TLSv1.3 or TLSv1.2
-SMTPd_tls_mandatory_protocols = !SSLv2, !SSLv3, !TLSv1, !TLSv1.1
-SMTPd_tls_protocols = !SSLv2, !SSLv3, !TLSv1, !TLSv1.1
-SMTP_tls_mandatory_protocols = !SSLv2, !SSLv3, !TLSv1, !TLSv1.1
-SMTP_tls_protocols = !SSLv2, !SSLv3, !TLSv1, !TLSv1.1
-```
+- Save and close the file. 
 
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_6.png)
+- Now restart Postfix.
 
-Save and close the file. 
+- Now run the following command to verify if Postfix is listening on `port 587` (`port 465` if you've configured outlook too).
+  ```bash
+  sudo systemctl restart postfix
 
-Now restart Postfix.
-
-Now run the following command to verify if Postfix is listening on port 587 (port 465 if you've configured outlook too) .
-
-`sudo systemctl restart postfix`
-
-`sudo ss -lnpt | grep master`
-
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_7.png)
+  sudo ss -lnpt | grep master
+  ```
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_7.png)
 
 
 ### Next, installing/configuring the IMAP Server - Dovecot:
