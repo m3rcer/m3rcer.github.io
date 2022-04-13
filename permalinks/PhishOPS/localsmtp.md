@@ -125,7 +125,7 @@ Once installation is complete a `/etc/postfix/main.cf` config file would be auto
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_3.png)
 - If you'd like to view the various binaries shipped along with postfix check them out with `dpkg -L postfix | grep /usr/sbin/`.
 
-**Sendmail** is a binary place at `/usr/sbin/sendmail` which is compatible with postfix to send emails. Send out your first testmail to your test email account using: `echo "test email" | sendmail your-test-account@gmail.com`
+**Sendmail** is a binary placed at `/usr/sbin/sendmail` which is compatible with postfix to send emails. Send out your first testmail to your test email account using: `echo "test email" | sendmail your-test-account@gmail.com`
   - Or you could install `mailutils` using `sudo apt-get install mailutils` . Just type "mail" and follow along the prompts entering the required fields and hitting `Ctrl+D` once done to send the mail.
 
 > *Note:* The email might land through into your primary right away but could be potentially flagged by other stronger MTA's and their spam filters. 
@@ -190,9 +190,9 @@ To send emails from a desktop email client, we need to enable the submission ser
     -o SMTPd_sasl_path=private/auth
   ```
   - Save and close the file.
+
 - Next, we need to specify the location of the previously before generated TLS certificate and private key in the Postfix config file. To do this we need to edit the `main.cf` conf file: `sudo vi /etc/postfix/main.cf`
 - _Delete/Comment-out any previous TLS parameters and edit the TLS parameters as follows._ 
-  
 - Add the TLS param code block from before and replace `SMTPd_tls_cert_file` with the full path to your `fullchain.pem`. Or just replace `example.com` with your domain name if you're using Ubuntu like me.
   ```bash
   #Enable TLS Encryption when Postfix receives incoming emails
