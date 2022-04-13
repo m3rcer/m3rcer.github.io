@@ -178,9 +178,8 @@ To send emails from a desktop email client, we need to enable the submission ser
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/tls1.png)
   - This configuration enables the submission daemon of Postfix and requires TLS encryption so that we can later connect using a desktop client. This listens on `port: 587` by default. 
 
-To use **Microsoft Outlook** as a desktop client listening over `port:465`. Then you need to do the same and enable the submission daemon over `port 465`.
-
-Uncomment the `SMTPs..` line as before and paste the follows below it:
+- To use **Microsoft Outlook** as a desktop client listening over `port:465`. Then you need to do the same and enable the submission daemon over `port 465`.
+- Uncomment the `SMTPs..` line as before and paste the follows below it:
   ```bash
   SMTPs     inet  n       -       y       -       -       SMTPd
     -o syslog_name=postfix/SMTPs
@@ -192,10 +191,8 @@ Uncomment the `SMTPs..` line as before and paste the follows below it:
     -o SMTPd_sasl_path=private/auth
   ```
   - Save and close the file.
-
-Next, we need to specify the location of the previously before generated TLS certificate and private key in the Postfix config file. To do this we need to edit the `main.cf` conf file: `sudo vi /etc/postfix/main.cf`
-
-_Delete/Comment-out any previous TLS parameters and edit the TLS parameters as follows._ 
+- Next, we need to specify the location of the previously before generated TLS certificate and private key in the Postfix config file. To do this we need to edit the `main.cf` conf file: `sudo vi /etc/postfix/main.cf`
+- _Delete/Comment-out any previous TLS parameters and edit the TLS parameters as follows._ 
   - Add the TLS param code block from before and replace `SMTPd_tls_cert_file` with the full path to your `fullchain.pem`. Or just replace `example.com` with your domain name if you're using Ubuntu like me.
   ```bash
   #Enable TLS Encryption when Postfix receives incoming emails
@@ -218,10 +215,8 @@ _Delete/Comment-out any previous TLS parameters and edit the TLS parameters as f
   ```
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_6.png)
   - Save and close the file. 
-
-Now restart Postfix.
-
-Now run the following command to verify if Postfix is listening on `port 587` (`port 465` if you've configured outlook too).
+- Now restart Postfix.
+- Now run the following command to verify if Postfix is listening on `port 587` (`port 465` if you've configured outlook too).
   ```bash
   sudo systemctl restart postfix
 
