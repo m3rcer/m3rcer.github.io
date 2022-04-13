@@ -105,33 +105,39 @@ Install postfix:
 
   sudo apt-get install postfix -y
   ```
+
 - While installation you will be asked to select a type for mail configuration. Select `Internet Site`.
   - This option allows Postfix to send emails to other MTAs and receive emails from other MTAs.
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_1.png)
+
 - Next enter your domain name when prompted for the system mail (not the `mail.example.com` subdomain) that is __"example.com"__ . 
-- This ensures that your mail address naming convention would be in the form of-
+- This ensures that your mail address naming convention would be in the form of:
+  
   > [-] name@example.com and not,
+  
   > [x] name@mail.example.com. 
+  
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_2.png)
 
 Once installation is complete a `/etc/postfix/main.cf` config file would be automatically generated along with postfix starting up.
 - Check your current Postfix version using `postconf mail_version`.
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_4.png)
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_4.png)
 - Use 'Socket Statistics' - `ss` utility to check if postfix is running on port 25 succesfully: `sudo ss -lnpt | grep master`
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_3.png)
 - If you'd like to view the various binaries shipped along with postfix check them out with `dpkg -L postfix | grep /usr/sbin/`.
 
 **Sendmail** is a binary place at `/usr/sbin/sendmail` which is compatible with postfix to send emails. Send out your first testmail to your test email account using: `echo "test email" | sendmail your-test-account@gmail.com`
   - Or you could install `mailutils` using `sudo apt-get install mailutils` . Just type "mail" and follow along the prompts entering the required fields and hitting `Ctrl+D` once done to send the mail.
+
 > *Note:* The email might land through into your primary right away but could be potentially flagged by other stronger MTA's and their spam filters. 
 
-_Incase your hosting provider has blocked outbound port 25, verify it using: `telnet gmail-SMTP-in.l.google.com 25`
+Incase your hosting provider has blocked outbound port 25, verify it using: `telnet gmail-SMTP-in.l.google.com 25`
   - If you see a status showing `Connected --> outbound 25 works succesfully`. Use `quit` to quit the command.
   - Head on over to your gmail inbox and open up the mail. 
   - Click on the drop down below the "Printer icon" to the right as shown in the `screenshot --> next click on "show original". --> next click on the "Copy to clipboard" button` to copy all contents.
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_5.png)
   - Head on over to https://spamcheck.postmarkapp.com/ and paste your contents in and check your `SpamAssasin` spam score.
-  - Check your deliverablity using [mail tester](https://mail-tester.com). My score here was about `5.5` at the moment
+  - Check your deliverablity using [mail tester](https://mail-tester.com). My score here was about `5.5` here at the moment
   _Note the score over each stage ._
 
 -------------------------------------------------------------------------------------------------
