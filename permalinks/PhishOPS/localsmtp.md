@@ -114,15 +114,13 @@ Install postfix:
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_1.png)
 - Next enter your domain name when prompted for the system mail (not the `mail.example.com` subdomain) that is __"example.com"__. 
 - This ensures that your mail address naming convention would be in the form of:
-  
-  > [-] name@example.com and not,
-  
-  > [x] name@mail.example.com. 
-  
+  - `[-] name@example.com` and not,
+  - `[x] name@mail.example.com`. 
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_2.png)
 
 Once installation is complete a `/etc/postfix/main.cf` config file would be automatically generated along with postfix starting up.
 - Check your current Postfix version using `postconf mail_version`.
+  
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_4.png)
 - Use 'Socket Statistics' - `ss` utility to check if postfix is running on port 25 succesfully: `sudo ss -lnpt | grep master`
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_3.png)
@@ -149,15 +147,13 @@ Incase your hosting provider has blocked outbound port 25, verify it using: `tel
 
 ### Getting TLS encryption and a certificate the easy way
 
-TLS encryption is mandatory and ensures secured delivery. *LetsEncrypt* offers a free certificate with assisstance from their client - _certbot_.
+TLS encryption is mandatory and ensures secured delivery. *LetsEncrypt* offers a free certificate with assisstance from their client: _certbot_.
 - Head on over to https://certbot.eff.org/. Click on  "Get Certbot instructions".
 - Select your server as the Software and which distro your running on system. In my case as i said before im using apache2 and ubuntu20.04LTS.
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/certbot1.png)
-
-Follow along the instructions to succesfully install certbot and when you reach an instruction such as `sudo certbot --apache` you will be prompted for the domains and subdomains to enable TLS on along with an administrative mail contact. Fill them as your hosting needs. 
+- Follow along the instructions to succesfully install certbot and when you reach an instruction such as `sudo certbot --apache` you will be prompted for the domains and subdomains to enable TLS on along with an administrative mail contact. Fill them as your hosting needs. 
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/certbot-setup2.png)
-
-You will then find your certificates in `/etc/letsencrypt/live/example.com/`.
+- You will then find your certificates in `/etc/letsencrypt/live/example.com/`.
 
 _Note: Use `fullchain.pem` as the supplied certificate and `privkey.pem` as the key . Fullchain.pem is a concatenation of `cert.pem` and `chain.pem` in one file._
 
