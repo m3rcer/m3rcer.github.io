@@ -119,8 +119,7 @@ Install postfix:
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_2.png)
 
 Once installation is complete a `/etc/postfix/main.cf` config file would be automatically generated along with postfix starting up.
-- Check your current Postfix version using `postconf mail_version`.
-  
+- Check your current Postfix version using the command: `postconf mail_version`.
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_4.png)
 - Use 'Socket Statistics' - `ss` utility to check if postfix is running on port 25 succesfully: `sudo ss -lnpt | grep master`
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_3.png)
@@ -193,7 +192,8 @@ To send emails from a desktop email client, we need to enable the submission ser
   - Save and close the file.
 - Next, we need to specify the location of the previously before generated TLS certificate and private key in the Postfix config file. To do this we need to edit the `main.cf` conf file: `sudo vi /etc/postfix/main.cf`
 - _Delete/Comment-out any previous TLS parameters and edit the TLS parameters as follows._ 
-  - Add the TLS param code block from before and replace `SMTPd_tls_cert_file` with the full path to your `fullchain.pem`. Or just replace `example.com` with your domain name if you're using Ubuntu like me.
+  
+- Add the TLS param code block from before and replace `SMTPd_tls_cert_file` with the full path to your `fullchain.pem`. Or just replace `example.com` with your domain name if you're using Ubuntu like me.
   ```bash
   #Enable TLS Encryption when Postfix receives incoming emails
   SMTPd_tls_cert_file=/etc/letsencrypt/live/example.com/fullchain.pem
