@@ -10,14 +10,14 @@ kramdown:
 
 <h1 align="center">Building and Configuring a Phishing Server on a VPS locally</h1>
 
-**This Blog details the practical aspect of setting up a SMTP phishing server (Ex: gophish, MS Exchange Server etc), configuring a dekstop client and setup security related checks such as SPF,DKIM,DMARC to bypass modern MTA spam filters from scratch. Refer the [Starting_Point section here](Starting_Point.md) to gain a brief understanding of MTA filter bypasses before setting up the server.**
+**This Blog details the practical aspect of setting up a SMTP phishing server with a client (Ex: gophish, MS Exchange Server etc), configuring a dekstop client and setup security related checks such as SPF,DKIM,DMARC to bypass modern MTA spam filters from scratch. Refer the [Starting_Point section here](Starting_Point.md) to gain a brief understanding of MTA filter bypasses before setting up the server.**
 
 __For this blog I've used the following and would recommend something similar__
 * `Ubuntu 20.04LTS` as my distro.
 * `Gmail` as the testing mail service.
 * `Namecheap` as my domain hosting provider.
 * `Thunderbird` as my desktop client for testing.
-* `GoPhish/MS Outlook` as my phish client.
+* `GoPhish/MS Outlook` as my SMTP server client to use the SMTP server.
 * Disabled any firewall rules against ports `25,587,80,443,465,143,993,110,995`.   
 
 
@@ -48,9 +48,7 @@ ________________________________________________________________________________
 ## Setting up a Message Transport System (MTS) aka SMTP server (Postfix)
 
 Postfix is a light , easy to use MTS which serves 2 primary purposes:
-
 - Transporting email messages from a mail client/mail user agent (MUA) to a remote SMTP server.
-
 - Accepts emails from other SMTP servers. 
 
 We will configure postfix for a single domain in this tutorial.
@@ -68,13 +66,11 @@ Make sure your hostnames set to a FQDN such as __mail.example.com__ by using the
 Gracefully reboot your server using `init 6` after.
 
 **Set up DNS records:**
-
 - MX records tell other MTA's that your mail server __mail.example.com__ is responsible for email delivery for your domain name.
   ```
   MX record    @           mail.example.com
   ```
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/mx_record.png)
-
 - An A record maps your FQDN to your IP address.
   ```
   mail.example.com        <ip-addr>
@@ -87,15 +83,12 @@ Gracefully reboot your server using `init 6` after.
 Ipv6 is tricky to configure alongside ipv4 and just adds a weighted overhead. For instance, you'd have to create a seperate reverse DNS entries for both ipv6 along with ipv4 or else MTA's such as gmail mail servers are bound to reject you.
 
 __To permanently disable ipv6 follow these steps (works on ubuntu20.04LTS and family):__
-
 - Edit the **/etc/sysctl.conf** configuration file by adding the following lines: `vi /etc/sysctl.conf`
   ```
   net.ipv6.conf.all.disable_ipv6=1
   net.ipv6.conf.default.disable_ipv6=1
   ```
-
 - This works on ubuntu 20.04, If it dosen't find an equivalent to disable ipv6 for your specific distro. 
-
 - A recommened method would be using `grub` too.  Check this [article](https://itsfoss.com/disable-ipv6-ubuntu-linux/) for more details. 
 
 Also `exim` or any other mail services that come by default packaged with some distributions like debian 8 hinder the installation of another mail service. So uninstall any unwanted mail service of the kind if they exist on your distro prepackaged.
@@ -116,14 +109,10 @@ Install postfix:
 
   sudo apt-get install postfix -y
   ```
-
 - While installation you will be asked to select a type for mail configuration. Select `Internet Site`.
-  
-  - This option allows Postfix to send emails to other MTAs and receive emails from other MTAs.
+    - This option allows Postfix to send emails to other MTAs and receive emails from other MTAs.
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_1.png)
-
 - Next enter your domain name when prompted for the system mail (not the `mail.example.com` subdomain) that is __"example.com"__. 
-
 - This ensures that your mail address naming convention would be in the form of:
   
   > [-] name@example.com and not,
@@ -133,32 +122,23 @@ Install postfix:
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_2.png)
 
 Once installation is complete a `/etc/postfix/main.cf` config file would be automatically generated along with postfix starting up.
-
 - Check your current Postfix version using `postconf mail_version`.
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_4.png)
-
 - Use 'Socket Statistics' - `ss` utility to check if postfix is running on port 25 succesfully: `sudo ss -lnpt | grep master`
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_3.png)
-
 - If you'd like to view the various binaries shipped along with postfix check them out with `dpkg -L postfix | grep /usr/sbin/`.
 
 **Sendmail** is a binary place at `/usr/sbin/sendmail` which is compatible with postfix to send emails. Send out your first testmail to your test email account using: `echo "test email" | sendmail your-test-account@gmail.com`
-  
   - Or you could install `mailutils` using `sudo apt-get install mailutils` . Just type "mail" and follow along the prompts entering the required fields and hitting `Ctrl+D` once done to send the mail.
 
 > *Note:* The email might land through into your primary right away but could be potentially flagged by other stronger MTA's and their spam filters. 
 
 Incase your hosting provider has blocked outbound port 25, verify it using: `telnet gmail-SMTP-in.l.google.com 25`
-  
   - If you see a status showing `Connected --> outbound 25 works succesfully`. Use `quit` to quit the command.
-  
   - Head on over to your gmail inbox and open up the mail. 
-  
   - Click on the drop down below the "Printer icon" to the right as shown in the `screenshot --> next click on "show original". --> next click on the "Copy to clipboard" button` to copy all contents.
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_5.png)
-  
   - Head on over to https://spamcheck.postmarkapp.com/ and paste your contents in and check your `SpamAssasin` spam score.
-  
   - Check your deliverablity using [mail tester](https://mail-tester.com). My score here was about `5.5` here at the moment
 
 -------------------------------------------------------------------------------------------------
@@ -170,9 +150,7 @@ Incase your hosting provider has blocked outbound port 25, verify it using: `tel
 ### Getting TLS encryption and a certificate the easy way
 
 TLS encryption is mandatory and ensures secured delivery. *LetsEncrypt* offers a free certificate with assisstance from their client - _certbot_.
-
 - Head on over to https://certbot.eff.org/. Click on  "Get Certbot instructions".
-
 - Select your server as the Software and which distro your running on system. In my case as i said before im using apache2 and ubuntu20.04LTS.
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/certbot1.png)
 
@@ -188,9 +166,7 @@ All your TLS certificates will now be live and the config automatically replaced
 ### Enable Submission Service in Postfix
 
 To send emails from a desktop email client, we need to enable the submission service of Postfix so that the email client can submit emails to Postfix SMTP server. 
-
 - Edit the `master.cf` file using your favorite text editor as follows: `sudo vi /etc/postfix/master.cf`
-
 - In the submission section, uncomment the `submission...` line and append the following lines(the 2nd line on) as stated here below it. This method ensures no bad tabs/spaces causing the config to error out. (Be careful editting this)
   ```bash
   submission     inet     n    -    y    -    -    SMTPd
@@ -204,10 +180,9 @@ To send emails from a desktop email client, we need to enable the submission ser
     -o SMTPd_sasl_path=private/auth
   ```
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/tls1.png)
-
   - This configuration enables the submission daemon of Postfix and requires TLS encryption so that we can later connect using a desktop client. This listens on `port: 587` by default. 
 
-- To use **Microsoft Outlook** as a desktop client listening over `port:465`. Then you need to do the same and enable the submission daemon over `port 465`.
+To use **Microsoft Outlook** as a desktop client listening over `port:465`. Then you need to do the same and enable the submission daemon over `port 465`.
 
 Uncomment the `SMTPs..` line as before and paste the follows below it:
   ```bash
@@ -219,15 +194,13 @@ Uncomment the `SMTPs..` line as before and paste the follows below it:
     -o SMTPd_recipient_restrictions=permit_mynetworks,permit_sasl_authenticated,reject
     -o SMTPd_sasl_type=dovecot
     -o SMTPd_sasl_path=private/auth
-```
+  ```
+  - Save and close the file.
 
-- Save and close the file.
-
-- Next, we need to specify the location of the previously before generated TLS certificate and private key in the Postfix config file. To do this we need to edit the `main.cf` conf file: `sudo vi /etc/postfix/main.cf`
+Next, we need to specify the location of the previously before generated TLS certificate and private key in the Postfix config file. To do this we need to edit the `main.cf` conf file: `sudo vi /etc/postfix/main.cf`
 
 _Delete/Comment-out any previous TLS parameters and edit the TLS parameters as follows._ 
-
-- Add the TLS param code block from before and replace `SMTPd_tls_cert_file` with the full path to your `fullchain.pem`. Or just replace `example.com` with your domain name if you're using Ubuntu like me.
+  - Add the TLS param code block from before and replace `SMTPd_tls_cert_file` with the full path to your `fullchain.pem`. Or just replace `example.com` with your domain name if you're using Ubuntu like me.
   ```bash
   #Enable TLS Encryption when Postfix receives incoming emails
   SMTPd_tls_cert_file=/etc/letsencrypt/live/example.com/fullchain.pem
@@ -248,12 +221,11 @@ _Delete/Comment-out any previous TLS parameters and edit the TLS parameters as f
   SMTP_tls_protocols = !SSLv2, !SSLv3, !TLSv1, !TLSv1.1
   ```
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_6.png)
+  - Save and close the file. 
 
-- Save and close the file. 
+Now restart Postfix.
 
-- Now restart Postfix.
-
-- Now run the following command to verify if Postfix is listening on `port 587` (`port 465` if you've configured outlook too).
+Now run the following command to verify if Postfix is listening on `port 587` (`port 465` if you've configured outlook too).
   ```bash
   sudo systemctl restart postfix
 
