@@ -7,8 +7,6 @@ categories: hackthebox
 description: HackTheBox Atom Writeup.
 ---
 
-<h1 align="center"> HTB Atom - Writeup</h1>
-
 <p align="center">
  <img src="https://www.hackthebox.eu/storage/avatars/27ea1e1be5e83989ad5b6361773f4eaa.png">
 </p>
