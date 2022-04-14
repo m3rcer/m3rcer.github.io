@@ -20,10 +20,14 @@ description: HackTheBox Atom Writeup.
 
 ## FOOTHOLD
 
-- Start a nmap scan with default script and version detections and the verbosity flag turned on to see open ports on the fly without having to wait for the scan to finish.
-    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom1.png)
-- A full port scan reveals redis is active on port `6379` along w winrm at 5985 which shows we can probably use remoting with authentic creds.
-    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom2.png)
+Start a nmap scan with default script and version detections and the verbosity flag turned on to see open ports on the fly without having to wait for the scan to finish.
+
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom1.png)
+
+A full port scan reveals redis is active on port `6379` along w winrm at 5985 which shows we can probably use remoting with authentic creds.
+
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom2.png)
+
 - We start off by enumerating port 80.
     - We find a possible username at the end of the page: MrR3boot@atom.htb.
     - From this we infer and add `atom.htb` to our `/etc/hosts` file. Continue browsing the site.
@@ -32,7 +36,7 @@ description: HackTheBox Atom Writeup.
 ### Enumerating redis
 
 - Much cant be enumerated since redis requires credentials to authenticate. Checking the format of authentication shows it requires only the password. We could attempt to brute force the password if nothing turns up from smb.
-    - - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom7.png)
+    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom7.png)
 
 ### Enumerating smb
 
@@ -93,7 +97,7 @@ description: HackTheBox Atom Writeup.
     `info keyspace`
     4. We see that there is one databse - number 0 which has 4 keys. View the keys using: `keys *`
     5. We see a bunch of keys. Retrieve the first or last, it might most likely be the administrator's key: `get pk:urn:user:e8e29158-d70d-44b1-a1ba-4949d52790a0`
-    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom16.jpg)
+    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom16.jpg)
 - We now have the administrator hash.
 - Ater looking a lot on how to decrypt the hash i decided to look back at the "User guide.pdf" to look for further clues.
     - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom18.png)
