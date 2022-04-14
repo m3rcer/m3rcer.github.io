@@ -38,6 +38,8 @@ __For this blog I've used the following and would recommend something similar__
   - [Enable Submission Service in Postfix](#enable-submission-service-in-postfix)
   - [Installing and Configuring the IMAP Server: Dovecot](#installing-and-configuring-the-imap-server-dovecot)
   - [Configuring the Authentication Mechanism](#configuring-the-authentication-mechanism)
+  - [Setting up SASL Authentication](#setting-up-sasl-authentication)
+  - [Setting up the Desktop Email Client for Remote access](#setting-up-the-desktop-email-client-for-remote-access)
 
 [STAGE 3](#stage-3)
 - [Setup SPF/DKIM records with postfix for improved/best delivery](#setting-up-spf-and-dkim-with-postfix)
@@ -285,7 +287,7 @@ Lets Edit the Dovecot main configuration file to set this up: `sudo vi /etc/dove
 - Save and close the file.
 
 
-### Configuring the Authentication Mechanism:
+### Configuring the Authentication Mechanism
 
 Lets start by editing the authentication config file: `sudo vi /etc/dovecot/conf.d/10-auth.conf`
 
@@ -298,7 +300,7 @@ Uncomment/add the following lines:
   - This is required as we setup canonical mailbox users.
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_12.png)
 - `auth_mechanisms = plain` and change its value to --> `auth_mechanisms = plain login`
-- This only enables the PLAIN authentication mechanism.
+  - This only enables the PLAIN authentication mechanism.
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_13.png)
 
 __Configuring SSL/TLS Encryption:__
@@ -322,121 +324,83 @@ __Configuring SSL/TLS Encryption:__
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_15.png)
 
 
-### Setting up SASL Authentication:
+### Setting up SASL Authentication
 
-
-Edit the "10-master.conf" file as before:
-
-`sudo vi /etc/dovecot/conf.d/10-master.conf`
-
-Change "service auth" section to the following so that Postfix can find the appropriate Dovecot authentication server.
-
-```bash
-service auth {
-    unix_listener /var/spool/postfix/private/auth {
-      mode = 0660
-      user = postfix
-      group = postfix
-    }
-}
-```
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_16.png)
-
-Save and close the file.
-
+- Edit the `10-master.conf` file as before: `sudo vi /etc/dovecot/conf.d/10-master.conf`
+- Change "service auth" section to the following so that Postfix can find the appropriate Dovecot authentication server.
+  ```bash
+  service auth {
+      unix_listener /var/spool/postfix/private/auth {
+        mode = 0660
+        user = postfix
+        group = postfix
+      }
+  }
+  ```
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_16.png)
+- Save and close the file.
 
 __Auto-create Sent and Trash Folder:__
 
+- Edit the following config file: `sudo vi /etc/dovecot/conf.d/15-mailboxes.conf`
+- Now to "auto-create" a specific section just append the following inside each respective code block: `auto = create`
+  - Example: To auto-create the Trash folder in your client-->
+  ```bash
+   mailbox Trash {
+      auto = create
+      special_use = \Trash
+   }
+  ```
+  - By default its good practice to enable common folders such as - "Drafts, Junk, Sent, Trash" for better usage and tracking of the mails sent and recieved.
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_17.png)
+- Save the file and restart Postfix and Dovecot: `sudo systemctl restart postfix dovecot`
 
-Edit the following config file:
-
-`sudo vi /etc/dovecot/conf.d/15-mailboxes.conf`
-
-Now to "auto-create" a specific section just append the following inside each respective code block.
-
-`auto = create`
-
-Example: To auto-create the Trash folder in your client-->
-
-```bash
- mailbox Trash {
-    auto = create
-    special_use = \Trash
- }
-```
-
-By default its good practice to enable common folders such as - "Drafts, Junk, Sent, Trash" for better usage and tracking of the mails sent and recieved.
-
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_17.png)
-
-Save the file and restart Postfix and Dovecot:
-
-`sudo systemctl restart postfix dovecot`
-
-
-**We are almost done with stage 2. Great!**
+**We are almost done with stage 2.**
 
 Dovecot will be listening on port 143 (IMAP) and 993 (IMAPS) .
-
-`sudo ss -lnpt | grep dovecot`
-
-`systemctl status dovecot`
-
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_18.png)
+- `sudo ss -lnpt | grep dovecot`
+- `systemctl status dovecot`
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_18.png)
 
 
-### Finally , setting up the Desktop Email Client:
+### Setting up the Desktop Email Client for Remote access
 
-I've setup Thunderbird as my Desktop client and would recommend so.
+I've setup [Thunderbird](https://www.thunderbird.net/en-US/) as my Desktop client and would recommend something similar.
 
 Install it using :
-
 - On windows : [Go here](https://www.thunderbird.net/en-US/)
-
 - On NIX: `sudo apt install thunderbird`
 
-Run Thunderbird. You'd most likely see a popup stating to setup your mail account if not go to Edit -> Account Settings -> Account Actions -> Add Mail Account to add a mail account.
-
-Click on Configure manually and setup as follows:
-
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_19.png)
-
-- Select the IMAP protocol; Enter mail.example.com as the server name; Choose port 143 and STARTTLS; Choose normal password as the authentication method.
+Run Thunderbird:
+- You'd most likely see a popup stating to setup your mail account if not go to `Edit -> Account Settings -> Account Actions -> Add Mail Account` to add a mail account.
+- Click on Configure manually and setup as follows:
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_19.png)
+- Select the `IMAP` protocol; Enter `mail.example.com` as the server name; Choose port `143` and `STARTTLS`; Choose `normal password` as the authentication method.
 
 _Note: You can also use port 993 with SSL/TLS encryption for IMAP, and use port 465 with SSL/TLS encryption for SMTP if you've set this up with Microsoft Outlook._
 
-You will now be able to connect to your setup mail server and finally send and receive emails with any external desktop email client using your mail server as a secure encrypted relay! Awesome!
+You will now be able to connect to your setup mail server and finally send and receive emails with any external desktop email client using your mail server as a secure encrypted relay. 
 
 Send a test mail and enter your credentials to ensure your setups up and working fine.
 
+You can now Create various Users on your VPS mail sevrer and create various associated mail accounts for sending/recieving capability: `sudo adduser -m support`
 
-
-- You can now Create various Users on your VPS mail sevrer and create various associated mail accounts for sending/recieving capability.
-
-`sudo adduser -m Yahoo` --> Add user with home directory
-
-For example . If i'd like to setup say, a *Spoofed Yahoo account* to send and recieve mails. I'd create a user on my VPS mail server . If only sending would be the need without the recieving capability, go with the *Spoofing method with GoPhish* discussed.
-
-
-You can list all available mailbox users with:
-
-`sudo doveadm user '*'`
+You can list all available mailbox users with: `sudo doveadm user '*'`
 
 It's advisable to restart Dovecot each time you add users.
 
-And STAGE 2 is complete!
-
-TroubleShooting tips:
-
-> If you get a Relay access denied error it's most likely that our VPS hosting provider dosen't allow relay over these ports. [To find a Hosting provider that supports all such needs check out my writeup on it](https://me4cer98.github.io/Hosting-providers-for-SMTP-builds/) 
-
-> If you use the Cloudflare DNS service, you should not enable the CDN (proxy) feature when creating DNS an A record and an AAAA record for the hostname of your mail server as Cloudflare dosen't support SMTP or IMAP proxy.
+And STAGE 2 is complete.
 
 Let's check our spam score:
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_38.png)
+  
+This can be improved further following stage 3.
 
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_38.png)
+**TroubleShooting tips:**
 
-Let's improve on this.
+- If you get a Relay access denied error it's most likely that our VPS hosting provider dosen't allow relay over these ports. [To find a Hosting provider that supports all such needs check out my writeup on it](https://me4cer98.github.io/Hosting-providers-for-SMTP-builds/) 
+-  If you use the Cloudflare DNS service, you should not enable the CDN (proxy) feature when creating DNS an A record and an AAAA record for the hostname of your mail server as Cloudflare dosen't support SMTP or IMAP proxy.
+
 
 -------------------------------------------------------------------------------------------------
 
