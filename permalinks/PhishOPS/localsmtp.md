@@ -37,6 +37,7 @@ __For this blog I've used the following and would recommend something similar__
   - [Getting TLS encryption and a certificate the easy way](#getting-tls-encryption-and-a-certificate-the-easy-way)
   - [Enable Submission Service in Postfix](#enable-submission-service-in-postfix)
   - [Installing and Configuring the IMAP Server: Dovecot](#installing-and-configuring-the-imap-server-dovecot)
+  - [Configuring the Authentication Mechanism](#configuring-the-authentication-mechanism)
 
 [STAGE 3](#stage-3)
 - [Setup SPF/DKIM records with postfix for improved/best delivery](#setting-up-spf-and-dkim-with-postfix)
@@ -286,66 +287,39 @@ Lets Edit the Dovecot main configuration file to set this up: `sudo vi /etc/dove
 
 ### Configuring the Authentication Mechanism:
 
-Lets start by editing the authentication config file.
-
-`sudo vi /etc/dovecot/conf.d/10-auth.conf`
+Lets start by editing the authentication config file: `sudo vi /etc/dovecot/conf.d/10-auth.conf`
 
 Uncomment/add the following lines:
 
 - `disable_plaintext_auth = yes`
-
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_11.png)
-
-This will disable plaintext authentication when there’s no SSL/TLS encryption for added security and no fallback to vulnerable versions.
-
+  - This will disable plaintext authentication when there’s no SSL/TLS encryption for added security and no fallback to vulnerable versions.
 - `#auth_username_format = %Lu` and change its value to --> `auth_username_format = %n`.
-
-This is required as we setup canonical mailbox users.
-
+  - This is required as we setup canonical mailbox users.
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_12.png)
-
-
 - `auth_mechanisms = plain` and change its value to --> `auth_mechanisms = plain login`
-
+- This only enables the PLAIN authentication mechanism.
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_13.png)
-
-This only enables the PLAIN authentication mechanism.
-
 
 __Configuring SSL/TLS Encryption:__
 
-Edit the SSL/TLS config file as follows:
-
-- `sudo vi /etc/dovecot/conf.d/10-ssl.conf`
-
-Find and change the value of `ssl = yes` to `ssl = required`
-
+- Edit the SSL/TLS config file as follows: `sudo vi /etc/dovecot/conf.d/10-ssl.conf`
+- Find and change the value of `ssl = yes` to `ssl = required`
 - Find and change the value of `#ssl_prefer_server_ciphers = no` to `ssl_prefer_server_ciphers = yes` 
-
-- Disable outdated and  inscure SSLv3, TLSv1 and TLSv1.1 by adding the following line to the end of the file.
-
-`ssl_protocols = !SSLv3 !TLSv1 !TLSv1.1`
-
-
+- Disable outdated and  inscure SSLv3, TLSv1 and TLSv1.1 by adding the following line to the end of the file: `ssl_protocols = !SSLv3 !TLSv1 !TLSv1.1`
 - Next find the following lines:
-
-```bash
-ssl_cert = </etc/dovecot/private/dovecot.pem
-ssl_key = </etc/dovecot/private/dovecot.key
-```
-
-Replace them with the perviously generated location of your Let’s Encrypt TLS certificate and private key.
-
-It would be as follows:
-
-```bash
-ssl_cert = </etc/letsencrypt/live/example.com/fullchain.pem
-ssl_key = </etc/letsencrypt/live/example.com/privkey.pem
-```
-
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_14.png)
-
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_15.png)
+  ```bash
+  ssl_cert = </etc/dovecot/private/dovecot.pem
+  ssl_key = </etc/dovecot/private/dovecot.key
+  ```
+- Replace them with the perviously generated location of your Let’s Encrypt TLS certificate and private key.
+- It would be as follows:
+  ```bash
+  ssl_cert = </etc/letsencrypt/live/example.com/fullchain.pem
+  ssl_key = </etc/letsencrypt/live/example.com/privkey.pem
+  ```
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_14.png)
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_15.png)
 
 
 ### Setting up SASL Authentication:
