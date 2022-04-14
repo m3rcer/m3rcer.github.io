@@ -24,28 +24,28 @@ description: HackTheBox Atom Writeup.
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom1.png)
 - A full port scan reveals redis is active on port `6379` along w winrm at 5985 which shows we can probably use remoting with authentic creds.
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom2.png)
-- We start off by enumerating port 80:
-- We find a possible username at the end of the page: MrR3boot@atom.htb.
-- From this we infer and add `atom.htb` to our `/etc/hosts` file. Continue browsing the site.
-- Directory Bruteforcing with gobuster results in nothing too userful, moving on. 
+- We start off by enumerating port 80.
+    - We find a possible username at the end of the page: MrR3boot@atom.htb.
+    - From this we infer and add `atom.htb` to our `/etc/hosts` file. Continue browsing the site.
+    - Directory Bruteforcing with gobuster results in nothing too userful, moving on. 
 
 ### Enumerating redis
 
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom7.png)
 - Much cant be enumerated since redis requires credentials to authenticate. Checking the format of authentication shows it requires only the password. We could attempt to brute force the password if nothing turns up from smb.
+    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom7.png)
 
 ### Enumerating smb
 
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom3.png)
 - `smbmap` shows use we have access to 2 shares amongst. **Software_Updates** seems interesting as we have **right access** too to it.
-- Using `smbclient` to connect to the share:
+    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom3.png)
+- Using `smbclient` to connect to the share with null authentication:
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom4.png)
 - Grap the pdf in the share. Looking at the pdf we infer 2 things:
     1. **Built with : electron-builder**
     2. We can place the update in any client folder and the automated script would check the update. We can probably replace some code to give us a shell here.
 - This link explains a suitable exploit: [electron-builder-Exploit](https://blog.doyensec.com/2020/02/24/electron-updater-update-signature-bypass.html)
 - In short is a vulnerability caused by an unescaped variable. We can trigger a parse error in the script to achieve code execution.
-- The exploit bypasses inbuilt signature checks.
+- The exploit bypasses inbuilt signature checks as shown below.
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom5.png)
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom6.png)
 
@@ -56,9 +56,9 @@ description: HackTheBox Atom Writeup.
 ***GETTING user.txt***
 - Generate an msfvenom payload of choice . Generate a reverse https executable and then rename it with single quotes.
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom8.png)
-- Rename the file to `d'payload.exe`.
+- Rename the file to the filename as `d'payload.exe` as shown.
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom10.png)
-- Calculate the hash using the prescribed syntax: 
+- Calculate the hash using the prescribed syntax as shown below: 
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom9.png)
 - Setup a listener on msfconsole to catch your shell using `multi/handler`.
 - Generate the `latest.yml` file update. Replace the path and the hash.
@@ -81,7 +81,7 @@ description: HackTheBox Atom Writeup.
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom17.png)
 - Since we already know redis was on,  we find its config file. 
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom14.png)
-- We found the password for redis. 
+- We finally found the password for the redis server as shown. 
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom15.jpg)
 - Use this [guide](https://book.hacktricks.xyz/pentesting/6379-pentesting-redis) as a reference to pentest redis.
 - Now follow these steps:
@@ -94,7 +94,6 @@ description: HackTheBox Atom Writeup.
     4. We see that there is one databse - number 0 which has 4 keys. View the keys using: `keys *`
     5. We see a bunch of keys. Retrieve the first or last, it might most likely be the administrator's key: `get pk:urn:user:e8e29158-d70d-44b1-a1ba-4949d52790a0`
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom16.jpg)
-
 - We now have the administrator hash.
 - Ater looking a lot on how to decrypt the hash i decided to look back at the "User guide.pdf" to look for further clues.
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom18.png)
@@ -119,9 +118,11 @@ description: HackTheBox Atom Writeup.
     ```
 - Install `des` using: `sudo pip3 install des`
 - Run the script, input your hash and get the decrypted hash. 
+    
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom20.jpg)
 - We now finally have the password for the administrator account. 
 - Lets try winrm again using these credentials. The credentials are valid.
+    
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom19.jpg)
 - Grab `root.txt` from the Desktop of the Administrator's account.
 
