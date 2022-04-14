@@ -327,7 +327,7 @@ __Configuring SSL/TLS Encryption:__
 ### Setting up SASL Authentication
 
 - Edit the `10-master.conf` file as before: `sudo vi /etc/dovecot/conf.d/10-master.conf`
-- Change "service auth" section to the following so that Postfix can find the appropriate Dovecot authentication server.
+- Change `service auth` section to the following so that Postfix can find the appropriate Dovecot authentication server.
   ```bash
   service auth {
       unix_listener /var/spool/postfix/private/auth {
@@ -355,8 +355,6 @@ __Auto-create Sent and Trash Folder:__
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_17.png)
 - Save the file and restart Postfix and Dovecot: `sudo systemctl restart postfix dovecot`
 
-**We are almost done with stage 2.**
-
 Dovecot will be listening on port 143 (IMAP) and 993 (IMAPS) .
 - `sudo ss -lnpt | grep dovecot`
 - `systemctl status dovecot`
@@ -373,9 +371,9 @@ Install it using :
 
 Run Thunderbird:
 - You'd most likely see a popup stating to setup your mail account if not go to `Edit -> Account Settings -> Account Actions -> Add Mail Account` to add a mail account.
-- Click on Configure manually and setup as follows:
+- Click on Configure manually and setup as shown in the following image:
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_19.png)
-- Select the `IMAP` protocol; Enter `mail.example.com` as the server name; Choose port `143` and `STARTTLS`; Choose `normal password` as the authentication method.
+- Select the `IMAP` protocol; Enter `mail.example.com` as the server name; Choose port `143` and `STARTTLS` encryption; Choose `normal password` as the authentication method.
 
 _Note: You can also use port 993 with SSL/TLS encryption for IMAP, and use port 465 with SSL/TLS encryption for SMTP if you've set this up with Microsoft Outlook._
 
@@ -392,13 +390,14 @@ It's advisable to restart Dovecot each time you add users.
 And STAGE 2 is complete.
 
 Let's check our spam score:
+
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_38.png)
-  
-This can be improved further following stage 3.
+
+
 
 **TroubleShooting tips:**
 
-- If you get a Relay access denied error it's most likely that our VPS hosting provider dosen't allow relay over these ports. [To find a Hosting provider that supports all such needs check out my writeup on it](https://me4cer98.github.io/Hosting-providers-for-SMTP-builds/) 
+- If you get a **Relay access denied** error it's most likely that our VPS hosting provider dosen't allow relay over these ports. [To find a Hosting provider that supports all such needs check out my writeup on it](https://me4cer98.github.io/Hosting-providers-for-SMTP-builds/) 
 -  If you use the Cloudflare DNS service, you should not enable the CDN (proxy) feature when creating DNS an A record and an AAAA record for the hostname of your mail server as Cloudflare dosen't support SMTP or IMAP proxy.
 
 
