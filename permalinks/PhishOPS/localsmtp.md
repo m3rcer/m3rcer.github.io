@@ -36,6 +36,7 @@ __For this blog I've used the following and would recommend something similar__
 - [Install an IMAP SERVER (Dovecot), enable TLS encryption and setup a Desktop client](#install-an-imap-server-dovecot-enable-tls-encryption-and-setup-a-desktop-client)
   - [Getting TLS encryption and a certificate the easy way](#getting-tls-encryption-and-a-certificate-the-easy-way)
   - [Enable Submission Service in Postfix](#enable-submission-service-in-postfix)
+  - [Installing and Configuring the IMAP Server: Dovecot](#installing-and-configuring-the-imap-server-dovecot)
 
 [STAGE 3](#stage-3)
 - [Setup SPF/DKIM records with postfix for improved/best delivery](#setting-up-spf-and-dkim-with-postfix)
@@ -160,9 +161,9 @@ All your TLS certificates will now be live and the config automatically replaced
 
 ### Enable Submission Service in Postfix
 
-To send emails from a desktop email client, we need to enable the submission service of Postfix so that the email client can submit emails to Postfix SMTP server. 
+To send emails from a remote desktop email client, we need to enable the submission service of Postfix so that the email client can submit emails to Postfix SMTP server. 
 - Edit the `master.cf` file using your favorite text editor as follows: `sudo vi /etc/postfix/master.cf`
-- In the submission section, uncomment the `submission...` line and append the following lines(the 2nd line on) as stated here below it. This method ensures no bad tabs/spaces causing the config to error out. (Be careful editting this)
+- In the submission section, uncomment the `submission...` line and append the following lines(the 2nd line from the start) as stated here below it. This method ensures no bad tabs/spaces causing the config to error out. (Be careful with the indentation)
   ```bash
   submission     inet     n    -    y    -    -    SMTPd
     -o syslog_name=postfix/submission
@@ -175,9 +176,9 @@ To send emails from a desktop email client, we need to enable the submission ser
     -o SMTPd_sasl_path=private/auth
   ```
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/tls1.png)
-  - This configuration enables the submission daemon of Postfix and requires TLS encryption so that we can later connect using a desktop client. This listens on `port: 587` by default. 
+  - This configuration enables the submission daemon of Postfix and requires TLS encryption so that we can later connect using a desktop client. This listens on port 587 by default. 
 
-- To use **Microsoft Outlook** as a desktop client listening over `port:465`. Then you need to do the same and enable the submission daemon over `port 465`.
+- To use **Microsoft Outlook** as a desktop client listening over port 465. Then you need to do the same and enable the submission daemon over `port 465`.
 - Uncomment the `SMTPs..` line as before and paste the follows below it:
   ```bash
   SMTPs     inet  n       -       y       -       -       SMTPd
@@ -225,111 +226,62 @@ To send emails from a desktop email client, we need to enable the submission ser
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_7.png)
 
 
-### Next, installing/configuring the IMAP Server - Dovecot:
+### Installing and Configuring the IMAP Server: Dovecot
 
-Enter the following command to install Dovecot's core packages and the IMAP daemon package on your Ubuntu/custom server.
+Enter the following command to install Dovecot's core packages and the IMAP daemon package on your Ubuntu/custom server: `sudo apt install dovecot-core dovecot-imapd`
 
-`sudo apt install dovecot-core dovecot-imapd`
+To setup POP3 to fetch emails, install the `dovecot-pop3d` package as: `sudo apt install dovecot-pop3d`
 
-To setup POP3 to fetch emails, install the dovecot-pop3d package as follows next.
-
-`sudo apt install dovecot-pop3d`
-
-Check the version of Dovecot.
-
-`dovecot --version`
-
+Check the version of Dovecot: `dovecot --version`
 
 **Enabling IMAP/POP3/LMTP Protocol**
 
 You can enable and use any protocol depending on your setup and the way you'd like to recieve and manage the mail system. Enabling atleast one is mandatory.
 
-IMAP/POP3:
-
-Edit the main dovecot config file using:
-
-`sudo vi /etc/dovecot/dovecot.conf`
-
-Add/append the following line to enable both the IMAP and POP3 protocol.
-
-`protocols = imap pop3`
-
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_8.png)
-
+- IMAP/POP3:
+  - Edit the main dovecot config file using: `sudo vi /etc/dovecot/dovecot.conf`
+  - Add/append the following line to enable both the IMAP and POP3 protocol: `protocols = imap pop3`
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_8.png)
 
 **Configuring the Mailbox Location**:
 
+By default, Postfix and Dovecot use the "mbox format" to store emails. By default each user’s emails are stored in a single file in `/var/mail/username`. To change it to use the "Maildir format" where email messages will be stored under the Maildir directory under each respective user’s home directory for easy management follow along: `sudo vi /etc/dovecot/conf.d/10-mail.conf`
 
-By default, Postfix and Dovecot use the "mbox format" to store emails. By default each user’s emails are stored in a single file in _/var/mail/username_. To change it to use the "Maildir format" where email messages will be stored under the Maildir directory under each respective user’s home directory for easy management follow along:
-
-`sudo vi /etc/dovecot/conf.d/10-mail.conf`
-
-Find and change the _mail_location_ to the value as follows:
-
-`mail_location = maildir:~/Maildir`
-
-Also append the following line to the file . If you're on Ubuntu 18.04+ this line is automatically added so you dont have to enter it.
-
-`mail_privileged_group = mail`
-
-Save and close the file.
-
-Now create/add dovecot to the mail group so that Dovecot can read the INBOX using:
-
-`sudo adduser dovecot mail`
+- Find and change the `mail_location` to the value as follows: `mail_location = maildir:~/Maildir`
+- Also append the following line to the file. If you're on Ubuntu 18.04+ this line is automatically added so you dont have to enter it: `mail_privileged_group = mail`
+- Save and close the file.
+- Now create/add dovecot to the mail group so that Dovecot can read the INBOX using: `sudo adduser dovecot mail`
 
 Although we configured Dovecot to store emails in the "Maildir format", by default Postfix uses its built-in local delivery agent (LDA) to move inbound emails to the message store and it will be saved in the "mbox format".
 
 To avoid this we also configure Postfix to pass incoming emails to Dovecot using the LMTP protocol. This is a simplified version of SMTP where incoming emails will be saved in the required "Maildir format" we've setup to use.
 
-Now install the Dovecot LMTP server using :
+Now install the Dovecot LMTP server as before using : `sudo apt install dovecot-lmtpd`
 
-`sudo apt install dovecot-lmtpd`
+Lets Edit the Dovecot main configuration file to set this up: `sudo vi /etc/dovecot/dovecot.conf`
 
-Lets Edit the Dovecot main configuration file to set this up:
-
-`sudo vi /etc/dovecot/dovecot.conf`
-
-Add _lmtp_ to the supported protocols as before:
-
-`protocols = imap pop3 lmtp`
-
-(I've set all to run in this example.)
-
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_9.png)
-
-Save and close the file.
-
-Its now time to edit the "Dovecot 10-master.conf" file.
-
-`sudo vi /etc/dovecot/conf.d/10-master.conf`
-
-Find and replace/comment out the __lmtp__ service definition to the following:
-
-```bash
-service lmtp {
- unix_listener /var/spool/postfix/private/dovecot-lmtp {
-   mode = 0600
-   user = postfix
-   group = postfix
+- Add `lmtp` to the supported protocols as before (I've set all to run in this example.): `protocols = imap pop3 lmtp`
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_9.png)
+- Save and close the file.
+- Its now time to edit the `Dovecot 10-master.conf` file: `sudo vi /etc/dovecot/conf.d/10-master.conf`
+- Find and replace/comment out the `lmtp` service definition to the following:
+  ```bash
+  service lmtp {
+   unix_listener /var/spool/postfix/private/dovecot-lmtp {
+     mode = 0600
+     user = postfix
+     group = postfix
+    }
   }
-}
-``` 
-
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_10.png)
-
-
-Now, edit the Postfix main configuration file.
-
-`sudo vi /etc/postfix/main.cf`
-
-Append the following lines to the end of the file to deliver incoming emails to the local message store via the Dovecot LMTP server and disable SMTPUTF8.
-
-```bash
-mailbox_transport = lmtp:unix:private/dovecot-lmtp
-SMTPutf8_enable = no
-```
-Save and close the file.
+  ``` 
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_10.png)
+- Now, edit the Postfix main configuration file: `sudo vi /etc/postfix/main.cf`
+- Append the following lines to the end of the file to deliver incoming emails to the local message store via the Dovecot LMTP server and disable `SMTPUTF8`.
+  ```bash
+  mailbox_transport = lmtp:unix:private/dovecot-lmtp
+  SMTPutf8_enable = no
+  ```
+- Save and close the file.
 
 
 ### Configuring the Authentication Mechanism:
