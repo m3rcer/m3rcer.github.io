@@ -57,8 +57,6 @@ Postfix is a light , easy to use MTS which serves 2 primary purposes:
 
 We will configure postfix for a single domain in this tutorial.
 
-Before we install postfix note to do the following before. 
-
 ### Set Hostname and DNS records
 
 Postfix uses the server’s hostname to identify itself when communicating with other MTAs. A hostname could be a single word or a FQDN.
@@ -103,7 +101,7 @@ Your PTR record does the inverse, that is maps your IP address back to your FQDN
 
 _This could be an option your hosting provider allows you to setup like how you did your domain records (cockbox.org uses this method ) or you'd have to probably contact support and they'd do it for you (flokinet works this way). Either case find a hosting provider that supports this._
 
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/ptr_record.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/ptr_record.png)
 
 ### Installing Postfix
 
@@ -231,7 +229,7 @@ To send emails from a remote desktop email client, we need to enable the submiss
 
 ### Installing and Configuring the IMAP Server: Dovecot
 
-Enter the following command to install Dovecot's core packages and the IMAP daemon package on your Ubuntu/custom server: `sudo apt install dovecot-core dovecot-imapd`
+Enter the following command to install Dovecot's core packages and the IMAP daemon package on your server: `sudo apt install dovecot-core dovecot-imapd`
 
 To setup POP3 to fetch emails, install the `dovecot-pop3d` package as: `sudo apt install dovecot-pop3d`
 
@@ -297,11 +295,12 @@ Uncomment/add the following lines:
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_11.png)
   - This will disable plaintext authentication when there’s no SSL/TLS encryption for added security and no fallback to vulnerable versions.
 - `#auth_username_format = %Lu` and change its value to --> `auth_username_format = %n`.
-  - This is required as we setup canonical mailbox users.
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_12.png)
+  - This is required as we setup canonical mailbox users.
 - `auth_mechanisms = plain` and change its value to --> `auth_mechanisms = plain login`
-  - This only enables the PLAIN authentication mechanism.
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_13.png)
+  - This only enables the PLAIN authentication mechanism.
+
 
 __Configuring SSL/TLS Encryption:__
 
@@ -373,27 +372,24 @@ Run Thunderbird:
 - You'd most likely see a popup stating to setup your mail account if not go to `Edit -> Account Settings -> Account Actions -> Add Mail Account` to add a mail account.
 - Click on Configure manually and setup as shown.
 
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_19.png)
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_19.png)
 
 - Select the `IMAP` protocol; Enter `mail.example.com` as the server name; Choose port `143` and `STARTTLS` encryption; Choose `normal password` as the authentication method.
 
 _Note: You can also use port 993 with SSL/TLS encryption for IMAP, and use port 465 with SSL/TLS encryption for SMTP if you've set this up with Microsoft Outlook._
 
 You will now be able to connect to your setup mail server and finally send and receive emails with any external desktop email client using your mail server as a secure encrypted relay. 
-
 Send a test mail and enter your credentials to ensure your setups up and working fine.
 
-You can now Create various Users on your VPS mail sevrer and create various associated mail accounts for sending/recieving capability: `sudo adduser -m support`
+You can now also Create various Users on your VPS mail sevrer and create various associated mail accounts for sending/recieving capability: `sudo adduser -m support`
 
 You can list all available mailbox users with: `sudo doveadm user '*'`
 
 It's advisable to restart Dovecot each time you add users.
 
-And STAGE 2 is complete.
+And STAGE 2 is complete. Let's check our spam score:
 
-Let's check our spam score:
-
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_38.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_38.png)
 
 **TroubleShooting tips:**
 
