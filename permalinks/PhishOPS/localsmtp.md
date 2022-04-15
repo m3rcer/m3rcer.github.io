@@ -372,7 +372,9 @@ Install it using :
 Run Thunderbird:
 - You'd most likely see a popup stating to setup your mail account if not go to `Edit -> Account Settings -> Account Actions -> Add Mail Account` to add a mail account.
 - Click on Configure manually and setup as shown.
+
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_19.png)
+
 - Select the `IMAP` protocol; Enter `mail.example.com` as the server name; Choose port `143` and `STARTTLS` encryption; Choose `normal password` as the authentication method.
 
 _Note: You can also use port 993 with SSL/TLS encryption for IMAP, and use port 465 with SSL/TLS encryption for SMTP if you've set this up with Microsoft Outlook._
