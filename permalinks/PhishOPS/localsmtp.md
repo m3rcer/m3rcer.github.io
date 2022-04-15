@@ -10,14 +10,14 @@ kramdown:
 
 <h1 align="center">Building and Configuring a Phishing Server on a VPS locally</h1>
 
-**This Blog details the practical aspect of setting up a SMTP server with a client (Ex: gophish, MS Exchange Server etc), configuring a dekstop client for remote access and setup security related checks such as SPF,DKIM,DMARC to bypass modern MTA spam filters from scratch. Refer the [Starting_Point section here](Starting_Point.md) to gain a brief understanding of MTA filter bypasses before setting up the server.**
+**This Blog details the practical aspect of setting up a SMTP server with a local phishingclient (Ex: gophish, MS Exchange Server etc), configuring a dekstop client for remote access to SMTP and setup Security Related Checks such as *SPF,DKIM,DMARC* to bypass modern MTA spam filters from scratch. Refer this [section here](StartingPoint.md) to gain a brief understanding of MTA filter bypasses before setting up the server.**
 
 __For this blog I've used the following and would recommend something similar__
 * `Ubuntu 20.04LTS` as my distro.
-* `Gmail` as the testing MTA mail service.
-* `Namecheap` as my domain hosting provider.
-* `Thunderbird` as my remote desktop client for testing.
-* `GoPhish/MS Outlook` as my SMTP server client to use the SMTP server for mail delivery.
+* `Gmail` as the testing MTA spam filter & mail service.
+* `Namecheap` as my domain hosting provider. Buy used/lapsed domains as I've noticed domain age is a key factory regardingly deliverability (Age the domain atleast 6weeks+). 
+* `Thunderbird` as my remote desktop client for remote access to the smtp server.
+* `GoPhish/MS Outlook` as my server phish client to use the SMTP server for phishing.
 * Disabled any firewall rules against ports `25,587,80,443,465,143,993,110,995`.   
 
 
@@ -49,10 +49,6 @@ __For this blog I've used the following and would recommend something similar__
   - [Connect Postfix to OpenDKIM](#connect-postfix-to-opendkim)
   
 - [Validation and checks](#validation-and-checks)
-
-
-
-
 
 _________________________________________________________________________________________________
 
@@ -463,7 +459,7 @@ When you receive an email from a domain that has an SPF record the next time, yo
 
 ### Setting up DKIM
 
-- Install `OpenDKIM` which is an open-source implementation of the DKIM sender authentication system using: `sudo apt install opendkim opendkim-tools`
+- Install OpenDKIM which is an open-source implementation of the DKIM sender authentication system using: `sudo apt install opendkim opendkim-tools`
 - Next add postfix user to the opendkim group: `sudo gpasswd -a postfix opendkim`
 - Edit the OpenDKIM main configuration file as follows: `sudo vi /etc/opendkim.conf`
   - Uncomment the following lines and replace simple with `relaxed/simple`:
@@ -504,11 +500,11 @@ When you receive an email from a domain that has an SPF record the next time, yo
 __Create Signing Table, Key Table and Trusted Hosts File:__
 
 - Create a directory structure for OpenDKIM as follows:
+  ```bash
+  sudo mkdir /etc/opendkim`
 
-`sudo mkdir /etc/opendkim`
-
-`sudo mkdir /etc/opendkim/keys`
-
+  sudo mkdir /etc/opendkim/keys
+  ```
 - Let's change the owner from `root` to `opendkim` and make sure only the `opendkim` user can read and write to the keys directory.
   ```bash
   sudo chown -R opendkim:opendkim /etc/opendkim
@@ -532,7 +528,8 @@ __Create Signing Table, Key Table and Trusted Hosts File:__
   *.example.com
   ```
 - Save and close the file.
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_28.png)
+
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_28.png)
 
 
 ### Generate Private and Public Keypairs
@@ -549,12 +546,12 @@ The Public key will be published in DNS.
 
 - Grab the public key using: `sudo cat /etc/opendkim/keys/example.com/default.txt`
 
-> Note: The string after the "p parameter" is the public key.
+> Note: The encoded string after the `p parameter` is the public key.
 
 - Now copy everything in the between the parentheses and paste it creating a new DNS record in your domain dns config as follows:
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_29.png)
 
-_Note: delete all double quotes and white spaces in the value field if any using some `sed` magic._
+> Note: delete all double quotes and white spaces in the value field if any using some `sed` magic.
 
 - Finally, Lets test the DKIM Key: `sudo opendkim-testkey -d example.com -s default -vvv`
   - You will see `Key OK` in the command output if all goes well until here.
@@ -583,7 +580,7 @@ Postfix can talk to OpenDKIM via a Unix socket file. The default socket file use
 - Find the following line (Ubuntu 20.04): `Socket    local:/run/opendkim/opendkim.sock` or `Socket    local:/var/run/opendkim/opendkim.sock` (for Ubuntu 18.04)
 - Replace it with the following line: `Socket    local:/var/spool/postfix/opendkim/opendkim.sock` (If you can’t find the above line, then add the following line.)
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_30.png)
-- Similarly, find the following line in the "/etc/default/opendkim" file:
+- Similarly, find the following line in the `/etc/default/opendkim` file:
   ```bash
   sudo vi /etc/default/opendkim
 
@@ -603,8 +600,6 @@ Postfix can talk to OpenDKIM via a Unix socket file. The default socket file use
   ```
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_32.png)
 - Save and close the file. Then restart Opendkim and the Postfix service: `sudo systemctl restart opendkim postfix`
-
-**AND FINALLY, WE ARE DONE!.**
 
 _________________________________________________________________________________________________
 
