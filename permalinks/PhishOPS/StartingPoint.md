@@ -7,15 +7,13 @@ categories: RedTeaming
 
 <h1 align="center">Requirements and good practices needed to bypass modern MTA spam filters</h1> ****
 
-_________________________________________________________________________________________________
-
 ### Find a hosting provider/ISP that allows an SMTP build
 
 Finding a good hosting provider that supports all your needs to build an already configured SMTP server with relays is hard. Basically the ISP could support relays, asn, bridges and tor support , crypto depending on your needs.
 
-Do they have high reputation IP addresses? You definitely don’t want to be listed on the dreaded Microsoft Outlook IP blacklist or the SpamRats blacklist. Outbound port `25/587` is mandatory for allowing your SMTP server to send outbound and recieve inbound mails. So be careful to select an ISP that provides a vps that meets the criteria.
+Do they have high reputation IP addresses? You definitely don’t want to be listed on the dreaded Microsoft Outlook IP blacklist or the SpamRats blacklist. Outbound port `25/587` is mandatory for allowing your SMTP server to send outbound and recieve inbound mails. So be careful to select an ISP that provides a VPS that meets the criteria.
 
-**[Here is the link](https://gitlab.torproject.org/legacy/trac/-/wikis/doc/GoodBadISPs)** that provides a list of all the available vps's that fit the criteria explained above. Choose accordingly. All credits go to [Alexander Færøy](https://gitlab.torproject.org/ahf) for this wonderful Repository.
+**[Here is the link](https://gitlab.torproject.org/legacy/trac/-/wikis/doc/GoodBadISPs)** that provides a list of all the available VPS's that fit the criteria explained above. Choose accordingly. All credits go to [Alexander Færøy](https://gitlab.torproject.org/ahf) for this wonderful Repository.
 
 ###  Permanently disable ipv6 and uninstall unecessary services like exim
 
@@ -23,7 +21,7 @@ Ipv6 is tricky to configure along with ipv4 and just adds a weighted overhead . 
 
 Exim or any other mail services that come by default packaged with some distributions like debian 8. They'd hinder the installation of another mail service. So uninstall any unwanted mail service of the kind if they exist on your distro prepackaged.
 
-### Setting the hostname for your vps
+### Setting the hostname for your VPS
 
 Some MTAs even query DNS to see if FQDN in the `smtpd` banner resolves to the IP of your mail server.
 
@@ -42,11 +40,11 @@ Find a service provider that allows rDNS change support (Refer to above to find 
 
 TLS encryption is a good practice to enable as they ensure the mails originate and are transported in a secure way. Basically a TLS certificate needs to be installed to secure the traffic. Grab a certificate for free using `letsencrypt` from `certbot`.  Certbot is quite straightforward with its installation instructions.
 
-### Implementing an IMAP server/Desktop client: Dovecot
+### Implementing an IMAP server/Desktop client
 
 Install an IMAP server to be able to easily setup a desktop client to send and recieve emails on the go remotely. This would work the same way you'd use a Desktop client to connect to a providers SMTP relay.  You can use a remote desktop client like Thunderbird and use your SMTP server as a secure relay.   __Dovecot__ is my personal choice and is quite easy to setup and allows mailboxes and their indexes to be modified by multiple computers at the same time, while still performing well. Also ensure that you have set the A record on your Domain Name to the IP address of the Server before you do so. 
 
-### Adding Aliases.
+### Adding Aliases
 
 Once the server is up  we need to tell it where to send mail to and from . Aliases improve efficiency and improve handling of a lot of emails to default accounts re-routing it to the account of choice . Aliases let you specify an alternate name to any mail account . 
 
@@ -62,8 +60,8 @@ Along with setting up the rDNS record which is mandatory these records add and i
 Along with the successfull setup of postfix and dovecot publishing the records/adding these relevant entries correctly can be tricky.
 
 Make sure to have published the following records:
-- `A record` - Maps the vps IP to mail.domain.com .
-- `PTR/ rDNS record` - A reverse lookup of mail.domain.com results in yielding your vps's IP . 
+- `A record` - Maps the VPS IP to mail.domain.com .
+- `PTR/ rDNS record` - A reverse lookup of mail.domain.com results in yielding your VPS's IP . 
 - `MX record` - specifies the mail server responsible for accepting email messages on behalf of a domain name .
 - `SPF record` - a txt record specific to  mail servers that are allowed to send email on behalf of your domain .
 - `DKIM record` - a txt record of your generated pubkey to verify non-repudiation.

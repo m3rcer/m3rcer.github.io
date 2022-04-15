@@ -7,7 +7,7 @@ categories: python_101
 description: Poison DNS responses.
 ---
 
-<p align="left">
+<p align="center">
  <img src="https://external-preview.redd.it/SRVKUe2MGSCBVB56FwBzwFZE6uxGaNZ_Vknx5vioVAw.png?auto=webp&s=b21e5b8bde6eed10e5ef54a188ebf0840e0bf8b4">
 </p>
 

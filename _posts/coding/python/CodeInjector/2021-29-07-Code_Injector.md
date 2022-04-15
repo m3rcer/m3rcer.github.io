@@ -8,10 +8,9 @@ description: A program to injects arbitary code  into the response of a HTTP req
 ---
 
 
-<p align="left">
+<p align="center">
  <img src="https://pbs.twimg.com/media/EXiXVKVXsAA5uO7?format=jpg&name=small">
 </p>
-
 
 
 ## This is a python script that injects arbitary code (JS,HTML,PHP...) into the response of a HTTP request.

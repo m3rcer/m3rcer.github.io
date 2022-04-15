@@ -9,7 +9,7 @@ description: A Network/Host Discovery Program.
 
 
 
-<p align="left">
+<p align="center">
  <img src="https://bournetocode.com/projects/GCSE_Computing_Fundamentals/pages/img/computer-network.jpg">
 </p>
 

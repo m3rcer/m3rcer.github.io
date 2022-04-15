@@ -7,7 +7,7 @@ categories: python_101
 description: A guide to Bypass HTTPS enabled sites.
 ---
 
-<p align="left">
+<p align="center">
  <img src="https://www.meme-arsenal.com/memes/6916d6688be5030280132d59bce29143.jpg">
 </p>
 

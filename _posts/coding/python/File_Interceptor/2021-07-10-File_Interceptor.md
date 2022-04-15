@@ -8,7 +8,7 @@ description: A program to intercept and replace a download to a malicious one.
 ---
 
 
-<p align="left">
+<p align="center">
  <img src="https://www.itaintboring.com/wp-content/uploads/2020/12/image-51.png">
 </p>
 
