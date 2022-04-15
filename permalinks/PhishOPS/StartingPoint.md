@@ -23,7 +23,7 @@ Ipv6 is tricky to configure along with ipv4 and just adds a weighted overhead . 
 
 Exim or any other mail services that come by default packaged with some distributions like debian 8. They'd hinder the installation of another mail service. So uninstall any unwanted mail service of the kind if they exist on your distro prepackaged.
 
-### Setting the hostname for your vps.
+### Setting the hostname for your vps
 
 Some MTAs even query DNS to see if FQDN in the `smtpd` banner resolves to the IP of your mail server.
 
@@ -42,7 +42,7 @@ Find a service provider that allows rDNS change support (Refer to above to find 
 
 TLS encryption is a good practice to enable as they ensure the mails originate and are transported in a secure way. Basically a TLS certificate needs to be installed to secure the traffic. Grab a certificate for free using `letsencrypt` from `certbot`.  Certbot is quite straightforward with its installation instructions.
 
-### Implementing an IMAP server/Desktop client - Dovecot.
+### Implementing an IMAP server/Desktop client: Dovecot
 
 Install an IMAP server to be able to easily setup a desktop client to send and recieve emails on the go remotely. This would work the same way you'd use a Desktop client to connect to a providers SMTP relay.  You can use a remote desktop client like Thunderbird and use your SMTP server as a secure relay.   __Dovecot__ is my personal choice and is quite easy to setup and allows mailboxes and their indexes to be modified by multiple computers at the same time, while still performing well. Also ensure that you have set the A record on your Domain Name to the IP address of the Server before you do so. 
 
@@ -50,7 +50,7 @@ Install an IMAP server to be able to easily setup a desktop client to send and r
 
 Once the server is up  we need to tell it where to send mail to and from . Aliases improve efficiency and improve handling of a lot of emails to default accounts re-routing it to the account of choice . Aliases let you specify an alternate name to any mail account . 
 
-### Setting up SPF, DKIM, DMARC records for added delivery rate.
+### Setting up SPF, DKIM, DMARC records for added delivery rate
 
 Along with setting up the rDNS record which is mandatory these records add and improve delivery rate. I've seen my spam score rise significantly after adding these records  
 - _SPF:_ A Sender Policy Framework (SPF) record is a DNS record that identifies specific mail servers that are allowed to send email on behalf of your domain.
