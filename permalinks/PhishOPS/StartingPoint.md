@@ -50,7 +50,7 @@ Install an IMAP server to be able to easily setup a desktop client to send and r
 
 Once the server is up  we need to tell it where to send mail to and from . Aliases improve efficiency and improve handling of a lot of emails to default accounts re-routing it to the account of choice . Aliases let you specify an alternate name to any mail account . 
 
-### Setting up SPF , DKIM , DMARC records for added delivery rate.
+### Setting up SPF, DKIM, DMARC records for added delivery rate.
 
 Along with setting up the rDNS record which is mandatory these records add and improve delivery rate. I've seen my spam score rise significantly after adding these records  
 - _SPF:_ A Sender Policy Framework (SPF) record is a DNS record that identifies specific mail servers that are allowed to send email on behalf of your domain.
