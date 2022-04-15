@@ -10,7 +10,7 @@ kramdown:
 
 <h1 align="center">Building and Configuring a Phishing Server on a VPS locally</h1>
 
-**This Blog details the practical aspect of setting up a SMTP server with a local phishingclient (Ex: gophish, MS Exchange Server etc), configuring a dekstop client for remote access to SMTP and setup Security Related Checks such as *SPF,DKIM,DMARC* to bypass modern MTA spam filters from scratch. Refer this [section here](StartingPoint.md) to gain a brief understanding of MTA filter bypasses before setting up the server.**
+**This Blog details the practical aspect of setting up a SMTP server with a phishing client (Ex: gophish, MS Exchange Server etc), configuring a dekstop client for remote access to SMTP and setup Security Related Checks such as *SPF,DKIM,DMARC* to bypass modern MTA spam filters from scratch. Refer this [section here](StartingPoint) to gain a brief understanding of MTA filter bypasses before setting up the server.**
 
 __For this blog I've used the following and would recommend something similar__
 * `Ubuntu 20.04LTS` as my distro.

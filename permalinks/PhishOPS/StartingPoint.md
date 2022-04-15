@@ -5,13 +5,13 @@ categories: RedTeaming
 ---
 
 
-**This section gives short a brief understanding to the requirements and good practices in my experience needed to bypass modern MTA spam filters.**
+<h1 align="center">Requirements and good practices needed to bypass modern MTA spam filters</h1> ****
 
 _________________________________________________________________________________________________
 
-### Spam Filter Bypass Requirements
+## Spam Filter Bypass Requirements
 
-## Find a hosting provider/ISP that allows an SMTP build
+### Find a hosting provider/ISP that allows an SMTP build
 
 Finding a good hosting provider that supports all your needs to build an already configured SMTP server with relays is hard. Basically the ISP could support relays, asn, bridges and tor support , crypto depending on your needs.
 
