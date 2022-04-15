@@ -9,17 +9,11 @@ categories: RedTeaming
 
 _________________________________________________________________________________________________
 
-## Spam Filter Bypass Requirements
-
 ### Find a hosting provider/ISP that allows an SMTP build
 
 Finding a good hosting provider that supports all your needs to build an already configured SMTP server with relays is hard. Basically the ISP could support relays, asn, bridges and tor support , crypto depending on your needs.
 
-Do they have high reputation IP addresses? You definitely don’t want to be listed on the dreaded Microsoft Outlook IP blacklist or the SpamRats blacklist.
-
-Outbound port `25/587` is mandatory for allowing your SMTP server to send outbound and recieve inbound mails. So be careful to select an ISP that provides a vps that meets the criteria.
-
-__I've made a blog/repo detailing ISP selection for SMTP builds [here](https://github.com/m3rcer/Hosting-providers-for-smtp-builds) if you haven't checked it out already.__
+Do they have high reputation IP addresses? You definitely don’t want to be listed on the dreaded Microsoft Outlook IP blacklist or the SpamRats blacklist. Outbound port `25/587` is mandatory for allowing your SMTP server to send outbound and recieve inbound mails. So be careful to select an ISP that provides a vps that meets the criteria.
 
 **[Here is the link](https://gitlab.torproject.org/legacy/trac/-/wikis/doc/GoodBadISPs)** that provides a list of all the available vps's that fit the criteria explained above. Choose accordingly. All credits go to [Alexander Færøy](https://gitlab.torproject.org/ahf) for this wonderful Repository.
 
@@ -75,7 +69,7 @@ Make sure to have published the following records:
 - `DKIM record` - a txt record of your generated pubkey to verify non-repudiation.
 - `DMARC record` - a txt record that helps protect email senders and recipients from spoofing. 
 
-Now that you have a base understanding of the requirements to bypass Spam filter MTA's, [Let's build your local SMTP here.](localsmtp.md)
+Now that you have a base understanding of the requirements to bypass Spam filter MTA's, [Let's build your local SMTP here.](localsmtp)
 
 _________________________________________________________________________________________________
 

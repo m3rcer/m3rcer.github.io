@@ -66,7 +66,7 @@ We will configure postfix for a single domain in this tutorial.
 
 Postfix uses the server’s hostname to identify itself when communicating with other MTAs. A hostname could be a single word or a FQDN.
 
-> *Note:* We will use `example.com` as our registered domain as an example domain here.
+> *Note:* We will use `example.com` as our registered example domain here.
 
 Make sure your hostnames set to a FQDN such as __mail.example.com__ by using the command: `sudo hostnamectl set-hostname mail.example.com`
 
