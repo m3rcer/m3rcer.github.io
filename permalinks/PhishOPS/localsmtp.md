@@ -42,7 +42,7 @@ __For this blog I've used the following and would recommend something similar__
   - [Setting up the Desktop Email Client for Remote access](#setting-up-the-desktop-email-client-for-remote-access)
 
 [STAGE 3](#stage-3)
-- [Setup SPF/DKIM records with postfix for improved/best delivery](#setting-up-spf-and-dkim-with-postfix)
+- [Setting up SPF and DKIM with Postfix](#setting-up-spf-and-dkim-with-postfix)
 
 
 _________________________________________________________________________________________________
@@ -372,7 +372,7 @@ Run Thunderbird:
 - You'd most likely see a popup stating to setup your mail account if not go to `Edit -> Account Settings -> Account Actions -> Add Mail Account` to add a mail account.
 - Click on Configure manually and setup as shown.
 
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_19.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_19.png)
 
 - Select the `IMAP` protocol; Enter `mail.example.com` as the server name; Choose port `143` and `STARTTLS` encryption; Choose `normal password` as the authentication method.
 
@@ -401,23 +401,18 @@ And STAGE 2 is complete. Let's check our spam score:
 
 # Stage 3:
 
-## Setting up SPF and DKIM with Postfix:
+## Setting up SPF and DKIM with Postfix
 
-We finally have a working Postfix SMTP server and Dovecot IMAP server with which we can send and receive email using any external email client like a desktop client(thunderbird).
+We finally have a working Postfix SMTP server and Dovecot IMAP server with which we can send and receive email using any external remote email client like a desktop client(thunderbird). Although we have correctly set up our DNS `MX`, `A` and `PTR` records our emails are still flagged as spam by strong and popular email services such as Gmail and Outlook mail.
 
- Although we have correctly set up our DNS MX, A and PTR records our emails are still flagged as spam by strong and popular email services such as Gmail and Outlook mail.
+As we all know most of our targets would be using such mail services so to succesfully bypass most strong spam filters its mandatory to set up a SPF and DKIM record as explained before.
 
- As we all know most of our targets would be using such mail services so to succesfully bypass most strong spam filters its mandatory to set up a SPF and DKIM record as explained before.
-
- And we begin,
+And we begin,
 
 ### Setting and configuring SPF:
 
-Get back to your respective domain management interface for DNS and create a new TXT record as follows:
-
-`TXT  @   v=spf1 mx ~all`
-
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_20.png)
+- Get back to your respective domain management interface for DNS and create a new TXT record as follows: `TXT  @   v=spf1 mx ~all`
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_20.png)
 
 > v=spf1: indicates that this is an SPF record and the SPF record version we are using is SPF1.
 
@@ -425,58 +420,36 @@ Get back to your respective domain management interface for DNS and create a new
 
 > \~all: indicates that emails from your domain should only come from hosts specified in the SPF record.
 
-
-Use the following command to verify you've succesfully added the record:
-
-`dig example.com txt +short`
-
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_21.png)
+- Use the following command to verify you've succesfully added the record: `dig example.com txt +short`
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_21.png)
 
 **Configuring SPF Policy Agent**:
 
 We now need to tell Postfix to check for SPF records of incoming emails. This doesn’t help ensure outgoing email delivery but helps with detecting forged incoming emails.
 
-Install the required packages:
+- Install the required packages: `sudo apt install postfix-policyd-spf-python`
+- Next, edit the Postfix master process configuration file: `sudo vi /etc/postfix/master.cf`
+- Now append the following to the end of the file:
+  ```bash
+  policyd-spf  unix  -       n       n       -       0       spawn
+      user=policyd-spf argv=/usr/bin/policyd-spf
+  ```
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_22.png)
+- Save and close the file. Next, edit the Postfix main configuration file: `sudo vi /etc/postfix/main.cf`
+- Append the following lines at the end of the file as before:
+  ```bash
+  policyd-spf_time_limit = 3600
+  SMTPd_recipient_restrictions =
+     permit_mynetworks,
+     permit_sasl_authenticated,
+     reject_unauth_destination,
+     check_policy_service unix:private/policyd-spf
+  ```
+- This will impose a restriction on incoming emails by rejecting unauthorized email and checking SPF record.
+- Save and close the file and restart Postfix: `sudo systemctl restart postfix`
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_23.png)
 
-`sudo apt install postfix-policyd-spf-python`
-
-Next, edit the Postfix master process configuration file:
-
-`sudo vi /etc/postfix/master.cf`
-
-Now append the following to the end of the file:
-
-```bash
-policyd-spf  unix  -       n       n       -       0       spawn
-    user=policyd-spf argv=/usr/bin/policyd-spf
-```
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_22.png)
-
-Save and close the file. Next, edit the Postfix main configuration file:
-
-`sudo vi /etc/postfix/main.cf`
-
-Append the following lines at the end of the file as before:
-
-```bash
-policyd-spf_time_limit = 3600
-SMTPd_recipient_restrictions =
-   permit_mynetworks,
-   permit_sasl_authenticated,
-   reject_unauth_destination,
-   check_policy_service unix:private/policyd-spf
-```
-This will impose a restriction on incoming emails by rejecting unauthorized email and checking SPF record.
-
-Save and close the file and restart Postfix.
-
-`sudo systemctl restart postfix`
-
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_23.png)
-
-When you receive an email from a domain that has an SPF record the next time, you can see the SPF check results in the raw email header. It would be as follows:
-
-`Received-SPF: Pass (sender SPF authorized).`
+When you receive an email from a domain that has an SPF record the next time, you can see the SPF check results in the raw email header. It would be as follows: `Received-SPF: Pass (sender SPF authorized).`
 
 
 ### Setting up DKIM:
