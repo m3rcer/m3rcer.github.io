@@ -9,8 +9,7 @@ categories: RedTeaming
 
 ### Find a hosting provider/ISP that allows an SMTP build
 
-Finding a good hosting provider that supports all your needs to build an already configured SMTP server with relays is hard. Basically the ISP could support relays, asn, bridges and tor support , crypto depending on your needs.
-
+Finding a good hosting provider that supports all your needs to build an already configured SMTP server with relays is hard. Basically the ISP could support relays, asn, bridges and tor support , crypto depending on your needs. 
 Do they have high reputation IP addresses? You definitely don’t want to be listed on the dreaded Microsoft Outlook IP blacklist or the SpamRats blacklist. Outbound port `25/587` is mandatory for allowing your SMTP server to send outbound and recieve inbound mails. So be careful to select an ISP that provides a VPS that meets the criteria.
 
 **[Here is the link](https://gitlab.torproject.org/legacy/trac/-/wikis/doc/GoodBadISPs)** that provides a list of all the available VPS's that fit the criteria explained above. Choose accordingly. All credits go to [Alexander Færøy](https://gitlab.torproject.org/ahf) for this wonderful Repository.
@@ -18,7 +17,6 @@ Do they have high reputation IP addresses? You definitely don’t want to be lis
 ###  Permanently disable ipv6 and uninstall unecessary services like exim
 
 Ipv6 is tricky to configure along with ipv4 and just adds a weighted overhead . For example, you'd have to create a seperate reverse DNS entry for ipv6 along w the ipv4 else gmail mail servers are bound to reject you. 
-
 Exim or any other mail services that come by default packaged with some distributions like debian 8. They'd hinder the installation of another mail service. So uninstall any unwanted mail service of the kind if they exist on your distro prepackaged.
 
 ### Setting the hostname for your VPS
@@ -28,13 +26,10 @@ Some MTAs even query DNS to see if FQDN in the `smtpd` banner resolves to the IP
 ### Setting up rDNS/PTR record
 
 A pointer record, or PTR record, maps an IP address to an FQDN. It’s the counterpart to the A record and is used for reverse DNS (rDNS) lookup.
-
 Reverse resolution of IP address with PTR record can help with blocking spammers. Many MTAs accept email only if the server is really responsible for a certain domain. 
 In short this is one of the most important factors that provides non repudiation to the domain as it proves that the domain belongs to that IP/VPS.
 
-__This is one of the main factors that gmail and other major MTA's consider, so the rdns setup is a must.__
-
-Find a service provider that allows rDNS change support (Refer to above to find service providers of the sort). Some have an option to configure the record like DNS, others require you to contact support and they'd do it for you.
+__This is one of the main factors that gmail and other major MTA's consider, so the rdns setup is a must.__ Find a service provider that allows rDNS change support (Refer to above to find service providers of the sort). Some have an option to configure the record like DNS, others require you to contact support and they'd do it for you.
 
 ### Enable TLS encryption
 

@@ -168,17 +168,17 @@ Incase your hosting provider has blocked outbound port 25, verify it using: `tel
 
 TLS encryption is mandatory and ensures secured delivery. *LetsEncrypt* offers a free certificate with assisstance from their client: _certbot_.
 
-- Head on over to https://certbot.eff.org/. Click on  "Get Certbot instructions".
+Head on over to https://certbot.eff.org/. Click on  "Get Certbot instructions".
 
-- Select your server as the Software and which distro your running on system. In my case as i said before im using apache2 and ubuntu20.04LTS.
+Select your server as the Software and which distro your running on system. In my case as i said before im using apache2 and ubuntu20.04LTS.
   
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/certbot1.png)
 
-- Follow along the instructions to succesfully install certbot and when you reach an instruction such as `sudo certbot --apache` you will be prompted for the domains and subdomains to enable TLS on along with an administrative mail contact. Fill them as your hosting needs. 
+Follow along the instructions to succesfully install certbot and when you reach an instruction such as `sudo certbot --apache` you will be prompted for the domains and subdomains to enable TLS on along with an administrative mail contact. Fill them as your hosting needs. 
   
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/certbot-setup2.png)
 
-- You will then find your certificates in `/etc/letsencrypt/live/example.com/`.
+You will then find your certificates in `/etc/letsencrypt/live/example.com/`.
 
 _Note: Use `fullchain.pem` as the supplied certificate and `privkey.pem` as the key . Fullchain.pem is a concatenation of `cert.pem` and `chain.pem` in one file._
 
@@ -402,9 +402,9 @@ __Auto-create Sent and Trash Folder:__
 
 Dovecot will be listening on port 143 (IMAP) and 993 (IMAPS) .
 
-- `sudo ss -lnpt | grep dovecot`
+`sudo ss -lnpt | grep dovecot`
 
-- `systemctl status dovecot`
+`systemctl status dovecot`
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_18.png)
 
@@ -436,7 +436,7 @@ You can list all available mailbox users with: `sudo doveadm user '*'`
 
 It's advisable to restart Dovecot each time you add users.
 
-And STAGE 2 is complete. Let's check our spam score:
+And STAGE 2 is complete. Let's check our spam score.
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_38.png)
 
