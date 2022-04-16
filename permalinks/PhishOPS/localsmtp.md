@@ -85,7 +85,7 @@ Gracefully reboot your server using `init 6` after.
   mail.example.com        <ip-addr>
   ```
 
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/a_record.png)
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/a_record.png)
 
 
 ### Permanently disable ipv6 and uninstall unecessary services like exim
@@ -121,7 +121,9 @@ Install postfix:
   ```
 - While installation you will be asked to select a type for mail configuration. Select `Internet Site`.
     - This option allows Postfix to send emails to other MTAs and receive emails from other MTAs.
+  
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_1.png)
+
 - Next enter your domain name when prompted for the system mail (not the `mail.example.com` subdomain) that is __"example.com"__. 
 - This ensures that your mail address naming convention would be in the form of:
   - `[-] name@example.com` and not,
