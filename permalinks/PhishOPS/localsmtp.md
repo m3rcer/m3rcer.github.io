@@ -77,12 +77,15 @@ Gracefully reboot your server using `init 6` after.
   ```
   MX record    @           mail.example.com
   ```
+  
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/mx_record.png)
+
 - An A record maps your FQDN to your IP address.
   ```
   mail.example.com        <ip-addr>
   ```
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/a_record.png)
+
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/a_record.png)
 
 
 ### Permanently disable ipv6 and uninstall unecessary services like exim
