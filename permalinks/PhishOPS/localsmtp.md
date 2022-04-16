@@ -132,13 +132,14 @@ Install postfix:
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_2.png)
 
 Once installation is complete a `/etc/postfix/main.cf` config file would be automatically generated along with postfix starting up.
+
 - Check your current Postfix version using the command: `postconf mail_version`.
   
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_4.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_4.png)
 
 - Use 'Socket Statistics' - `ss` utility to check if postfix is running on port 25 succesfully: `sudo ss -lnpt | grep master`
   
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_3.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_3.png)
 
 - If you'd like to view the various binaries shipped along with postfix check them out with `dpkg -L postfix | grep /usr/sbin/`.
 
@@ -166,14 +167,16 @@ Incase your hosting provider has blocked outbound port 25, verify it using: `tel
 ### Getting TLS encryption and a certificate the easy way
 
 TLS encryption is mandatory and ensures secured delivery. *LetsEncrypt* offers a free certificate with assisstance from their client: _certbot_.
+
 - Head on over to https://certbot.eff.org/. Click on  "Get Certbot instructions".
+
 - Select your server as the Software and which distro your running on system. In my case as i said before im using apache2 and ubuntu20.04LTS.
   
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/certbot1.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/certbot1.png)
 
 - Follow along the instructions to succesfully install certbot and when you reach an instruction such as `sudo certbot --apache` you will be prompted for the domains and subdomains to enable TLS on along with an administrative mail contact. Fill them as your hosting needs. 
   
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/certbot-setup2.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/certbot-setup2.png)
 
 - You will then find your certificates in `/etc/letsencrypt/live/example.com/`.
 
@@ -290,7 +293,7 @@ Lets Edit the Dovecot main configuration file to set this up: `sudo vi /etc/dove
 
 - Add `lmtp` to the supported protocols as before (I've set all to run in this example.): `protocols = imap pop3 lmtp`
 
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_9.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_9.png)
 
 - Save and close the file.
 - Its now time to edit the `Dovecot 10-master.conf` file: `sudo vi /etc/dovecot/conf.d/10-master.conf`
@@ -398,10 +401,12 @@ __Auto-create Sent and Trash Folder:__
 - Save the file and restart Postfix and Dovecot: `sudo systemctl restart postfix dovecot`
 
 Dovecot will be listening on port 143 (IMAP) and 993 (IMAPS) .
+
 - `sudo ss -lnpt | grep dovecot`
+
 - `systemctl status dovecot`
 
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_18.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_18.png)
 
 
 ### Setting up the Desktop Email Client for Remote access
@@ -457,7 +462,7 @@ And we begin,
 
 - Get back to your respective domain management interface for DNS and create a new TXT record as follows: `TXT  @   v=spf1 mx ~all`
 
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_20.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_20.png)
 
 > v=spf1: indicates that this is an SPF record and the SPF record version we are using is SPF1.
 
@@ -467,7 +472,7 @@ And we begin,
 
 - Use the following command to verify you've succesfully added the record: `dig example.com txt +short`
 
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_21.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_21.png)
 
 **Configuring SPF Policy Agent**:
 
@@ -496,7 +501,7 @@ We now need to tell Postfix to check for SPF records of incoming emails. This do
 - This will impose a restriction on incoming emails by rejecting unauthorized email and checking SPF record.
 - Save and close the file and restart Postfix: `sudo systemctl restart postfix`
 
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_23.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_23.png)
 
 When you receive an email from a domain that has an SPF record the next time, you can see the SPF check results in the raw email header. It would be as follows: `Received-SPF: Pass (sender SPF authorized).`
 
@@ -560,13 +565,13 @@ __Create Signing Table, Key Table and Trusted Hosts File:__
 - Now, create the signing table: `sudo vi /etc/opendkim/signing.table`
 - Append this line. This tells OpenDKIM that if a sender on your server is using a `@example.com` address, then it should be signed with the private key identified by default.`_domainkey.example.com`. Replace `example.com` with your domain: `*@example.com    default._domainkey.example.com`
 
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_26.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_26.png)
 
 - Save and close the file. Next create the key table: `sudo vi /etc/opendkim/key.table`
 - Append the following: `default._domainkey.example.com     example.com:default:/etc/opendkim/keys/example.com/default.private`
 - This tells the location of the private key.
 
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_27.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_27.png)
 
 - Save and close the file. 
 - Now, create the trusted hosts file: `sudo vi /etc/opendkim/trusted.hosts`
@@ -600,7 +605,7 @@ The Public key will be published in DNS.
 
 - Now copy everything in the between the parentheses and paste it creating a new DNS record in your domain dns config as follows:
 
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_29.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_29.png)
 
 > Note: delete all double quotes and white spaces in the value field if any using some `sed` magic.
 
@@ -631,7 +636,7 @@ Postfix can talk to OpenDKIM via a Unix socket file. The default socket file use
 - Find the following line (Ubuntu 20.04): `Socket    local:/run/opendkim/opendkim.sock` or `Socket    local:/var/run/opendkim/opendkim.sock` (for Ubuntu 18.04)
 - Replace it with the following line: `Socket    local:/var/spool/postfix/opendkim/opendkim.sock` (If you can’t find the above line, then add the following line.)
 
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_30.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_30.png)
 
 - Similarly, find the following line in the `/etc/default/opendkim` file:
   ```bash
@@ -641,7 +646,7 @@ Postfix can talk to OpenDKIM via a Unix socket file. The default socket file use
   ```
 - Change it to: `SOCKET="local:/var/spool/postfix/opendkim/opendkim.sock"`
 
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_31.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_31.png)
 
 - Save and close the file.
 - Alas, we need to edit the Postfix main configuration file: `sudo vi /etc/postfix/main.cf`
@@ -655,7 +660,7 @@ Postfix can talk to OpenDKIM via a Unix socket file. The default socket file use
   ```
 
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_32.png)
-  
+
 - Save and close the file. Then restart Opendkim and the Postfix service: `sudo systemctl restart opendkim postfix`
 
 _________________________________________________________________________________________________
