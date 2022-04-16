@@ -34,7 +34,8 @@ A full port scan reveals redis is active on port `6379` along w winrm at 5985 wh
 ### Enumerating redis
 
 - Much cant be enumerated since redis requires credentials to authenticate. Checking the format of authentication shows it requires only the password. We could attempt to brute force the password if nothing turns up from smb.
-    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom7.png)
+
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom7.png)
 
 ### Enumerating smb
 
@@ -111,9 +112,9 @@ A full port scan reveals redis is active on port `6379` along w winrm at 5985 wh
     
     ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom16.jpg)
 - We now have the administrator hash.
-- Ater looking a lot on how to decrypt the hash i decided to look back at the "User guide.pdf" to look for further clues.
+- After looking a lot on how to decrypt the hash i decided to look back at the "User guide.pdf" to look for further clues.
     
-    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom18.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom18.png)
 - Googling around it is figured that portable-kanban stores the settings for the encrypted password.
 - Searching around for an exploit an encrypted password disclosure vulnerability is found [here](https://www.torchsec.net/portablekanban-4-3-6578-38136-encrypted-password-disclosure-torchsec/).
 - Remove the unnecessary `except` statement.
