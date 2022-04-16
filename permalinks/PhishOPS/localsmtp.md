@@ -128,13 +128,18 @@ Install postfix:
 - This ensures that your mail address naming convention would be in the form of:
   - `[-] name@example.com` and not,
   - `[x] name@mail.example.com`. 
+  
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_2.png)
 
 Once installation is complete a `/etc/postfix/main.cf` config file would be automatically generated along with postfix starting up.
 - Check your current Postfix version using the command: `postconf mail_version`.
+  
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_4.png)
+
 - Use 'Socket Statistics' - `ss` utility to check if postfix is running on port 25 succesfully: `sudo ss -lnpt | grep master`
+  
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_3.png)
+
 - If you'd like to view the various binaries shipped along with postfix check them out with `dpkg -L postfix | grep /usr/sbin/`.
 
 **Sendmail** is a binary placed at `/usr/sbin/sendmail` which is compatible with postfix to send emails. Send out your first testmail to your test email account using: `echo "test email" | sendmail your-test-account@gmail.com`
@@ -146,7 +151,9 @@ Incase your hosting provider has blocked outbound port 25, verify it using: `tel
   - If you see a status showing `Connected --> outbound 25 works succesfully`. Use `quit` to quit the command.
   - Head on over to your gmail inbox and open up the mail. 
   - Click on the drop down below the "Printer icon" to the right as shown in the `screenshot --> next click on "show original". --> next click on the "Copy to clipboard" button` to copy all contents.
+  
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_5.png)
+
   - Head on over to https://spamcheck.postmarkapp.com/ and paste your contents in and check your `SpamAssasin` spam score.
   - Check your deliverablity using [mail tester](https://mail-tester.com). My score here was about `5.5` here at the moment
 
@@ -161,9 +168,13 @@ Incase your hosting provider has blocked outbound port 25, verify it using: `tel
 TLS encryption is mandatory and ensures secured delivery. *LetsEncrypt* offers a free certificate with assisstance from their client: _certbot_.
 - Head on over to https://certbot.eff.org/. Click on  "Get Certbot instructions".
 - Select your server as the Software and which distro your running on system. In my case as i said before im using apache2 and ubuntu20.04LTS.
+  
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/certbot1.png)
+
 - Follow along the instructions to succesfully install certbot and when you reach an instruction such as `sudo certbot --apache` you will be prompted for the domains and subdomains to enable TLS on along with an administrative mail contact. Fill them as your hosting needs. 
+  
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/certbot-setup2.png)
+
 - You will then find your certificates in `/etc/letsencrypt/live/example.com/`.
 
 _Note: Use `fullchain.pem` as the supplied certificate and `privkey.pem` as the key . Fullchain.pem is a concatenation of `cert.pem` and `chain.pem` in one file._
@@ -186,7 +197,9 @@ To send emails from a remote desktop email client, we need to enable the submiss
     -o SMTPd_sasl_type=dovecot
     -o SMTPd_sasl_path=private/auth
   ```
+
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/tls1.png)
+
   - This configuration enables the submission daemon of Postfix and requires TLS encryption so that we can later connect using a desktop client. This listens on port 587 by default. 
 
 - To use **Microsoft Outlook** as a desktop client listening over port 465. Then you need to do the same and enable the submission daemon over `port 465`.
@@ -225,7 +238,9 @@ To send emails from a remote desktop email client, we need to enable the submiss
   SMTP_tls_mandatory_protocols = !SSLv2, !SSLv3, !TLSv1, !TLSv1.1
   SMTP_tls_protocols = !SSLv2, !SSLv3, !TLSv1, !TLSv1.1
   ```
+
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_6.png)
+
   - Save and close the file. 
 - Now restart Postfix.
 - Now run the following command to verify if Postfix is listening on `port 587` (`port 465` if you've configured outlook too).
@@ -234,6 +249,7 @@ To send emails from a remote desktop email client, we need to enable the submiss
 
   sudo ss -lnpt | grep master
   ```
+
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_7.png)
 
 
@@ -252,6 +268,7 @@ You can enable and use any protocol depending on your setup and the way you'd li
 - IMAP/POP3:
   - Edit the main dovecot config file using: `sudo vi /etc/dovecot/dovecot.conf`
   - Add/append the following line to enable both the IMAP and POP3 protocol: `protocols = imap pop3`
+
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_8.png)
 
 **Configuring the Mailbox Location**:
@@ -272,7 +289,9 @@ Now install the Dovecot LMTP server as before using : `sudo apt install dovecot-
 Lets Edit the Dovecot main configuration file to set this up: `sudo vi /etc/dovecot/dovecot.conf`
 
 - Add `lmtp` to the supported protocols as before (I've set all to run in this example.): `protocols = imap pop3 lmtp`
+
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_9.png)
+
 - Save and close the file.
 - Its now time to edit the `Dovecot 10-master.conf` file: `sudo vi /etc/dovecot/conf.d/10-master.conf`
 - Find and replace/comment out the `lmtp` service definition to the following:
@@ -284,8 +303,10 @@ Lets Edit the Dovecot main configuration file to set this up: `sudo vi /etc/dove
      group = postfix
     }
   }
-  ``` 
+  ```
+
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_10.png)
+
 - Now, edit the Postfix main configuration file: `sudo vi /etc/postfix/main.cf`
 - Append the following lines to the end of the file to deliver incoming emails to the local message store via the Dovecot LMTP server and disable `SMTPUTF8`.
   ```bash
@@ -302,13 +323,19 @@ Lets start by editing the authentication config file: `sudo vi /etc/dovecot/conf
 Uncomment/add the following lines:
 
 - `disable_plaintext_auth = yes`
+
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_11.png)
+
   - This will disable plaintext authentication when there’s no SSL/TLS encryption for added security and no fallback to vulnerable versions.
 - `#auth_username_format = %Lu` and change its value to --> `auth_username_format = %n`.
+
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_12.png)
+
   - This is required as we setup canonical mailbox users.
 - `auth_mechanisms = plain` and change its value to --> `auth_mechanisms = plain login`
+
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_13.png)
+
   - This only enables the PLAIN authentication mechanism.
 
 
@@ -329,7 +356,9 @@ __Configuring SSL/TLS Encryption:__
   ssl_cert = </etc/letsencrypt/live/example.com/fullchain.pem
   ssl_key = </etc/letsencrypt/live/example.com/privkey.pem
   ```
+
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_14.png)
+
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_15.png)
 
 
@@ -346,7 +375,9 @@ __Configuring SSL/TLS Encryption:__
       }
   }
   ```
+
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_16.png)
+
 - Save and close the file.
 
 __Auto-create Sent and Trash Folder:__
@@ -361,12 +392,15 @@ __Auto-create Sent and Trash Folder:__
    }
   ```
   - By default its good practice to enable common folders such as - "Drafts, Junk, Sent, Trash" for better usage and tracking of the mails sent and recieved.
+
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_17.png)
+
 - Save the file and restart Postfix and Dovecot: `sudo systemctl restart postfix dovecot`
 
 Dovecot will be listening on port 143 (IMAP) and 993 (IMAPS) .
 - `sudo ss -lnpt | grep dovecot`
 - `systemctl status dovecot`
+
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_18.png)
 
 
@@ -422,6 +456,7 @@ And we begin,
 ### Setting and configuring SPF
 
 - Get back to your respective domain management interface for DNS and create a new TXT record as follows: `TXT  @   v=spf1 mx ~all`
+
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_20.png)
 
 > v=spf1: indicates that this is an SPF record and the SPF record version we are using is SPF1.
@@ -431,6 +466,7 @@ And we begin,
 > \~all: indicates that emails from your domain should only come from hosts specified in the SPF record.
 
 - Use the following command to verify you've succesfully added the record: `dig example.com txt +short`
+
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_21.png)
 
 **Configuring SPF Policy Agent**:
@@ -444,7 +480,9 @@ We now need to tell Postfix to check for SPF records of incoming emails. This do
   policyd-spf  unix  -       n       n       -       0       spawn
       user=policyd-spf argv=/usr/bin/policyd-spf
   ```
+
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_22.png)
+
 - Save and close the file. Next, edit the Postfix main configuration file: `sudo vi /etc/postfix/main.cf`
 - Append the following lines at the end of the file as before:
   ```bash
@@ -457,6 +495,7 @@ We now need to tell Postfix to check for SPF records of incoming emails. This do
   ```
 - This will impose a restriction on incoming emails by rejecting unauthorized email and checking SPF record.
 - Save and close the file and restart Postfix: `sudo systemctl restart postfix`
+
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_23.png)
 
 When you receive an email from a domain that has an SPF record the next time, you can see the SPF check results in the raw email header. It would be as follows: `Received-SPF: Pass (sender SPF authorized).`
@@ -481,7 +520,9 @@ When you receive an email from a domain that has an SPF record the next time, yo
   DNSTimeout          5
   SignatureAlgorithm  rsa-sha256
   ```
+
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_24.png)
+
 - Add the following lines at the end of this file if you're on a different distro. (Note that On Ubuntu 20.04, this is already set)
   ```bash
   #OpenDKIM user
@@ -518,11 +559,15 @@ __Create Signing Table, Key Table and Trusted Hosts File:__
   ```
 - Now, create the signing table: `sudo vi /etc/opendkim/signing.table`
 - Append this line. This tells OpenDKIM that if a sender on your server is using a `@example.com` address, then it should be signed with the private key identified by default.`_domainkey.example.com`. Replace `example.com` with your domain: `*@example.com    default._domainkey.example.com`
+
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_26.png)
+
 - Save and close the file. Next create the key table: `sudo vi /etc/opendkim/key.table`
 - Append the following: `default._domainkey.example.com     example.com:default:/etc/opendkim/keys/example.com/default.private`
 - This tells the location of the private key.
+
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_27.png)
+
 - Save and close the file. 
 - Now, create the trusted hosts file: `sudo vi /etc/opendkim/trusted.hosts`
 - Append the following lines to the newly created file. This tells `OpenDKIM` that if an email is coming from `localhost` or from the same domain, then `OpenDKIM` should not perform DKIM verification on the email.
@@ -554,6 +599,7 @@ The Public key will be published in DNS.
 > Note: The encoded string after the `p parameter` is the public key.
 
 - Now copy everything in the between the parentheses and paste it creating a new DNS record in your domain dns config as follows:
+
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_29.png)
 
 > Note: delete all double quotes and white spaces in the value field if any using some `sed` magic.
@@ -584,7 +630,9 @@ Postfix can talk to OpenDKIM via a Unix socket file. The default socket file use
 - Then edit the OpenDKIM main configuration file: `sudo vi /etc/opendkim.conf`
 - Find the following line (Ubuntu 20.04): `Socket    local:/run/opendkim/opendkim.sock` or `Socket    local:/var/run/opendkim/opendkim.sock` (for Ubuntu 18.04)
 - Replace it with the following line: `Socket    local:/var/spool/postfix/opendkim/opendkim.sock` (If you can’t find the above line, then add the following line.)
+
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_30.png)
+
 - Similarly, find the following line in the `/etc/default/opendkim` file:
   ```bash
   sudo vi /etc/default/opendkim
@@ -592,7 +640,9 @@ Postfix can talk to OpenDKIM via a Unix socket file. The default socket file use
   `SOCKET="local:/var/run/opendkim/opendkim.sock"` or `SOCKET=local:$RUNDIR/opendkim.sock
   ```
 - Change it to: `SOCKET="local:/var/spool/postfix/opendkim/opendkim.sock"`
+
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_31.png)
+
 - Save and close the file.
 - Alas, we need to edit the Postfix main configuration file: `sudo vi /etc/postfix/main.cf`
 - Append the following lines to the end of this file.  Postfix will now be able to call OpenDKIM via the milter protocol.
@@ -603,7 +653,9 @@ Postfix can talk to OpenDKIM via a Unix socket file. The default socket file use
   SMTPd_milters = local:opendkim/opendkim.sock
   non_SMTPd_milters = $SMTPd_milters
   ```
+
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/postfix_install_32.png)
+  
 - Save and close the file. Then restart Opendkim and the Postfix service: `sudo systemctl restart opendkim postfix`
 
 _________________________________________________________________________________________________
