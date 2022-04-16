@@ -39,9 +39,12 @@ A full port scan reveals redis is active on port `6379` along w winrm at 5985 wh
 ### Enumerating smb
 
 - `smbmap` shows use we have access to 2 shares amongst. **Software_Updates** seems interesting as we have **right access** too to it.
+
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom3.png)
 - Using `smbclient` to connect to the share with null authentication:
+
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom4.png)
+
 - Grap the pdf in the share. Looking at the pdf we infer 2 things:
     1. **Built with : electron-builder**
     2. We can place the update in any client folder and the automated script would check the update. We can probably replace some code to give us a shell here.
