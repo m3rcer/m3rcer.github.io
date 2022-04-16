@@ -7,54 +7,44 @@ categories: RedTeaming
 
 <h1 align="center">Use an external cloud provided SMTP server</h1>
 
-These days abusing/ using SMTP servers provided by cloud hostings for phishing/spam has become more strict due to the recent constant abuse.
+These days abusing SMTP servers provided by cloud providers for phishing/spam has become more strict due to the recent constant abuse by malicious actors.
 
-_I will be detailing `Gmail SMTP` as the cloud SMTP example here, it's on you to find another provider for better delivery/ your needs._
+__I will be detailing `Gmail SMTP` as the cloud SMTP example here, it's on you to find another provider for better delivery that suit your needs.__
 
 
 _________________________________________________________________________________________________
 
 
-## Setting up GMails external SMTP:
+## Setting up GMails external SMTP
 
-- GMails SMTP details are as follows:
+GMails SMTP details are as follows:
+  - Gmail SMTP server address: `SMTP.gmail.com`
+  - Gmail SMTP name: `Your full name`
+  - Gmail SMTP username: `Your full Gmail address (e.g. you@gmail.com)`
+  - Gmail SMTP password: `The password that you use to log in to Gmail`
+  - Gmail SMTP port (TLS): `587`
+  - Gmail SMTP port (SSL): `465`
 
- > Gmail SMTP server address: SMTP.gmail.com.
+Visit https://myaccount.google.com/lesssecureapps and enable "Less secure app access" to your gmail account.
 
- > Gmail SMTP name: Your full name.
+Setting up GMails SMTP with GoPhish:
+ - Login to your GoPhish server --> Sending Profiles --> New Profile.
+ - Setup the config as detailed in the start.
  
- > Gmail SMTP username: Your full Gmail address (e.g. you@gmail.com)
- 
- > Gmail SMTP password: The password that you use to log in to Gmail.
+ ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/cloud-smtp-1.png)
 
- > Gmail SMTP port (TLS): 587.
+ - Test the email. 
 
- > Gmail SMTP port (SSL): 465
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/cloud-smtp-2.png)
 
-
-- Visit https://myaccount.google.com/lesssecureapps and enable "Less secure app access" to your gmail account.
-
-- Setting up GMails SMTP with GoPhish:
-
- > Login to your GoPhish server --> Sending Profiles --> New Profile.
-
-   - Setup the config as detailed in the start.
-
-   ![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/cloud-smtp-1.png)
-
-   - Test the email. 
-
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/cloud-smtp-2.png)
-
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/cloud-smtp-3.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/cloud-smtp-3.png)
 
 _________________________________________________________________________________________________
 
-## Inference:
+## Inference
 
-The mails should land through the spam into the primary like cheese with delivery depending on the cloud provider. In this case it would be 100% since GMails delivery would be so.
-
-GMail and most other cloud providers offer roughly around 300 mails or so on a daily basis for free. Plans with payment can be used to upgrade and improve the number of mails sent per day.
+- The mails should land bypassing the spam filter into the primary inbox most times with delivery depending on the cloud provider. In this case it would be 100% since GMails delivery would be so.
+- GMail and most other cloud providers offer roughly around 300 mails or so on a daily basis for free. Plans with payment can be used to upgrade and improve the number of mails sent per day.
 
 _________________________________________________________________________________________________
 

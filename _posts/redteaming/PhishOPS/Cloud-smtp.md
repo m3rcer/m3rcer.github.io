@@ -1,8 +1,8 @@
 <h1 align="center">Use an external cloud provided SMTP server</h1>
 
-These days abusing/ using SMTP servers provided by cloud hostings for phishing/spam has become more strict due to the recent constant abuse.
+These days abusing SMTP servers provided by cloud providers for phishing/spam has become more strict due to the recent constant abuse by malicious actors.
 
-_I will be detailing `Gmail SMTP` as the cloud SMTP example here, it's on you to find another provider for better delivery/ your needs._
+__I will be detailing `Gmail SMTP` as the cloud SMTP example here, it's on you to find another provider for better delivery that suit your needs.__
 
 
 _________________________________________________________________________________________________
