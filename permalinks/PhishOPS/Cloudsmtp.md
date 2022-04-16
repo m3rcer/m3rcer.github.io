@@ -25,7 +25,7 @@ GMails SMTP details are as follows:
   - Gmail SMTP port (TLS): `587`
   - Gmail SMTP port (SSL): `465`
 
-Visit https://myaccount.google.com/lesssecureapps and enable "Less secure app access" to your gmail account.
+Visit `https://myaccount.google.com/lesssecureapps` and enable "Less secure app access" to your gmail account.
 
 Setting up GMails SMTP with GoPhish:
  - Login to your GoPhish server --> Sending Profiles --> New Profile.
@@ -38,6 +38,8 @@ Setting up GMails SMTP with GoPhish:
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/cloud-smtp-2.png)
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/permalinks/PhishOPS/images/cloud-smtp-3.png)
+
+- It isn't possible to spoof using simple header spoofing that gophish offers, in this case (GMail) we'd have to make a thoughtful gmail account such as: `facebook-support24_7@gmail.com`.
 
 _________________________________________________________________________________________________
 
