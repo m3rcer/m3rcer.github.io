@@ -19,7 +19,7 @@ description: Writing a basic hello world program in C#.
 
 ### Code:
 
-```Csharp
+```csharp
 using System;
 
 namespace hello_world

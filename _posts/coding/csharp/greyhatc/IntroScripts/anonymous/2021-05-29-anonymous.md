@@ -17,7 +17,7 @@ description: Using a Delegate and referencing through Anonymous methods.
 
 ### Code:
 
-```Csharp
+```csharp
 using System;
 
 

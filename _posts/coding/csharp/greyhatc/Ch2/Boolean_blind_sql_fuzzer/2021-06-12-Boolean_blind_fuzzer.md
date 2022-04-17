@@ -27,7 +27,7 @@ _This exploit is more complicated than the UNION based sql fuzzer and requires m
 
 ### Code block:
 
-```Csharp
+```csharp
 using System;
 using System.Net;
 using System.Reflection;

@@ -19,7 +19,7 @@ description: Creating a mutational fuzzer to fuzz JSON requests for possible sql
 
 ### Code:
 
-```Csharp
+```csharp
 using System;
 using System.Net;
 using System.Net.Sockets;

@@ -19,7 +19,7 @@ _UNION injection is faster than boolean based/blind injection_.
 
 ### Code Block:
 
-```Csharp
+```csharp
 using System;
 using System.Linq;
 using System.Net;
