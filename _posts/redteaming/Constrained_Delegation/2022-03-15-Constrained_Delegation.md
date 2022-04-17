@@ -25,11 +25,13 @@ Table of Contents:
 **Constrained Delegation** was soon released after unconstrained delegation as a safer means for services to perform Kerberos delegation. It aims to restrict the services to which the server can act on behalf of a user. It no longer allows the server to cache the TGTs of other users, but allows it to request a TGS for another user with its own TGT.
 
 To impersonate the user, *Service for User (S4U)* extensions are used which provides two extensions:
-	- **Service for User to Self (S4U2self)** - Allows a service to obtain a forwardable TGS to itself on behalf of a user with just the user principal name without supplying a password. The service account must have the *TRUSTED_TO_AUTHENTICATE_FOR_DELEGATION – T2A4D UserAccountControl* attribute.
-	- **Service for User to Proxy (S4U2proxy)** - Allows a service to obtain a TGS to a second service on behalf of a user. Which second service? This is controlled by *msDS-AllowedToDelegateTo* attribute. This attribute contains a list of SPNs to which the user tokens can be forwarded.
-	![](Constrained1.png)
+- **Service for User to Self (S4U2self)** - Allows a service to obtain a forwardable TGS to itself on behalf of a user with just the user principal name without supplying a password. The service account must have the *TRUSTED_TO_AUTHENTICATE_FOR_DELEGATION – T2A4D UserAccountControl* attribute.
+- **Service for User to Proxy (S4U2proxy)** - Allows a service to obtain a TGS to a second service on behalf of a user. Which second service? This is controlled by *msDS-AllowedToDelegateTo* attribute. This attribute contains a list of SPNs to which the user tokens can be forwarded.
 
-To perform the delegation, we ultimately need the TGT of the principal (**machine or user**) trusted for delegation. We can extract it from a machine (Rubeus dump) or request one using the NTLM / AES keys (Mimikatz `sekurlsa::ekeys` + Rubeus `asktgt`).
+![](Constrained1.png)
+
+To perform the delegation, we ultimately need the TGT of the principal (**machine or user**) trusted for delegation. We can extract it from a machine (Rubeus dump) or request one using the NTLM/AES keys (Mimikatz `sekurlsa::ekeys` + Rubeus `asktgt`).
+
 Enumerate users/computers with constrained Delegation
 - In Bloodhound: 
 	- Users:
@@ -49,7 +51,7 @@ Enumerate users/computers with constrained Delegation
 	```
 	Get-DomainComputer –TrustedToAuth
 	```
-- Using ADModule enumerate both computers and users: 
+- Using ADModule enumerate both for computers and users: 
 ```
 Get-ADObject -Filter {msDS-AllowedToDelegateTo -ne "$null"} -Properties msDS-AllowedToDelegateTo
 ```
