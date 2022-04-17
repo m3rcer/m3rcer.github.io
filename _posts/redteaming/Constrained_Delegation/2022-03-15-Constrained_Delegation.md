@@ -4,7 +4,7 @@ date: 2022-03-15 09:48:47 +07:00
 categories: RedTeaming
 #modified: 20-08-29 09:24:47 +07:00
 #tags: [blog, netlify, jekyll, github]
-description: Various attack prototypes for Constrained Delegation Abuse
+description: Various Attacks For Constrained Delegation Abuse
 ---
 
 # Constrained Delegation
@@ -19,7 +19,9 @@ Table of Contents:
 	- [Abusing Resource Based Constrained Delegation](#abusing-resource-based-constrained-delegation)
 - [OPSEC](#opsec)
 - [Resources](#resources)
+
 -------------------------------------------------------
+
 **Constrained Delegation** was soon released after unconstrained delegation as a safer means for services to perform Kerberos delegation. It aims to restrict the services to which the server can act on behalf of a user. It no longer allows the server to cache the TGTs of other users, but allows it to request a TGS for another user with its own TGT.
 
 To impersonate the user, *Service for User (S4U)* extensions are used which provides two extensions:
@@ -28,29 +30,29 @@ To impersonate the user, *Service for User (S4U)* extensions are used which prov
 	![](Constrained1.png)
 
 To perform the delegation, we ultimately need the TGT of the principal (**machine or user**) trusted for delegation. We can extract it from a machine (Rubeus dump) or request one using the NTLM / AES keys (Mimikatz `sekurlsa::ekeys` + Rubeus `asktgt`).
-1. Enumerate users/computers with constrained Delegation
-	- In Bloodhound: 
-		- Users:
-		```
-		MATCH (c:User), (t:Computer), p=((c)-[:AllowedToDelegate]->(t)) RETURN p
-		```
-		- Computers: 
-		```
-		MATCH (c:Computer), (t:Computer), p=((c)-[:AllowedToDelegate]->(t)) RETURN p
-		````
-	- Using Powerview:
-		- Users: 
-		```
-		Get-DomainUser –TrustedToAuth
-		```
-		- Computers:
-		```
-		Get-DomainComputer –TrustedToAuth
-		```
-	- Using ADModule enumerate both computers and users: 
+Enumerate users/computers with constrained Delegation
+- In Bloodhound: 
+	- Users:
 	```
-	Get-ADObject -Filter {msDS-AllowedToDelegateTo -ne "$null"} -Properties msDS-AllowedToDelegateTo
+	MATCH (c:User), (t:Computer), p=((c)-[:AllowedToDelegate]->(t)) RETURN p
 	```
+	- Computers: 
+	```
+	MATCH (c:Computer), (t:Computer), p=((c)-[:AllowedToDelegate]->(t)) RETURN p
+	````
+- Using Powerview:
+	- Users: 
+	```
+	Get-DomainUser –TrustedToAuth
+	```
+	- Computers:
+	```
+	Get-DomainComputer –TrustedToAuth
+	```
+- Using ADModule enumerate both computers and users: 
+```
+Get-ADObject -Filter {msDS-AllowedToDelegateTo -ne "$null"} -Properties msDS-AllowedToDelegateTo
+```
 > NOTE: Constrained delegation can be configured on user accounts as well as computer accounts.  Make sure you search for both.
 
 ------------------------------------------------------
