@@ -20,13 +20,15 @@ ________________________________________________________________________________
 
 _Let's say we want to impersonate Facebook/Instagram._ All you have to do once the local SMTP is up an running as discussed [previously](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/local_smtp.md) is -
 
-- _(Optional):_ Create a user account on your vps server in accordance to your spoofed account if you want to add the functionality to recieve emails too. 
+1._(Optional):_ Create a user account on your vps server in accordance to your spoofed account if you want to add the functionality to recieve emails too. 
   
-   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/spoof1.png)
-- Setup a "New Sending Profile" on GoPhish or a Phish server of choice as follows:
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/spoof1.png)
 
-   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/spoof2.png)
-- Fire-Away using the New Profile.
+2. Setup a "New Sending Profile" on GoPhish or a Phish server of choice as follows:
+  
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/spoof2.png)
+
+3. Fire-Away using the New Profile.
    
    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_36.png)
 
