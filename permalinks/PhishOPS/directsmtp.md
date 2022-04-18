@@ -76,14 +76,12 @@ ________________________________________________________________________________
   set type=mx
   example.com
   ```
-  - The result yields systems responsible for incoming mail for that domain.
+- The result yields systems responsible for incoming mail for that domain.
   
-    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/direct1.png)
-
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/direct1.png)
 - Next we perform a basic nmap scan, to identify open ports: Namely seeking ports - 25,465,587.
 
   ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/direct2.png)
-
 - Now based on what ports are open we can perform the following:
   - Connecting/Pentesting Port 25:
   - Mailserver User Enumeration: use the `VRFY/EXPN` SMTP Command:
