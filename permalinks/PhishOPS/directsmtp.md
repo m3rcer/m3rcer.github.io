@@ -6,7 +6,7 @@ categories: RedTeaming
 
 
 
-<h1 align="center">Engaging and pentesting SMTP relays/server</h1>
+<h1 align="center">Engaging and pentesting SMTP Relays & Servers</h1>
 
 
 <p align="center">
@@ -51,9 +51,7 @@ Some basic SMTP Commands:
   QUIT: It terminates the SMTP conversation.
 ```
 
-A workflow of an email´s travel from one user to another would look like so:
-
-  `MUA → MSA → MTA → internet → MTA → MDA → MUA`
+A workflow of an email´s travel from one user to another would look like so: `MUA → MSA → MTA → internet → MTA → MDA → MUA`
 
 A "relay" SMTP system receives mail from an SMTP client and transmits it, without modification to the message data other than adding trace information, to another SMTP server for further relaying or for delivery.
 
@@ -64,34 +62,29 @@ ________________________________________________________________________________
 
 ## Various Scenarious
 
-1. Someone connects to your SMTP-server and wants to send from an account on your domain to another on your domain.
-- This is the “normal” case that one would assume to happen on a daily basis. 
-- Hence it is _rare nbut absolutely abusable_ if credentials are available.
+1. Someone connects to your SMTP-server and wants to send from an account on your domain to another on your domain. This is the “normal” case that one would assume to happen on a daily basis. Hence it is _rare nbut absolutely abusable_ if credentials are available.
 
-2. Someone connects to your SMTP-server and wants to send from your domain to an external domain.
--  I would consider this to be at least unusual, as no one from your organisation will directly transfer their emails to the firewall under normal circumstances. 
--  Hence it is _not as abusable_.
+2. Someone connects to your SMTP-server and wants to send from your domain to an external domain. I would consider this to be at least unusual, as no one from your organisation will directly transfer their emails to the firewall under normal circumstances. Hence it is _not as abusable_.
 
-3. Someone connects to your SMTP-server and wants to send from an external domain to an external domain.
--  This would be considered an open mail-relay if allowed and you don´t want that to happen, unless you like yourself to be put on all the blacklists for spammers out there.
--  Hence it is _higly Abusable and dangerous_.
+3. Someone connects to your SMTP-server and wants to send from an external domain to an external domain. This would be considered an open mail-relay if allowed and you don´t want that to happen, unless you like yourself to be put on all the blacklists for spammers out there. Hence it is _higly Abusable and dangerous_.
 
 _________________________________________________________________________________________________
 
 ## Pentesting port 25,465,587
 
-1. Using a simple nslookup for the MX records:
+- Using a simple nslookup for the MX records:
   ```bash
   nslookup
   set type=mx
   example.com
   ```
-- The result yields systems responsible for incoming mail for that domain.
-  ![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/direct1.png)
+  - The result yields systems responsible for incoming mail for that domain.
+  
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/direct1.png)
 
-2. Next we perform a basic nmap scan, to identify open ports: Namely seeking ports - 25,465,587.
+- Next we perform a basic nmap scan, to identify open ports: Namely seeking ports - 25,465,587.
 
-![Image](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/images/direct2.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/direct2.png)
 
 - Now based on what ports are open we can perform the following:
   - Connecting/Pentesting Port 25:
