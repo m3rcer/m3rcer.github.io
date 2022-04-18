@@ -70,60 +70,61 @@ ________________________________________________________________________________
 
 ## Pentesting port 25,465,587
 
-- Using a simple nslookup for the MX records:
+Using a simple nslookup for the MX records:
+
   ```bash
   nslookup
   set type=mx
   example.com
   ```
 
-- The result yields systems responsible for incoming mail for that domain.
+The result yields systems responsible for incoming mail for that domain.
   
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/direct1.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/direct1.png)
 
-- Next we perform a basic nmap scan, to identify open ports: Namely seeking ports - 25,465,587.
+Next we perform a basic nmap scan, to identify open ports: Namely seeking ports - 25,465,587.
+ 
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/direct2.png)
 
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/direct2.png)
-  
-- Now based on what ports are open we can perform the following:
-  - Connecting/Pentesting Port 25:
-  - Mailserver User Enumeration: use the `VRFY/EXPN` SMTP Command:
-    ```bash
-      telnet 10.0.0.1 25
-      Trying 10.0.0.1...
-      Connected to 10.0.0.1.
-      Escape character is '^]'.
-      220 myhost ESMTP Sendmail 8.9.3
-      HELO
-      501 HELO requires domain address
-      HELO x
-      250 myhost Hello [10.0.0.99], pleased to meet you
-      VRFY boobman
-      250 Super-User <boobman@myhost>
-      VRFY blah
-      550 blah... User unknown
-    ```
-    ```bash
-      telnet 10.0.10.1 25
-      Trying 10.0.10.1...
-      Connected to 10.0.10.1.
-      Escape character is '^]'.
-      220 myhost ESMTP Sendmail 8.9.3
-      HELO
-      501 HELO requires domain address
-      HELO x
-      EXPN test
-      550 5.1.1 test... User unknown
-      EXPN root
-      250 2.1.5 <ed.williams@myhost>
-      EXPN sshd
-      250 2.1.5 sshd privsep <sshd@mail2>
-    ```
-  - Sending email:
-    - Use the SMTP Commands `MAIL FROM` and `RCPT TO` to send the forged mail to the receiver using:
-      - Syntax for sender: `mail from`: `kingkong@example.com`
-      - Syntax for receiver: `rcpt to`: `tarzan@example.com`
-      - Utilize the SMTP command `DATA` to compose the mail in the command line.
+Now based on what ports are open we can perform the following:
+- Connecting/Pentesting Port 25:
+- Mailserver User Enumeration: use the `VRFY/EXPN` SMTP Command:
+  ```bash
+    telnet 10.0.0.1 25
+    Trying 10.0.0.1...
+    Connected to 10.0.0.1.
+    Escape character is '^]'.
+    220 myhost ESMTP Sendmail 8.9.3
+    HELO
+    501 HELO requires domain address
+    HELO x
+    250 myhost Hello [10.0.0.99], pleased to meet you
+    VRFY boobman
+    250 Super-User <boobman@myhost>
+    VRFY blah
+    550 blah... User unknown
+  ```
+  ```bash
+    telnet 10.0.10.1 25
+    Trying 10.0.10.1...
+    Connected to 10.0.10.1.
+    Escape character is '^]'.
+    220 myhost ESMTP Sendmail 8.9.3
+    HELO
+    501 HELO requires domain address
+    HELO x
+    EXPN test
+    550 5.1.1 test... User unknown
+    EXPN root
+    250 2.1.5 <ed.williams@myhost>
+    EXPN sshd
+    250 2.1.5 sshd privsep <sshd@mail2>
+  ```
+- Sending email:
+  - Use the SMTP Commands `MAIL FROM` and `RCPT TO` to send the forged mail to the receiver using:
+    - Syntax for sender: `mail from`: `kingkong@example.com`
+    - Syntax for receiver: `rcpt to`: `tarzan@example.com`
+    - Utilize the SMTP command `DATA` to compose the mail in the command line.
 
 
   
