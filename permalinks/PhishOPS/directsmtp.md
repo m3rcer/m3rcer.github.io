@@ -63,9 +63,7 @@ ________________________________________________________________________________
 ## Various Scenarious
 
 1. Someone connects to your SMTP-server and wants to send from an account on your domain to another on your domain. This is the “normal” case that one would assume to happen on a daily basis. Hence it is _rare nbut absolutely abusable_ if credentials are available.
-
 2. Someone connects to your SMTP-server and wants to send from your domain to an external domain. I would consider this to be at least unusual, as no one from your organisation will directly transfer their emails to the firewall under normal circumstances. Hence it is _not as abusable_.
-
 3. Someone connects to your SMTP-server and wants to send from an external domain to an external domain. This would be considered an open mail-relay if allowed and you don´t want that to happen, unless you like yourself to be put on all the blacklists for spammers out there. Hence it is _higly Abusable and dangerous_.
 
 _________________________________________________________________________________________________
@@ -80,11 +78,11 @@ ________________________________________________________________________________
   ```
   - The result yields systems responsible for incoming mail for that domain.
   
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/direct1.png)
+    ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/direct1.png)
 
 - Next we perform a basic nmap scan, to identify open ports: Namely seeking ports - 25,465,587.
 
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/direct2.png)
+  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/direct2.png)
 
 - Now based on what ports are open we can perform the following:
   - Connecting/Pentesting Port 25:
