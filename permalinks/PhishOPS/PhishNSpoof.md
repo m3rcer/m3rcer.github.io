@@ -8,7 +8,6 @@ categories: RedTeaming
 
 _________________________________________________________________________________________________
 
-**`NOTE:` All numbering below is in accordance to methods listed previously**
 
 ## INDEX
 
@@ -20,6 +19,10 @@ ________________________________________________________________________________
      - [1: A Locally built SMTP server](#1-a-locally-built-smtp-server-1)
      - [2: A Cloud Provided Relay](#2-a-cloud-provided-relay-1)
      - [3: An Open Relay](#3-an-open-relay-1)
+
+
+
+**`NOTE:` All numbering below is in accordance to methods listed previously**
 
 _________________________________________________________________________________________________
 
@@ -55,7 +58,7 @@ The header spoofing feature as detailed in the image for the local SMTP is not p
 
 ### 3: An Open Relay
 
-This basically depends on you [pentesting](https://book.hacktricks.xyz/pentesting/pentesting-SMTP) the open relay, finding some sort of credentials/misconfigurations to take advantage of, enumerating possible usernames and abusing their inbound trust relationships.
+This basically depends on you [pentesting](https://book.hacktricks.xyz/pentesting/pentesting-smtp) the open relay, finding some sort of credentials/misconfigurations to take advantage of, enumerating possible usernames and abusing their inbound trust relationships.
 
 __________________________________________________________________________________________________
 
