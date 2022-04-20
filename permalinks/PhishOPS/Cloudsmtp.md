@@ -11,6 +11,9 @@ These days abusing SMTP servers provided by cloud providers for phishing/spam ha
 
 __I will be detailing `Gmail SMTP` as the cloud SMTP example here, it's on you to find another provider for better delivery that suit your needs.__
 
+- [Setting up GMails external SMTP](#setting-up-gmails-external-smtp)
+- [Inference](#inference)
+
 
 _________________________________________________________________________________________________
 

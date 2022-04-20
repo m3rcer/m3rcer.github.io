@@ -13,15 +13,19 @@ categories: RedTeaming
      <img src="https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/smtpmeme.png">
 </p>
 
+# Index
+
+
+- [Introduction](#introduction)
+- [Attacking an SMTP-Server](#attacking-an-smtp-server)
+  - [Various Scenarious](#various-scenarious)
+  - [Pentesting port 25,465,587](#pentesting-port-25-465-587)
+  - [Pentesting SPF,DKIM,DMARK](#pentesting-spf-dkim-dmarc)
+- [Conclusion](#conclusion)
+
 _________________________________________________________________________________________________
 
 # Introduction
-
-The default ports used are 25, 465 (Exchange) and 587 that are meant to be used for submissions from your e-mail client to the e-mail server and  higher ports are used for relaying between SMTP-server.
-
-- Some verbatim assocaited with SMTP:
-  - `Mail User Agent (MUA)`: This is a (part of a) program connecting to a SMTP-server in order to send an email. Most likely this is your Outlook, Thunderbird, whatever.
-  - `Mail Transfer Agent (MTA)`: The transport service part of a program. They receive and transfer the emails. This might be an Exchange server, an internet facing gateway and so on.
 
 Some basic SMTP Commands: 
 
@@ -65,8 +69,6 @@ ________________________________________________________________________________
 1. Someone connects to your SMTP-server and wants to send from an account on your domain to another on your domain. This is the “normal” case that one would assume to happen on a daily basis. Hence it is _rare nbut absolutely abusable_ if credentials are available.
 2. Someone connects to your SMTP-server and wants to send from your domain to an external domain. I would consider this to be at least unusual, as no one from your organisation will directly transfer their emails to the firewall under normal circumstances. Hence it is _not as abusable_.
 3. Someone connects to your SMTP-server and wants to send from an external domain to an external domain. This would be considered an open mail-relay if allowed and you don´t want that to happen, unless you like yourself to be put on all the blacklists for spammers out there. Hence it is _higly Abusable and dangerous_.
-
-_________________________________________________________________________________________________
 
 ## Pentesting port 25,465,587
 
