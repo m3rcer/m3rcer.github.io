@@ -13,7 +13,7 @@ description: Various Attacks For Constrained Delegation Abuse
 
 Table of Contents:
 - [Attack Variants](#attack-variants)
-	- [Basic Constrained Delegation Exploitation](#Basic-Constrained-Delegation-Exploitation)
+	- [Basic Constrained Delegation Exploitation](#basic-constrained-delegation-exploitation)
 	- [Alternate Service Name Abuse](#alternate-service-name-abuse)
 	- [Bronze Bit Attack](#bronze-bit-attack)
 	- [Abusing Resource Based Constrained Delegation](#abusing-resource-based-constrained-delegation)
