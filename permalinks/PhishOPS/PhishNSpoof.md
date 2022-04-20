@@ -4,7 +4,7 @@ permalink: /permalinks/PhishOPS/PhishNSpoof
 categories: RedTeaming
 ---
 
-<h1 align="center">Spoofing and Evasion with SMTP Builds</h1> 
+<h1 align="center">Spoofing and Evasion</h1> 
 
 _________________________________________________________________________________________________
 
@@ -27,19 +27,19 @@ ________________________________________________________________________________
 
 ### 1: A Locally built SMTP server
 
-Let's say we want to impersonate _Facebook/Instagram._ All you have to do once the local SMTP is up an running as discussed [previously](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/local_smtp.md) is as mentioned below.
+Let's say we want to impersonate _Facebook/Instagram._ All you have to do once the local SMTP is up an running as discussed [previously](https://github.com/m3rcer/Red-Team-SMTP-Spam-Filter-Bypass/blob/main/local_smtp.md) is 
 
-_(Optional):_ Create a user account on your vps server in accordance to your spoofed account if you want to add the functionality to recieve emails too. 
+- _(Optional):_ Create a user account on your vps server in accordance to your spoofed account if you want to add the functionality to recieve emails too. 
 
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/spoof1.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/spoof1.png)
 
-Setup a `New Sending Profile` on GoPhish or a similar MUA (Mail User Agent) of choice as follows:
+- Setup a `New Sending Profile` on GoPhish or a similar MUA (Mail User Agent) of choice as follows:
 
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/spoof2.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/spoof2.png)
   
-Fire-Away using the `New Profile`.
+- Fire-Away using the `New Profile`.
 
-  ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_36.png)
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_36.png)
 
 ### 2: A Cloud Provided Relay
 
