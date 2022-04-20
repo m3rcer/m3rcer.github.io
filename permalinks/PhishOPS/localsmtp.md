@@ -10,16 +10,15 @@ kramdown:
 
 <h1 align="center">Building and Configuring a Phishing Server on a VPS locally</h1>
 
-**This Blog details the practical aspect of setting up a SMTP server with a phishing client (Ex: gophish, MS Exchange Server etc), configuring a dekstop client for remote access to SMTP and setup Security Related Checks such as *SPF,DKIM,DMARC* to bypass modern MTA spam filters from scratch.**
+**This Blog details the practical aspect of setting up a SMTP server with a MTA ( Ex: gophish, MS Exchange Server etc), configuring a MUA dekstop client for remote access to SMTP and setup Security Related Checks such as *SPF,DKIM,DMARC* to bypass modern MTA spam filters from scratch.**
 
 __For this blog I've used the following and would recommend something similar__
 * `Ubuntu 20.04LTS` as my distro.
-* `Gmail` as the testing MTA spam filter & mail service.
+* `Gmail` as the testing external MTA spam filter & mail service.
 * `Namecheap` as my domain hosting provider. Buy used/lapsed domains as I've noticed domain age is a key factory regardingly deliverability (Age the domain atleast 6weeks+). 
-* `Thunderbird` as my remote desktop client for remote access to the smtp server.
-* `GoPhish/MS Outlook` as my server phish client to use the SMTP server for phishing.
-* Disabled any firewall rules against ports `25,587,80,443,465,143,993,110,995`.   
-
+* `Thunderbird` as my MUA remote desktop client for remote access to the smtp server.
+* `GoPhish/MS Exchange` as my local MTA server for phishing.
+* Disable any firewall rules against ports: `25,587,80,443,465,143,993,110,995`.   
 
 ## Index
 
