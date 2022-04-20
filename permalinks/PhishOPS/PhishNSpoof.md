@@ -13,14 +13,13 @@ ________________________________________________________________________________
 ## INDEX
 
 - [Spoofing](#spoofing)
-     - [1: A Locally built SMTP server](#spoofing)
-     - [2: A Cloud Provided Relay](#spoofing)
-     - [3: An Open Relay](#spoofing)
+     - [1: A Locally built SMTP server](#1-a-locally-built-smtp-server)
+     - [2: A Cloud Provided Relay](#2-a-cloud-provided-relay)
+     - [3: An Open Relay](#3-an-open-relay)
 - [Evasion](#evasion)
-     - [1: A Locally built SMTP server](#spoofing)
-     - [2: A Cloud Provided Relay](#spoofing)
-     - [3: An Open Relay](#spoofing)
-
+     - [1: A Locally built SMTP server](#1-a-locally-built-smtp-server-1)
+     - [2: A Cloud Provided Relay](#2-a-cloud-provided-relay-1)
+     - [3: An Open Relay](#3-an-open-relay-1)
 
 _________________________________________________________________________________________________
 
