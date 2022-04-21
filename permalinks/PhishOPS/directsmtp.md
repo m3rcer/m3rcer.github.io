@@ -20,7 +20,7 @@ categories: RedTeaming
 - [Attacking an SMTP-Server](#attacking-an-smtp-server)
   - [Various Scenarious](#various-scenarious)
   - [Pentesting port 25,465,587](#pentesting-port-25465587)
-  - [Pentesting SPF,DKIM,DMARK](#pentesting-spfdkimdmarc)
+  - [Pentesting SPF,DKIM,DMARK](#pentesting-spfdkimdmark)
 - [Attacking an Exchange Server](#attacking-an-exchange-server)
 - [Conclusion](#conclusion)
 
@@ -144,13 +144,13 @@ ________________________________________________________________________________
 
 # Attacking an Exchange Server
 
-- Exchange is basically a mail server that supports a bunch of Microsoft protocols. It’s usually located on subdomains named `autodiscover`, `mx`, `owa` or `mail`, and it can also be detected by existing `/owa/`, `/ews/`, `/ecp/`, `/oab/`, `/autodiscover/`, `/Microsoft-Server-ActiveSync/`, `/rpc/`, `/powershell/` endpoints on the web server.
+Exchange is basically a mail server that supports a bunch of Microsoft protocols. It’s usually located on subdomains named `autodiscover`, `mx`, `owa` or `mail`, and it can also be detected by existing `/owa/`, `/ews/`, `/ecp/`, `/oab/`, `/autodiscover/`, `/Microsoft-Server-ActiveSync/`, `/rpc/`, `/powershell/` endpoints on the web server.
 
-- The currently supported server versions are 2007, 2010, 2013 and 2016.
+The currently supported server versions are 2007, 2010, 2013 and 2016.
 
-- `Office 365` and `Outlook.com` are built on top of Exchange. Consequently, any attack we could perform against an Exchange server, can be also performed against an `Office365` or `Outlook.com` profile. 
+`Office 365` and `Outlook.com` are built on top of Exchange. Consequently, any attack we could perform against an Exchange server, can be also performed against an `Office365` or `Outlook.com` profile. 
 
-- I'd recommended reading through this well written blog by [h4ms1k](https://h4ms1k.github.io/) detailing [how to attack/abuse Exchange Servers from a Red Team's perspective](https://h4ms1k.github.io/Red_Team_exchange/).
+I'd recommended reading through this already well written blog by [h4ms1k](https://h4ms1k.github.io/) detailing [how to attack MS Exchange Servers from a Red Team's perspective](https://h4ms1k.github.io/Red_Team_exchange/).
 
 _________________________________________________________________________________________________
 
