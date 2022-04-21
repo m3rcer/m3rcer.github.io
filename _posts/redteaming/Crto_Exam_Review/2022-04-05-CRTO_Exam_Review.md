@@ -20,6 +20,7 @@ Index:
 	- [Exam Experience](#exam-experience)
 	- [Exam Tips](#exam-tips)
 - [Conclusion](#conclusion)
+- [What's Next](#whats-next)
 
 -------------------------------------------------------
 
@@ -31,13 +32,13 @@ Index:
 
 In my initial days learning to hack I always had a keen interest towards Botnet's and C2's. The power a Botherder beheld being able to control an Army of Computers with the click of a few buttons was everything that peaked my hacker interest, I think It's quite deplorable that such power is used mostly for cyberfraud. 
 
-I began scourging and playing with every C2 I could find off the Darknet or every open Source github C2. I was quite clueless with everything as there weren't any definitive guides to setting things up, even if they were they were all ancient methods/too good to be true scams on the darknet. I set out trying to understand and study all I could about C2's and Red Team Operations. I Knew Cobalt Strike was it when it came to APT Operations. I remember reading a lot of APT papers from sources like @Mandiant, learning and trying to emulate APT behaviour using a botched up Cracked version of Cobalt Strike 3.x. I finally managed to get my hands on a fully operational Cracked version of Cobalt Strike 4.3 from a user on github called `ORCA666` which was clean from all malware treachery. The project was taken down a few weeks after. If you're interested here's the [link](https://github.com/ORCA666/Cobalt-Wipe).
+I began scourging and playing with every C2 I could find off the Darknet or every open Source github C2. I was quite clueless with everything as there weren't any definitive guides to setting things up, even if they were they were all ancient methods/too good to be true well disguised malware/scams. I Knew Cobalt Strike was it when it came to APT Operations. I remember reading a lot of APT papers from sources like [@Mandiant](https://www.mandiant.com/), watching Raphael Mudge on [youtube](https://www.youtube.com/channel/UCJU2r634VNPeCRug7Y7qdcw) trying to emulate APT behaviour using Cracked versions of Cobalt Strike 3/4.x such as [Cobalt-Wipe]((https://github.com/ORCA666/Cobalt-Wipe)) by ORCA666 (Taken down by DMCA. [WayBack Machine](https://archive.org/) is your friend).
 
-I watched Raphael Mudge on [youtube](https://www.youtube.com/channel/UCJU2r634VNPeCRug7Y7qdcw), learnt the basic functionality of Cobalt Strike. As an experiment managed to succesfully set up a standard 3 tier architecture with a staging,post-ex and long haul server on seperate VPS's. Setup Redirectors with [Red-Warden](https://github.com/mgeeky/RedWarden), experimented and learnt alot about Cobalt Strike and A/V evasion. Learnt a lot on how to rewrite the Artificat Kit to incorporate direct Syscalls, Adding custom AMSI bypasses and droppers in the Resource Kit etc etc... I also did quite some research and built my own SMTP Server on a VPS with things like DKIM,SPF,DMARC etc setup which could Bypass most spam filters like Gmail,Yahoo etc to accompany my Cobalt Strike Teamserver delivering my phish.
+As an experiment I managed to succesfully set up a standard 3 tier architecture with a staging,post-ex and long haul server on seperate VPS's. Setup Redirectors with [Red-Warden](https://github.com/mgeeky/RedWarden), experimented and learnt alot about Cobalt Strike and A/V evasion. Not just Cobalt Strike I learnt to bypass A/v using many other C2's such as [SILENTTRINITY](https://github.com/byt3bl33d3r/SILENTTRINITY) with simple powershell obfuscation. Learnt a lot on how to rewrite the Artificat Kit to incorporate direct Syscalls, Adding custom AMSI bypasses and droppers in the Resource Kit etc etc...
 
-I had been taking a couple other certs/books/courses etc to supplement my overall hacking skillset, played regular CTF's and planned to better my Active Directory skills by starting off and completing the CRTP earlier this January. Even though the whole course is structured around manual Active Directory Enumeration. I did both, did the intended way and after which could'nt resist to not play around using my Cracked Cobalt Strike and Custom Aggressor/Tools finding all or new ways using newer exploits. I learnt soo much more doing this and I highly recommend it. A place where you can detonate practically anything safely are the @PentesterAcademy Labs which is awesome. I even managed to pass the exam pwning all 5 machines using only Cobalt Strike as an added challenge as their are no tool restrictions on the CRTP Exam. 
+I had been taking a couple other certs/books/courses etc to supplement my overall Active Directory skillset, played regular CTF's, built my own labs, research etc as I felt I understood the toolset and verbatim associated but din't understand know how to hack an Active Directory. I started off by gaining a fair bit off AD experience from the PWKv2 after which completing the CRTP earlier this January. Even though the whole course is structured around manual Active Directory Enumeration which is awesome, I did both, the intended way after which could'nt resist to not play around using my Cracked Cobalt Strike instance and Custom Aggressors. I learnt soo much more doing this and I highly recommend "playing outside the box". A place where you can detonate practically any tooling safely are the [@PentesterAcademy Labs](https://www.pentesteracademy.com/redlabs). I even managed to pass the CRTP exam pwning all machines using my Cracked Cobalt Strike instance and wrote a report including Cobalt Strike which was unnecessary but was succesfully evaluated as their are no tool restrictions on the CRTP Exam.  
 
-I had been eyeing the CRTO course for a while as I felt it is the right of passage to becoming able in Red Team Operations using Cobalt Strike. Even though I did have a fair share of experience with Cobalt Strike through my own learning, the course managed to fill in a lot of base knowledge gaps, increase my Active Directory hacking attack skillset and make me overall love and understand Cobalt Strike a 100x more. I'd Recommend doing the CRTP/OSCP as a primer to Active Directory exploitaion before taking this course.
+I had been eyeing the CRTO course for a while as I felt it is the right of passage to becoming able in Red Team Operations using Cobalt Strike and I knew I have to enroll to further hone my Cobalt Strike skillset. Even though I did have a fair share of experience with Cobalt Strike through my own learning, the course managed to fill in a lot of base knowledge gaps, increase my Active Directory hacking attack skillset and make me overall love and understand Cobalt Strike a 100x more. I'd Recommend doing the CRTP/OSCP as a primer to Active Directory exploitaion before taking this course.
 
 
 ------------------------------------------------------
@@ -66,18 +67,15 @@ I had been eyeing the CRTO course for a while as I felt it is the right of passa
 
 ------------------------------------------------------
 
-
 ## Exam Review
 
 ### Exam Structure
 
 The exam is totally 48 hours, you have 4 days to allocate 48 hours. 4 days * 12 hours is the most viable option to go with. Their is no proctoring and no report submissions which I feel is one of the best parts about the exam. The exam can be scheduled I'd say almost a day before, there are ample slots available. I'd recommend booking the exam a few days prior. Once done, launch the snaplab Exam instance, read the exam instructions and download your threat profile.
 
-
 ### Exam Experience
 
-I scheduled my exam for the 28th of March, 6-8 weeks after enrollment with the idea of the standard 4 days * 12 hours. I felt I was already prepared after a month of practice, but for personal reasons and because @rasta_mouse did add additional modules to the course, I had to posponn the exam. I did enroll in a Pro-Lab from HTB in the meantime called "Cybernetics" 2 weeks prior my exam. Pwning the first domain off Cybernetics I'd say was great practice, I wouldn't say it is mandatory to do so. I feel 6 weeks of good preparation with the course and lab will yield hearty results.
-
+I scheduled my exam for the 28th of March, 6-8 weeks after enrollment with the idea of the standard 4 days * 12 hours. I felt I was already prepared after a month of practice, but for personal reasons and because @rasta_mouse did add additional modules to the course, I had to posponn the exam. I did enroll in a Pro-Lab from HTB in the meantime called [Cybernetics](https://www.hackthebox.com/newsroom/prolab-cybernetics) 2 weeks prior my exam. Pwning the first domain off [Cybernetics](https://www.hackthebox.com/newsroom/prolab-cybernetics) I'd say was great practice, I wouldn't say it is mandatory to do so. I feel 4-6 weeks of good preparation with the course and lab will yield hearty results.
 
 ![](crto2.png)
 
@@ -88,6 +86,8 @@ The next day I spent the whole day trying to make things work and finally manage
 The 3rd day I spent some time debugging as I had managed to break something in the lab. If you do face something similar you can revert all your exam machines by yourself. You dont have to contact @Rasta_Mouse the way I did (Like always he did respond in a few minutes). After an hour of reverting I found the final flag. To some the last 2 flags can seem tricky since they aren't as obvious as the rest. I'd recommend going for the last 2 flags as I feel I've learnt a lot just from completing the exam.
 
 Finally I'm happy to pass with all 8 flags and suprisingly still manage to have over 24 hours of exam lab time. Mainly because I did pause the labs when I took breaks too. I dont have an issue setting things up again if it gives me extra time if say I needed it, thats just my train of thought. The amount of time given is overkill for that thought train and is more than enough to pwn 2 exams. This makes the exam all the more easy,relaxed and enjoyable to pwn all the flags.
+
+![](crto3.png)
 
 ### Exam Tips
 
@@ -110,6 +110,10 @@ If I could I'd definitely vouch to purchase the licensed version of Cobalt Strik
 Also being taught with assisstance from @Rasta_Mouse himself is a cherry on top. The exam is balanced in terms of difficulty and is a good test in terms of Cobalt Strike Operatibility. The course will someday hopefully be the de-facto for Red Teaming Operations on HR. Can't wait to see what @Rasta_Mouse has in store for CRTO2.
 
 
+----------------------------------------------------
 
+## What's Next
+
+I plan to continue and complete [Cybernetics](https://www.hackthebox.com/newsroom/prolab-cybernetics) from HackTheBox and enroll into [PACES](https://www.pentesteracademy.com/gcb) alongside where I still plan to use my Cracked Cobalt Strike Instance and better my skillset with and without a C2. I am currently writting an Aggressor Script too for learning purposes. After PACES I'm going to be finally applying for Red Team Positions.
 
 
