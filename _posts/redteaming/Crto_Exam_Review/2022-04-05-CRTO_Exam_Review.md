@@ -83,11 +83,13 @@ I began my exam at 11.30am and had my first flag in about an hour mainly because
 
 The next day I spent the whole day trying to make things work and finally managed to do so by 5 in the evening. I decided to take a massive break after which i found the 7th flag within half an hour of enumeration around 11pm. I just took the rest of the day off as i still had over 28hrs lab time on my exam.
 
-The 3rd day I spent some time debugging as I had managed to break something in the lab. If you do face something similar you can revert all your exam machines by yourself. You dont have to contact [@Rasta_Mouse](https://twitter.com/_rastamouse?lang=en) the way I did (Like always he did respond in a few minutes). After an hour of reverting I found the final flag. To some the last 2 flags can seem tricky since they aren't as obvious as the rest. I'd recommend going for the last 2 flags as I feel I've learnt a lot just from completing the exam.
+The 3rd day I spent some time debugging as I had managed to break something in the lab. If you do face something similar you can revert all your exam machines by yourself. You dont have to contact [@Rasta_Mouse](https://twitter.com/_rastamouse?lang=en) the way I did (Like always he did respond in a few minutes). After an hour of reverting I found the final flag. To some the last 2 flags can seem tricky since they aren't as obvious as the rest. I'd recommend going for the last 2 flags as I feel I've learnt a lot just from completing the exam. I spent the rest of the 3rd and 4rth day just gaming and relaxing.
 
 Finally I'm happy to pass with all 8 flags and suprisingly still manage to have over 24 hours of exam lab time. Mainly because I did pause the labs when I took breaks too. I dont have an issue setting things up again if it gives me extra time if say I needed it, thats just my train of thought. The amount of time given is overkill for that thought train and is more than enough to pwn 2 exams. This makes the exam all the more easy,relaxed and enjoyable to pwn all the flags.
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Crto_Exam_Review/crto3.png)
+
+"Issued on Apr 1, 2022" - A perfect day for the RTO badge to arrive. 
 
 ### Exam Tips
 
