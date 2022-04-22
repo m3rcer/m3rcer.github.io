@@ -8,7 +8,7 @@ description: My MRTO Journey 2022
 ---
 
 
-![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Crto_Exam_Review/crto1.png)
+
 
 -------------------------------------------------------
 
@@ -26,6 +26,9 @@ Index:
 
 -------------------------------------------------------
 
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Crto_Exam_Review/crto1.png)
+
+-------------------------------------------------------
 
 ## Preface
 
