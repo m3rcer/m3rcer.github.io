@@ -26,7 +26,7 @@ Index:
 
 # My MRTO Journey
 
-![](crto1.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Crto_Exam_Review/crto1.png)
 
 ## Preface
 
@@ -77,7 +77,7 @@ The exam is totally 48 hours, you have 4 days to allocate 48 hours. 4 days * 12 
 
 I scheduled my exam for the 28th of March, 4-6 weeks after enrollment with the idea of the standard 4 days * 12 hours. I felt I was already prepared after a month of practice, but for personal reasons and because [@Rasta_Mouse](https://twitter.com/_rastamouse?lang=en) did add additional modules to the course, I had to posponn the exam. I did enroll in a Pro-Lab from HTB in the meantime called [Cybernetics](https://www.hackthebox.com/newsroom/prolab-cybernetics) 2 weeks prior my exam. Pwning the first domain off [Cybernetics](https://www.hackthebox.com/newsroom/prolab-cybernetics) I'd say was great practice, I wouldn't say it is mandatory to do so. I did it because I was saturated with the RTO Course and thought extra practice could never hurt. I feel 4-6 weeks of good preparation with the course and lab will yield hearty results.
 
-![](crto2.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Crto_Exam_Review/crto2.png)
 
 I began my exam at 11.30am and had my first flag in about an hour mainly because I already had my C2 profile ready prior the exam and only had to work on A/V bypasses initially. The attack path is quite fair and obvious, there are no rabbitholes or any that I could find. I managed to get the first 5 flags in my first day. Knew the path to the 6th but decided to call it a day and took some good rest since I felt this was the trickiest flag of the exam with a little out of the box thinking needed.
 
@@ -87,7 +87,7 @@ The 3rd day I spent some time debugging as I had managed to break something in t
 
 Finally I'm happy to pass with all 8 flags and suprisingly still manage to have over 24 hours of exam lab time. Mainly because I did pause the labs when I took breaks too. I dont have an issue setting things up again if it gives me extra time if say I needed it, thats just my train of thought. The amount of time given is overkill for that thought train and is more than enough to pwn 2 exams. This makes the exam all the more easy,relaxed and enjoyable to pwn all the flags.
 
-![](crto3.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Crto_Exam_Review/crto3.png)
 
 ### Exam Tips
 
@@ -114,6 +114,6 @@ Also being taught with assisstance from [@Rasta_Mouse](https://twitter.com/_rast
 
 ## What's Next
 
-I plan to continue and complete [Cybernetics](https://www.hackthebox.com/newsroom/prolab-cybernetics) from HackTheBox and enroll into [PACES](https://www.pentesteracademy.com/gcb) alongside where I still plan to use my Cracked Cobalt Strike Instance and further better my skillset with and without a C2. I am currently writting an Aggressor Script too for learning purposes. After [PACES](https://www.pentesteracademy.com/gcb) I plan to finally apply for Open Red Team Positions.
+I plan to continue and complete [Cybernetics](https://www.hackthebox.com/newsroom/prolab-cybernetics) from HackTheBox and I've enrolled into [PACES](https://www.pentesteracademy.com/gcb) alongside where I still plan to use my Cracked Cobalt Strike Instance and further better my skillset with and without a C2. I am currently writting an Aggressor Script too for learning purposes. After [PACES](https://www.pentesteracademy.com/gcb) I plan to finally apply for Open Red Team Positions.
 
 
