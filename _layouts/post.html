@@ -46,7 +46,8 @@
           <h1 class="header-title" align="center" itemprop="headline">{{ page.title | escape }}</h1>
           <h5 style="color: darkgrey;" align="center">
             <time datetime="{{ page.date | date_to_xmlschema }}" style="float: center;" itemprop="datePublished">{{ page.date | date: "%b %d, %Y" }}</time>
-            </span>
+          </h5>
+          <h5 style="color: darkgrey;" align="center" itemprop="name">{{ site.author.name }}>
           </h5>
           <div class="post-meta">
             <time hidden datetime="{{ page.modified | date_to_xmlschema }}" itemprop="dateModified">
