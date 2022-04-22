@@ -1,12 +1,14 @@
 ---
-title: MRTO Exam Review
+title: My MRTO Journey
 date: 2022-04-02 09:48:47 +07:00
 categories: RedTeaming
 #modified: 20-08-29 09:24:47 +07:00
 #tags: [blog, netlify, jekyll, github]
-description: MRTO Exam Review 2022
+description: My MRTO Journey 2022
 ---
 
+
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Crto_Exam_Review/crto1.png)
 
 -------------------------------------------------------
 
@@ -24,9 +26,6 @@ Index:
 
 -------------------------------------------------------
 
-# My MRTO Journey
-
-![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Crto_Exam_Review/crto1.png)
 
 ## Preface
 
@@ -34,11 +33,11 @@ In my initial days learning to hack I always had a keen interest towards Botnet'
 
 I began scourging and playing with every C2 I could find off the Darknet or every open Source github C2. I was quite clueless with everything as there weren't any definitive guides to setting things up, even if they existed, they were all ancient methods/too good to be true well disguised malware/scams. I Knew Cobalt Strike was it when it came to APT Operations. I remember reading a lot of APT papers from sources like [@Mandiant](https://www.mandiant.com/), watching [Raphael Mudge on youtube](https://www.youtube.com/channel/UCJU2r634VNPeCRug7Y7qdcw) trying to emulate APT behaviour using Cracked Versions of Cobalt Strike 3/4.x such as [Cobalt-Wipe]((https://github.com/ORCA666/Cobalt-Wipe) by ORCA666 (Taken down by DMCA. [WayBack Machine](https://archive.org/) is your friend).
 
-As an experiment I managed to succesfully set up a standard 3 tier architecture with a staging,post-ex and long haul server on seperate VPS's. Setup Redirectors with [Red-Warden](https://github.com/mgeeky/RedWarden), experimented and learnt alot about Cobalt Strike and modern A/V evasion. Not just Cobalt Strike I learnt to bypass A/V's using many other C2's such as [SILENTTRINITY](https://github.com/byt3bl33d3r/SILENTTRINITY). Learnt a lot on how to rewrite the Artifact Kit to incorporate direct Syscalls, Adding custom AMSI bypasses and droppers in the Resource Kit etc etc...
+As an experiment I managed to succesfully set up a standard 3 tier architecture with a staging,post-ex and long haul server on seperate VPS's. Setup Redirectors with [Red-Warden](https://github.com/mgeeky/RedWarden), experimented and learnt a lot about Cobalt Strike and modern EDR evasion. Not just Cobalt Strike I learnt to bypass A/V's using many other C2's such as [SILENTTRINITY](https://github.com/byt3bl33d3r/SILENTTRINITY), [Covenant](https://github.com/cobbr/Covenant) etc. Learnt a lot on how to rewrite the Artifact Kit to incorporate direct Syscalls, Adding custom AMSI bypasses and droppers in the Resource Kit, Found safe ways to execute my .NET tooling using Aggressors like [InlineExecute-Assembly](https://github.com/anthemtotheego/InlineExecute-Assembly), Creating undetectable Malleable C2 profiles, implementing [Cross platform beacons on Cobalt Strike](https://github.com/gloxec/CrossC2)etc etc...
 
-I had been taking a couple other certs/books/courses etc to supplement my overall Active Directory skillset, played regular CTF's, built my own labs etc as I felt I understood the toolset and verbatim associated but din't understand know how to hack an Active Directory. I started off by gaining a fair bit off experience from the [PWKv2 labs](https://www.offensive-security.com/pwk-oscp/) after which I completed the [CRTP](https://www.pentesteracademy.com/activedirectorylab) earlier this January. Even though the [CRTP](https://www.pentesteracademy.com/activedirectorylab) is structured around manual Active Directory Enumeration, I did both, the intended way after which could'nt resist to not play around using my Cracked Cobalt Strike instance and Custom Aggressors. I learnt soo much more doing this and I highly recommend "playing outside the box". A place where you can detonate practically any tooling safely are the [@PentesterAcademy Labs](https://www.pentesteracademy.com/redlabs). I even managed to pass the [CRTP](https://www.pentesteracademy.com/activedirectorylab) exam pwning all machines using my Cracked Cobalt Strike instance and wrote a report including Cobalt Strike which was unnecessary but was succesfully evaluated as their are no tool restrictions on the [CRTP](https://www.pentesteracademy.com/activedirectorylab) Exam.  
+I had also been taking a couple other certs/books/courses etc to supplement my overall Active Directory skillset, played regular CTF's, built my own labs etc as I felt I understood the toolset and verbatim associated but my skillset hacking Active Directory was weak. I started off by gaining a fair bit off experience from the [PWKv2 labs](https://www.offensive-security.com/pwk-oscp/) after which I completed the [CRTP](https://www.pentesteracademy.com/activedirectorylab) earlier this January. Even though the [CRTP](https://www.pentesteracademy.com/activedirectorylab) is structured around manual Active Directory Enumeration, I did both, the intended way after which could'nt resist to not play around using my Cracked Cobalt Strike instance and Custom Aggressors. I learnt soo much more doing this and I highly recommend "playing outside the box". A place where you can detonate practically any tooling safely are the [@PentesterAcademy Labs](https://www.pentesteracademy.com/redlabs) in my opinion :). I even managed to pass the [CRTP](https://www.pentesteracademy.com/activedirectorylab) exam pwning all machines using my Cracked Cobalt Strike instance and wrote a report including Cobalt Strike which was unnecessary but was succesfully evaluated as their are no tool restrictions on the [CRTP](https://www.pentesteracademy.com/activedirectorylab) Exam.
 
-I had been eyeing the CRTO course for a while as I felt it is the right of passage to becoming able in Red Team Operations using Cobalt Strike and I knew I have to enroll to further hone my Cobalt Strike skillset. Even though I did have a fair share of experience with Cobalt Strike through my own learning, the course managed to fill in a lot of base knowledge gaps, increase my Active Directory hacking attack skillset and make me overall love and understand Cobalt Strike a 100x more. I'd Recommend doing the [CRTP](https://www.pentesteracademy.com/activedirectorylab)/OSCP as a primer to Active Directory exploitaion before taking this course.
+I had been eyeing the CRTO course for a while as I felt it is the right of passage to becoming able in Red Team Operations using Cobalt Strike and I knew I have to enroll to further hone and test my Cobalt Strike skillset. Even though I did have a fair share of experience with Cobalt Strike through my own learning, the course managed to fill in a lot of base knowledge gaps, increase my Active Directory hacking attack skillset and make me overall love and understand Cobalt Strike a 100x more. I'd Recommend doing the [CRTP](https://www.pentesteracademy.com/activedirectorylab)/OSCP as a primer to Active Directory exploitaion before taking this course and it isn't mandatory to have experience with Cobalt Strike prior, if you do so that is a plus.
 
 
 ------------------------------------------------------
