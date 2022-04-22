@@ -44,7 +44,7 @@ I had been eyeing the CRTO course for a while as I felt it is the right of passa
 
 ## Course Review
 
-[RTO (Red Team Ops) by zeropoint security](https://www.zeropointsecurity.co.uk/red-team-ops/overview) in short is a hands on course that teaches you how to operate and perform Core Fundamental Red Team Operations using Cobalt Strike. It is divided into several modules with most modules corresponding to a common MITRE Red Team attack tactic. Some modules are accompanied with videos demonstrating the concept in the practice lab demonstrated by [@Rasta_Mouse](https://twitter.com/_rastamouse?lang=en) himself.
+[RTO (Red Team Ops) by Zeropoint Security](https://www.zeropointsecurity.co.uk/red-team-ops/overview) in short is a hands on course that teaches you how to operate and perform Core Fundamental Red Team Operations using Cobalt Strike. It is divided into several modules with most modules corresponding to a common MITRE Red Team attack tactic. Some modules are accompanied with videos demonstrating the concept in the practice lab demonstrated by [@Rasta_Mouse](https://twitter.com/_rastamouse?lang=en) himself.
 
 ### Course Highlights
 
