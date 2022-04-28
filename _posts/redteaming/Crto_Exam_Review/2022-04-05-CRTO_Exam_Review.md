@@ -120,6 +120,6 @@ Also learning a course from [@Rasta_Mouse](https://twitter.com/_rastamouse?lang=
 
 ## What's Next
 
-I plan to continue and complete [Cybernetics](https://www.hackthebox.com/newsroom/prolab-cybernetics) from HackTheBox and I've recently enrolled into [PACES](https://www.pentesteracademy.com/gcb) alongside where I plan to understand advanced Active Directory Implementations and advanced defence mechanisms such as LAPS, JEA, WSL, RBCD, WDAC, ASR, AWL, Credential Guard, CLM, virtualization and more. I am currently writting an Aggressor Script for learning purposes which I plan to release soon. After [PACES](https://www.pentesteracademy.com/gcb) I plan to hopefully apply for open red team positions.
+I plan to continue and complete [Cybernetics](https://www.hackthebox.com/newsroom/prolab-cybernetics) from HackTheBox and I've recently enrolled into [PACES](https://www.pentesteracademy.com/gcb) alongside where I plan to understand advanced Active Directory Implementations and counter defence mechanisms such as LAPS, JEA, WSL, RBCD, WDAC, ASR, AWL, Credential Guard, CLM, virtualization and more. I am also currently writting an Aggressor Script for learning purposes which I plan to release soon. After [PACES](https://www.pentesteracademy.com/gcb) I plan to hopefully apply for open red team positions.
 
 
