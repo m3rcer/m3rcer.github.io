@@ -1,10 +1,10 @@
 ---
-title: My MRTO Journey
+title: CRTO (by Zeropoint Security) Review - A Cobalt Strike Battle Ground  
 date: 2022-04-02 09:48:47 +07:00
 categories: RedTeaming
 #modified: 20-08-29 09:24:47 +07:00
 #tags: [blog, netlify, jekyll, github]
-description: My MRTO Journey 2022
+description: CRTO  2022
 ---
 
 
@@ -48,6 +48,8 @@ I had been eyeing the CRTO course for a while during this tenure as I felt it is
 ## Course Review
 
 [RTO (Red Team Ops) by Zeropoint Security](https://www.zeropointsecurity.co.uk/red-team-ops/overview) in short is a hands on course that teaches you how to operate and perform Core Fundamental Red Team Operations using Cobalt Strike. It is divided into several modules with most modules corresponding to a common MITRE Red Team attack tactic. Some modules are accompanied with videos demonstrating the concept in the practice lab demonstrated by [@Rasta_Mouse](https://twitter.com/_rastamouse?lang=en) himself.
+
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Crto_Exam_Review/crto4.png)
 
 ### Course Highlights
 
