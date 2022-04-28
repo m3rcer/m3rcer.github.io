@@ -93,7 +93,7 @@ Finally I'm happy to pass with all 8 flags and suprisingly still manage to have 
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Crto_Exam_Review/crto3.png)
 
-"Issued on Apr 1, 2022" - A perfect day for the RTO badge to arrive. 
+**"Issued on Apr 1, 2022"** - A perfect day for the RTO badge to arrive. 
 
 ### Exam Tips
 
