@@ -111,7 +111,7 @@ Finally I'm happy to pass with all 8 flags and suprisingly still manage to have 
 
 ## Conclusion
 
-If I could I'd definitely vouch to purchase the licensed version of Cobalt Strike someday mainly to accreditate such a beautiful project by Raphael Mudge and my love for Cobalt Strike. He is an absolute legend. And so is this course: A legal way to get your hands on Cobalt Strike along with training for such a valuable price. I encourage anyone interested with a decent share of Active Directory Exploitation skill to enroll.
+If I could I'd definitely vouch to purchase the licensed version of Cobalt Strike someday/or make my company do so mainly to accreditate such a beautiful project by Raphael Mudge and my love for Cobalt Strike. He is an absolute legend. And so is this course: A legal way to get your hands on Cobalt Strike along with training for such a valuable price. I encourage anyone interested with a decent share of Active Directory Exploitation skill to enroll.
 
 Also learning a course from [@Rasta_Mouse](https://twitter.com/_rastamouse?lang=en) is an absolute privilege. The exam is balanced in terms of difficulty and is a good test in terms of Cobalt Strike operatibility. The course will someday hopefully be the de-facto for Red Teaming Operations on HR. Can't wait to see what [@Rasta_Mouse](https://twitter.com/_rastamouse?lang=en) has in store for CRTO2 and his other upcoming courses!
 
