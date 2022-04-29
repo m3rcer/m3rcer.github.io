@@ -7,7 +7,9 @@ categories: RedTeaming
 description: CRTO 2022
 ---
 
-
+<p align="center">
+     <img src="https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Crto_Exam_Review/crto6.png">
+</p>
 
 
 -------------------------------------------------------
