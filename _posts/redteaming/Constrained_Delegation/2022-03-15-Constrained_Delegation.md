@@ -30,7 +30,7 @@ To impersonate the user, *Service for User (S4U)* extensions are used which prov
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Constrained_Delegation/Constrained1.png)
 
-Enumerate users/computers with constrained Delegation
+Enumerate **Users/Computers** with constrained Delegation
 - In Bloodhound: 
 	- Users:
 	```
