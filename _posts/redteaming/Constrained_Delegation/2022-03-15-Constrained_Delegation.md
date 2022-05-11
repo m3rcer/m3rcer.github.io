@@ -106,7 +106,7 @@ To perform the delegation, we ultimately need the TGT of the principal (**machin
 ```
 
 ## Abusing Resource Based Constrained Delegation
-- It's possible to gain code execution with elevated privileges on a remote computer if you have **WRITE** privilege on that computer's AD object.
+- It's possible to gain code execution with elevated privileges on a remote computer if you have **WRITE** privilege or rights like **AllExtendedRights** on that computer's AD object.
 - Resource-Based Constrained Delegation (RBCD) configures the backend server (e.g. MSSQL) to allow only selected frontend services (e.g. IIS) to delegate on behalf of the user. This makes it easier for specific server administrators to configure delegation, without requiring domain admin privileges.
 - DACL Property: `msDS-AllowedToActOnBehalfOfOtherIdentity`.
 - In this scenario, `s4u2self` and `s4u2proxy` are used as above to request a forwardable ticket on behalf of the user. However, with RBCD, the KDC checks if the SPN for the requesting service (i.e., the frontend service) is present in the `msDS-AllowedToActOnBehalfOfOtherIdentity` property of the backend service. This means that the frontend service needs to have an SPN set. Thus, attacks against RBCD have to be performed from either a service account with SPN or a machine account.
