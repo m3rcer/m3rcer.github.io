@@ -117,15 +117,13 @@ Finally I'm happy to pass with all 8 flags and suprisingly still manage to have 
 
 ## Conclusion
 
-If I could I'd definitely vouch to purchase the licensed version of Cobalt Strike someday/or make my company do so mainly to accreditate such a beautiful project by Raphael Mudge and my love for Cobalt Strike. He is an absolute legend. And so is this course: A legal way to get your hands on Cobalt Strike along with training for such a valuable price. I encourage anyone interested with a decent share of Active Directory Exploitation skill to enroll.
+Cobalt Strike is a beautiful project by Raphael Mudge and for Red Team C2 Operations and so is this course, A legal way to get your hands on Cobalt Strike  training for such a valuable price. I encourage anyone interested with a decent share of Active Directory Exploitation skill to enroll.
 
-Also learning a course from [@Rasta_Mouse](https://twitter.com/_rastamouse?lang=en) is an absolute privilege. The exam is balanced in terms of difficulty and is a good test in terms of Cobalt Strike operatibility. The course will someday hopefully be the de-facto for Red Teaming Operations on HR. Can't wait to see what [@Rasta_Mouse](https://twitter.com/_rastamouse?lang=en) has in store for CRTO2 and his other upcoming courses!
+Also learning a course from [@Rasta_Mouse](https://twitter.com/_rastamouse?lang=en) is an absolute privilege. The exam is balanced in terms of difficulty and is a good test in terms of Cobalt Strike operatibility and I do agree with the mindset of limited tooling for the exam as it does force you to better your enumeration and cultivate better understand and discipline in terms of enumeration. The course will someday hopefully be the de-facto for Red Teaming Operations on HR. Can't wait to see what [@Rasta_Mouse](https://twitter.com/_rastamouse?lang=en) has in store for CRTO2 and his other upcoming courses!
 
 
 ----------------------------------------------------
 
 ## What's Next
 
-I plan to continue and complete [Cybernetics](https://www.hackthebox.com/newsroom/prolab-cybernetics) from HackTheBox and I've recently enrolled into [PACES](https://www.pentesteracademy.com/gcb) alongside where I plan to understand advanced active directory implementations and counter defence mechanisms such as LAPS, PAM Trusts, JEA, WSL, RBCD, WDAC, ASR, AWL, Credential Guard, CLM, virtualization and more. I am also currently writting an Aggressor Script for learning purposes which I'm due to release soon. After [PACES](https://www.pentesteracademy.com/gcb) I plan to hopefully apply for open red team positions.
-
-
+I plan to continue and complete [Cybernetics](https://www.hackthebox.com/newsroom/prolab-cybernetics) from HackTheBox and I've recently enrolled into [PACES](https://www.pentesteracademy.com/gcb) alongside where I plan to understand advanced active directory implementations and counter defence mechanisms such as LAPS, PAM Trusts, JEA, WSL, RBCD, WDAC, ASR, AWL, Credential Guard, CLM, virtualization and more. I am also currently writting an Aggressor Script for learning purposes which I'm due to release quite soon. 
