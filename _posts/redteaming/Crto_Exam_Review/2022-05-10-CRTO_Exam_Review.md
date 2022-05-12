@@ -105,10 +105,10 @@ Finally, I'm happy to pass with all 8 flags and suprisingly still managed to hav
 
 - Take some time and build the Malleable C2 profile prior the exam in accordance to the threat profile and verify it using `c2lint` from the practice lab instance if you dont own Cobalt Strike. I've seen most people waste time in building and setting their initial beacon up on the exam. I managed to get my 1st flag withing an hour preparing this way.
 - Understand A/V evasion taught from the course well. Repeat, practice and understand everything taught. Since the practice labs have most machines without harderned defenses, I'd recommend practicing lateral movement,persistence etc with the hardened hosts in the practice labs.
-- Personally I feel the amount of time allotted is overkill, so don't stress about time. Hack with tunes, take breaks, smoke some or do anything to keep your mind off when you reach a roadblock. Follow the OSCP mantra to K.I.S.S.
+- Personally I feel the amount of time allotted is overkill, so don't stress about time. Hack with tunes, take breaks and do anything to keep your mind off when you reach a roadblock. Follow the OSCP mantra to K.I.S.S.
 - The attack path will seem clear for some or most flags but be ready to encounter hardened defenses. Unless you understand how to bypass and craft your way through ingenously you might find the exam quite challenging.
 - Understand Firewall Rules and implementations in the course. This is really important.
-- Read and implement every HINT,TIP and TRICK [@Rasta_Mouse](https://twitter.com/_rastamouse?lang=en) has nudged for in the course.
+- Read and implement every HINT, TIP and TRICK [@Rasta_Mouse](https://twitter.com/_rastamouse?lang=en) has nudged for in the course.
 - You will not see a majority of the standard tooling discussed in the lab. Practice manual enumeration with all tools in the course well.
 - Take structured notes of enumeration using Joplin or so, so that you reproduce steps and have a good track of your enuermation.
 - **MAJOR TIP**: **EVERYTHING YOU NEED TO PASS IS IN THE COURSE**. Don't try porting tools or outsmarting the exam. I did it and just wasted time. All the tools and attacks are from the course. Not a copy paste verbatim, you will have to think out of the box and know where to use what.
