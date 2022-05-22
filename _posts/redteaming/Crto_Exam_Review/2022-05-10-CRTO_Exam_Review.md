@@ -103,7 +103,7 @@ Finally, I'm happy to pass with all 8 flags and surprisingly still managed to ha
 
 ### Exam Tips
 
-- Take some time and build the Malleable C2 profile prior the exam in accordance to the threat profile and verify it using `c2lint` from the practice lab instance if you don’t own Cobalt Strike. I've seen most people waste time in building and setting their initial beacon up on the exam. I managed to get my 1st flag withing an hour preparing this way.
+- Take some time and build the Malleable C2 profile prior the exam in accordance to the threat profile and verify it using `c2lint` from the practice lab instance if you don’t own Cobalt Strike. I've seen most people waste time in building and setting their initial beacon up on the exam. I managed to get my 1st flag within an hour preparing this way.
 - Understand A/V evasion taught from the course well. Repeat, practice and understand everything taught. Since the practice labs have most machines without hardened defences, I'd recommend practicing lateral movement, persistence etc with the hardened hosts in the practice labs.
 - Personally, I feel the amount of time allotted is overkill, so don't stress about time. Hack with tunes, take breaks and do anything to keep your mind off when you reach a roadblock. Follow the OSCP mantra to K.I.S.S.
 - The attack path will seem clear for some or most flags but be ready to encounter hardened defences. Unless you understand how to bypass and craft your way through ingeniously you might find the exam quite challenging.
@@ -119,7 +119,7 @@ Finally, I'm happy to pass with all 8 flags and surprisingly still managed to ha
 
 Cobalt Strike is a beautiful project by Raphael Mudge and so is this course, a legal way to get your hands on Cobalt Strike training for such a valuable price. I encourage anyone interested with a decent share of Active Directory Exploitation skill to enrol.
 
-Also learning a course from [@Rasta_Mouse](https://twitter.com/_rastamouse?lang=en) is an absolute privilege. The exam is balanced in terms of difficulty and is a good test in terms of Cobalt Strike operability and I do agree with the mindset of limited tooling for the exam as it does force you to better your  and cultivate better discipline in terms of enumeration. The course will someday hopefully be the de-facto for Red Teaming Operations on HR. Can't wait to see what [@Rasta_Mouse](https://twitter.com/_rastamouse?lang=en) has in store for CRTO2 and his other upcoming courses!
+Also learning a course from [@Rasta_Mouse](https://twitter.com/_rastamouse?lang=en) is an absolute privilege. The exam is balanced in terms of difficulty and is a good test in terms of Cobalt Strike operability and I do agree with the mindset of limited tooling for the exam as it does force you to cultivate better discipline in terms of enumeration. The course will someday hopefully be the de-facto for Red Teaming Operations on HR. Can't wait to see what [@Rasta_Mouse](https://twitter.com/_rastamouse?lang=en) has in store for CRTO2 and his other upcoming courses!
 
 
 ----------------------------------------------------
