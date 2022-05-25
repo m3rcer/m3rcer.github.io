@@ -77,7 +77,7 @@ I had been eyeing the [CRTO course by Zeropoint Security](https://www.zeropoints
 
 ### Exam Structure
 
-The exam is totally 48 hours, you have 4 days to allocate 48 hours. 4 days * 12 hours/day is the most viable option to go with. There is no proctoring or report submission. I feel this is one of the best parts about the exam. The exam can be scheduled I'd say almost a day before, there are ample slots available. I'd recommend booking the exam a few days prior and once done, read the exam instructions and download your threat profile.
+The exam is totally 48 hours, you have 4 days to allocate 48 hours with a task of obtaining 6/8 flags. 4 days * 12 hours/day is the most viable option to go with. There is no proctoring or report submission. I feel this is one of the best parts about the exam. The exam can be scheduled I'd say almost a day before, there are ample slots available. I'd recommend booking the exam a few days prior and once done, read the exam instructions and download your threat profile.
 
 ### Exam Experience
 
