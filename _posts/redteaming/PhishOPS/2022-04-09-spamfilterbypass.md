@@ -26,59 +26,46 @@ A "relay" SMTP system receives mail from an SMTP client and transmits it, withou
 
 ----------------------------------- 
 
-***I will be breaking this into 3 broad stages.***
+***I will be breaking this into 3 broad stages***
 
 1. Setting up a Message Transport System (MTS) aka SMTP server (Postfix). 
-
 2. Setting up an IMAP server (Dovecot), configuring TLS Encryption and configuring a Desktop client.
-
 3. Setup SPF/DKIM records with postfix for improved/best delivery.
 
-__Note: For this example i'ved used the following and would recommend a similar setup-->__
+__Note: For this example i'ved used the following and would recommend a similar setup -->__
 
   * Ubuntu 20.04LTS as my distro.
-
   * Gmail as the testing mail service.
-
   * Namecheap as my domain hosting provider.
-
   * Thunderbird as my desktop client for testing.
-
   * GoPhish/CobaltStrike as my phish client.
-
   * Disabled any firewall rules against ports 25,587,80,443,465,143,993,110,995.              
 
 _________________________________________________________________________________________________
 
-## __STAGE 1__ : 
+## __STAGE 1__ 
 
-## Setting up a Message Transport System (MTS) aka SMTP server (Postfix). 
+## Setting up a Message Transport System (MTS) aka SMTP server (Postfix)
 
-Postfix is a light , easy to use MTS which serves 2 primary purposes:
-
+Postfix is a light, easy to use MTS which serves 2 primary purposes:
 - Transporting email messages from a mail client/mail user agent (MUA) to a remote SMTP server.
- 
 - Accepts emails from other SMTP servers. 
 
-We will configure postfix for a single domain in this tutorial.
+We will configure postfix for a single domain in this tutorial. Before we install postfix note to do the following before. 
 
-Before we install postfix note to do the following before. 
+### Set Hostname and DNS records
 
-### Set Hostname and DNS records.
+Postfix uses the server's hostname to identify itself when communicating with other MTAs. A hostname could be a single word or a FQDN.
 
-Postfix uses the server’s hostname to identify itself when communicating with other MTAs. A hostname could be a single word or a FQDN.
+_Note: We will use `example.com` as our registered domain as an example here_.
 
-_Note: We will use example.com as our registered domain as an example here_.
-
-Make sure your hostnames set to a FQDN such as __mail.example.com__ by using the command:
-
-`sudo hostnamectl set-hostname mail.example.com`
+Make sure your hostnames set to a FQDN such as `mail.example.com` by using the command: `sudo hostnamectl set-hostname mail.example.com`
 
 Gracefully reboot your server using `init 6` after.
 
-**Set up DNS records:**
+**Set up DNS records**
 
-- MX records tell other MTA's that your mail server __mail.example.com__ is responsible for email delivery for your domain name.
+MX records tell other MTA's that your mail server `mail.example.com` is responsible for email delivery for your domain name.
 
 ```
 MX record    @           mail.example.com
@@ -86,7 +73,7 @@ MX record    @           mail.example.com
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/mx_record.png)
 
-- An A record maps your FQDN to your IP address.
+An A record maps your FQDN to your IP address.
 
 ```
 mail.example.com        <ip-addr>
@@ -95,40 +82,34 @@ mail.example.com        <ip-addr>
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/a_record.png)
 
 
-### Permanently disable ipv6 and uninstall unecessary services like exim .
+### Permanently disable ipv6 and uninstall unecessary services like exim
 
 Ipv6 is tricky to configure along w ipv4 and just adds a weighted overhead . For example , you'd have to create a seperate reverse dns entry for ipv6 along w the ipv4 else gmail mail servers are bound to reject you. 
 
 Exim or any other mail services that come by default packaged with some distributions like debian 8 . They'd hinder the installation of another mail service . So uninstall any unwanted mail service of the kind if they exist on your distro prepackaged.
 
-__To permanently disable ipv6 follow these steps (works on ubuntu20.04LTS n fam) :__
+__Permanently disable ipv6:__
 
-- Edit the **/etc/sysctl.conf** configuration file by adding the following lines:
-
-`vi /etc/sysctl.conf`
+- Edit the **/etc/sysctl.conf** configuration file by adding the following lines: `vi /etc/sysctl.conf`
 
 ```bash
 net.ipv6.conf.all.disable_ipv6=1
 net.ipv6.conf.default.disable_ipv6=1
 ```
 
-This works on ubuntu 20.04 , If it dosen't find an equivalent to disable ipv6 for your specific distro . 
+This works on ubuntu 20.04, If it dosen't find an equivalent to disable ipv6 for your specific distro. A recommened method would be using grub too. Check this [article](https://itsfoss.com/disable-ipv6-ubuntu-linux/) for more details .
 
-A recommened method would be using grub too. 
-
-Check this [article](https://itsfoss.com/disable-ipv6-ubuntu-linux/) for more details .
-
-###  PTR record
+### PTR record (rDNS)
 
 Your PTR record does the inverse, ie maps your IP address back to your FQDN. This is as crucial as it gets as MTA's like gmail and most out there will only accept mails through into the primary inbox if this is set right.
 
-_This could be an option your hosting provider allows you to setup like how you did your domain records (cockbox.org uses this method ) or you'd have to probably contact support and they'd do it for you (flokinet works this way). Either case find a hosting provider that supports this . [ I've made a blog detailing various hosting providers that support these builds here](https://github.com/me4cer98/Hosting-providers-for-SMTP-builds)._
+_This could be an option your hosting provider allows you to setup like how you did your domain records (`cockbox.org` uses this method ) or you'd have to probably contact support and they'd do it for you (`flokinet.is` works this way). Either case find a hosting provider that supports this._
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/ptr_record.png)
 
 ### Installing Postfix
 
-- Run this on Ubuntu n fam:
+Run this in a terminal:
 
 ```bash
 sudo apt-get update
@@ -136,57 +117,47 @@ sudo apt-get update
 sudo apt-get install postfix -y
 ```
 
-- While installation you will be asked to select a type for mail configuration. Select `Internet Site`.
-
-This option allows Postfix to send emails to other MTAs and receive emails from other MTAs.
-
+While installation you will be asked to select a type for mail configuration. Select `Internet Site`. This option allows Postfix to send emails to other MTAs and receive emails from other MTAs.
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_1.png)
 
-
-- Next enter your domain name when prompted for the system mail name as your domain name without __"mail"__ ie just __"example.com"__ . 
+Next enter your domain name when prompted for the system mail name as your domain name without __"mail"__ ie just `example.com`. 
 
 This ensures that your mail address naming convention would be in the form of -
 
-> [-] name@example.com and not,
+> [-] `name@example.com` and not,
 
-> [x]  name@mail.example.com  . 
+> [x] `name@mail.example.com`. 
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_2.png)
 
-Use a valid subdomain replacement if you would need to implement one , it will work. 
-
+Use a valid subdomain replacement if you would need to implement one, it will work. 
 
 Once installation is complete a `/etc/postfix/main.cf` config file would be automatically generated along with postfix starting up.
 
-- Check your current Postfix version using `postconf mail_version`.
+Check your current Postfix version using `postconf mail_version`.
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_4.png)
 
-- Use 'Socket Statistics' - ss utility to check if postfix is running on port 25 succesfully.
-
-`sudo ss -lnpt | grep master`
+Use `Socket Statistics` - `ss` utility to check if postfix is running on port 25 succesfully: `sudo ss -lnpt | grep master`
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_3.png)
 
-If you'd like to view the various binaries shipped along with postfix check them out with `dpkg -L postfix | grep /usr/sbin/` .
+If you'd like to view the various binaries shipped along with postfix check them out with `dpkg -L postfix | grep /usr/sbin/` 
 
-- Sendmail is a binary place at '/usr/sbin/sendmail' which is compatible with postfix.
-Send out your first testmail to your test email account using :
+`Sendmail` is a binary place at `/usr/sbin/sendmail` which is compatible with postfix.
 
-`echo "test email" | sendmail your-test-account@gmail.com`
+Send out your first testmail to your test email account using : `echo "test email" | sendmail your-test-account@gmail.com`
 
-Or you could install mailutils using `sudo apt-get install mailutils` . Just type "mail" and follow along the prompts entering the required fields and hitting "Ctrl+D" once done to send the mail.
+Or you could install mailutils using `sudo apt-get install mailutils` . Just type `mail` and follow along the prompts entering the required fields and hitting `Ctrl+D` once done to send the mail.
 
-*Note:* The email might land through into your primary right away but could be potentially flagged by other stronger MTA's and their spam filters.
-We will be comparing the spam score at each stage to see the overall improvement in deliverability.
+*Note:* The email might land through into your primary right away but could be potentially flagged by other stronger MTA's and their spam filters. We will be comparing the spam score at each stage to see the overall improvement in deliverability.
 
-_Incase your hosting provider has blocked outbound port 25, verify it using:
-`telnet gmail-SMTP-in.l.google.com 25`
-If you see a status showing "Connected" --> outbound 25 works succesfully. Use "quit" to quit the command._
+Incase your hosting provider has blocked outbound port 25, verify it using: `telnet gmail-SMTP-in.l.google.com 25`
 
-Head on over to your gmail inbox and open up the mail. 
-Click on the drop down below the "Printer icon" to the right as shown in the screenshot --> next click on "show original". --> next click on the "Copy to clipboard" button to copy all contents.
+If you see a status showing `"Connected" --> outbound 25 works succesfully`. Use `quit` to quit the command.
+
+Head on over to your gmail inbox and open up the mail. Click on the drop down below the `Printer icon` to the right as shown in the screenshot --> next click on `show original`. --> next click on the `Copy to clipboard` button to copy all contents.
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_5.png)
 
