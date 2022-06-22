@@ -32,7 +32,7 @@ A "relay" SMTP system receives mail from an SMTP client and transmits it, withou
 2. Setting up an IMAP server (Dovecot), configuring TLS Encryption and configuring a Desktop client.
 3. Setup SPF/DKIM records with postfix for improved/best delivery.
 
-__Note: For this example i'ved used the following and would recommend a similar setup -->__
+__Note: For this example I've used the following and would recommend a similar setup -->__
 
   * Ubuntu 20.04LTS as my distro.
   * Gmail as the testing mail service.
@@ -175,9 +175,9 @@ _Note the score over each stage ._
 
 TLS encryption is mandatory and ensures secured delivery. `LetsEncrypt` offers a free certificate with assisstance from their client - `certbot`.
 
-- Head on over to `https://certbot.eff.org/`. Click on  `Get Certbot instructions`.
+Head on over to `https://certbot.eff.org/`. Click on  `Get Certbot instructions`.
 
-- Select your server as the Software and which distro your running on system. In my case as I said before im using apache2 and ubuntu20.04LTS.
+Select your server as the Software and which distro your running on system. In my case as I said before im using Apache2 and Ubuntu20.04LTS.
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/certbot1.png)
 
@@ -191,7 +191,7 @@ _Note: Use `fullchain.pem` as the supplied certificate and `privkey.pem` as the 
 
 All your TLS certificates will now be live and the config automatically replaced in your respective web servers config. Renew or set a cronjob to renew your certificates periodically as listed by certbot.
 
-### Enable Submission Service in Postfix:
+### Enable Submission Service in Postfix
 
 To send emails from a desktop email client, we need to enable the submission service of Postfix so that the email client can submit emails to Postfix SMTP server. 
 
@@ -446,9 +446,7 @@ Dovecot will be listening on port 143 (IMAP) and 993 (IMAPS).
 I've setup Thunderbird as my Desktop client and would recommend so.
 
 Install it using:
-
 - On windows : [Go here](https://www.thunderbird.net/en-US/)
-
 - On NIX: `sudo apt install thunderbird`
 
 Run Thunderbird. You'd most likely see a popup stating to setup your mail account if not go to `Edit -> Account Settings -> Account Actions -> Add Mail Account` to add a mail account. Click on Configure manually and setup as follows:
@@ -475,7 +473,7 @@ And STAGE 2 is complete!
 
 TroubleShooting tips:
 
-> If you get a Relay access denied error it's most likely that our VPS hosting provider dosen't allow relay over these ports. [To find a Hosting provider that supports all such needs check out my writeup on it](https://me4cer98.github.io/Hosting-providers-for-SMTP-builds/) 
+> If you get a Relay access denied error it's most likely that our VPS hosting provider dosen't allow relay over these ports.
 
 > If you use the Cloudflare DNS service, you should not enable the CDN (proxy) feature when creating DNS an A record and an AAAA record for the hostname of your mail server as Cloudflare dosen't support SMTP or IMAP proxy.
 
@@ -487,50 +485,39 @@ Let's improve on this.
 
 -------------------------------------------------------------------------------------------------
 
-# Stage 3:
+# Stage 3
 
-## Setting up SPF and DKIM with Postfix:
+## Setting up SPF and DKIM with Postfix
 
-We finally have a working Postfix SMTP server and Dovecot IMAP server with which we can send and receive email using any external email client like a desktop client(thunderbird).
+We finally have a working Postfix SMTP server and Dovecot IMAP server with which we can send and receive email using any external email client like a desktop client (thunderbird).
 
- Although we have correctly set up our DNS MX, A and PTR records our emails are still flagged as spam by strong and popular email services such as Gmail and Outlook mail.
+Although we have correctly set up our DNS MX, A and PTR records our emails are still flagged as spam by strong and popular email services such as Gmail and Outlook mail.
 
- As we all know most of our targets would be using such mail services so to succesfully bypass most strong spam filters its mandatory to set up a SPF and DKIM record as explained before.
+As we all know most of our targets would be using such mail services so to succesfully bypass most strong spam filters its mandatory to set up a SPF and DKIM record as explained before.
 
- And we begin,
+And we begin,
 
-### Setting and configuring SPF:
+### Setting and configuring SPF
 
-Get back to your respective domain management interface for DNS and create a new TXT record as follows:
-
-`TXT  @   v=spf1 mx ~all`
+Get back to your respective domain management interface for DNS and create a new TXT record as follows: `TXT  @   v=spf1 mx ~all`
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_20.png)
-
 > v=spf1: indicates that this is an SPF record and the SPF record version we are using is SPF1.
 
 > mx: means all hosts listed in the MX records are allowed to send emails for your domain and any other hosts are disallowed.
 
 > \~all: indicates that emails from your domain should only come from hosts specified in the SPF record.
-
-
-Use the following command to verify you've succesfully added the record:
-
-`dig example.com txt +short`
+Use the following command to verify you've succesfully added the record: `dig example.com txt +short`
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_21.png)
 
-**Configuring SPF Policy Agent**:
+**Configuring SPF Policy Agent**
 
 We now need to tell Postfix to check for SPF records of incoming emails. This doesn’t help ensure outgoing email delivery but helps with detecting forged incoming emails.
 
-Install the required packages:
+Install the required packages: `sudo apt install postfix-policyd-spf-python`
 
-`sudo apt install postfix-policyd-spf-python`
-
-Next, edit the Postfix master process configuration file:
-
-`sudo vi /etc/postfix/master.cf`
+Next, edit the Postfix master process configuration file: `sudo vi /etc/postfix/master.cf`
 
 Now append the following to the end of the file:
 
@@ -540,9 +527,7 @@ policyd-spf  unix  -       n       n       -       0       spawn
 ```
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_22.png)
 
-Save and close the file. Next, edit the Postfix main configuration file:
-
-`sudo vi /etc/postfix/main.cf`
+Save and close the file. Next, edit the Postfix main configuration file: `sudo vi /etc/postfix/main.cf`
 
 Append the following lines at the end of the file as before:
 
@@ -562,35 +547,24 @@ Save and close the file and restart Postfix.
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_23.png)
 
-When you receive an email from a domain that has an SPF record the next time, you can see the SPF check results in the raw email header. It would be as follows:
+When you receive an email from a domain that has an SPF record the next time, you can see the SPF check results in the raw email header. It would be as follows: `Received-SPF: Pass (sender SPF authorized).`
 
-`Received-SPF: Pass (sender SPF authorized).`
+### Setting up DKIM
 
+Install OpenDKIM which is an open-source implementation of the DKIM sender authentication system using: `sudo apt install opendkim opendkim-tools`
 
-### Setting up DKIM:
+Next add postfix user to the opendkim group: `sudo gpasswd -a postfix opendkim`
 
-Install OpenDKIM which is an open-source implementation of the DKIM sender authentication system using:
+Edit the OpenDKIM main configuration file as follows: `sudo vi /etc/opendkim.conf`
 
-`sudo apt install opendkim opendkim-tools`
-
-Next add postfix user to the opendkim group:
-
-`sudo gpasswd -a postfix opendkim`
-
-Edit the OpenDKIM main configuration file as follows:
-
-`sudo vi /etc/opendkim.conf`
-
-> Uncomment the following lines and replace simple with relaxed/simple:
+Uncomment the following lines and replace simple with `relaxed/simple`:
 
 ```bash
 Canonicalization   simple
 Mode               sv
 SubDomains         no
 ```
-
-
-> Next, add the following lines below #ADSPAction continue line. If your file doesn’t have #ADSPAction continue line, then just add them below "SubDomains  no".
+Next, add the following lines below `#ADSPAction` continue line. If your file doesn’t have `#ADSPAction` continue line, then just add them below `SubDomains  no`.
 
 ```bash
 AutoRestart         yes
@@ -601,8 +575,7 @@ SignatureAlgorithm  rsa-sha256
 ```
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_24.png)
 
-
-> Add the following lines at the end of this file if you're on a different distro. (Note that On Ubuntu 20.04, this is already set)
+Add the following lines at the end of this file if you're on a different distro. (Note that On Ubuntu 20.04, this is already set)
 
 ```bash
 #OpenDKIM user
@@ -610,7 +583,7 @@ SignatureAlgorithm  rsa-sha256
 UserID             opendkim
 ```
 
-> Finally append this too to the end of the file , Save and close it.
+Finally append this too to the end of the file, Save and close it.
 
 ```bash
 # Map domains in From addresses to keys used to sign messages
@@ -626,7 +599,7 @@ InternalHosts       /etc/opendkim/trusted.hosts
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_25.png)
 
-__Create Signing Table, Key Table and Trusted Hosts File:__
+__Create Signing Table, Key Table and Trusted Hosts File__
 
 Create a directory structure for OpenDKIM as follows:
 
@@ -634,32 +607,23 @@ Create a directory structure for OpenDKIM as follows:
 
 `sudo mkdir /etc/opendkim/keys`
 
-Let's change the owner from root to opendkim and make sure only the opendkim user can read and write to the keys directory.
+Let's change the owner from root to opendkim and make sure only the opendkim user can read and write to the keys directory:
 
-```
+```bash
 sudo chown -R opendkim:opendkim /etc/opendkim
 
 sudo chmod go-rw /etc/opendkim/keys
 ```
 
-Now, create the signing table.
+Now, create the signing table: `sudo vi /etc/opendkim/signing.table`
 
-`sudo vi /etc/opendkim/signing.table`
-
-Append this line. This tells OpenDKIM that if a sender on your server is using a @example.com address, then it should be signed with the private key identified by default.\_domainkey.example.com.
-Replace example.com with your domain.
-
-`*@example.com    default._domainkey.example.com`
+Append this line. This tells OpenDKIM that if a sender on your server is using a `@example.com` address, then it should be signed with the private key identified by `default._domainkey.example.com`. Replace `example.com` with your domain: `*@example.com    default._domainkey.example.com`
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_26.png)
 
-Save and close the file. Next create the key table.
+Save and close the file. Next create the key table: `sudo vi /etc/opendkim/key.table`
 
-`sudo vi /etc/opendkim/key.table`
-
-Append the following:
-
-`default._domainkey.example.com     example.com:default:/etc/opendkim/keys/example.com/default.private`
+Append the following: `default._domainkey.example.com     example.com:default:/etc/opendkim/keys/example.com/default.private`
 
 This tells the location of the private key.
 
@@ -667,65 +631,49 @@ This tells the location of the private key.
 
 Save and close the file. 
 
-Now, create the trusted hosts file.
-
-`sudo vi /etc/opendkim/trusted.hosts`
+Now, create the trusted hosts file: `sudo vi /etc/opendkim/trusted.hosts`
 
 Append the following lines to the newly created file. This tells OpenDKIM that if an email is coming from localhost or from the same domain, then OpenDKIM should not perform DKIM verification on the email.
 
-```
+```bash
 127.0.0.1
 localhost
 
 *.example.com
 ```
-
 Save and close the file.
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_28.png)
 
-
-### Generate Private and Public Keypairs:
+### Generate Private and Public Keypairs
 
 Since DKIM is used to sign outgoing messages and verify incoming messages, we need to generate a private key for signing and a public key for remote verification. 
 
 The Public key will be published in DNS.
 
-Let's begin by creating a separate folder for the domain as follows:
+Let's begin by creating a separate folder for the domain as follows: `sudo mkdir /etc/opendkim/keys/example.com`
 
-`sudo mkdir /etc/opendkim/keys/example.com`
+Now generate keys using opendkim-genkey tool: `sudo opendkim-genkey -b 2048 -d example.com -D /etc/opendkim/keys/example.com -s default -v`
 
-Now generate keys using opendkim-genkey tool:
+Make opendkim as the owner of the private key: `sudo chown opendkim:opendkim /etc/opendkim/keys/example.com/default.private`
 
-`sudo opendkim-genkey -b 2048 -d example.com -D /etc/opendkim/keys/example.com -s default -v`
+### Publish Your Public Key in the DNS Records
 
-Make opendkim as the owner of the private key:
+Grab the public key using: `sudo cat /etc/opendkim/keys/example.com/default.txt`
 
-`sudo chown opendkim:opendkim /etc/opendkim/keys/example.com/default.private`
+_Note: The string after the `p parameter` is the public key._
 
+Now copy everything in the between the parentheses and paste it creating a new DNS record in your domain DNS config as follows:
 
-### Publish Your Public Key in the DNS Records:
-
-Grab the public key using:
-
-`sudo cat /etc/opendkim/keys/example.com/default.txt`
-
-_note: The string after the "p parameter" is the public key._
-
-Now copy everything in the  between the parentheses and paste it creating a new DNS record in your domain dns config as follows:
-
-_Note: delete all double quotes and white spaces in the value field if any using some sed magic._
+_Note: Delete all double quotes and white spaces in the value field if any using some sed magic._
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_29.png)
 
+Finally, Lets test the DKIM Key: `sudo opendkim-testkey -d example.com -s default -vvv`
 
-Finally, Lets test the DKIM Key:
+ You will see `Key OK` in the command output if all goes well until here.
 
-`sudo opendkim-testkey -d example.com -s default -vvv`
-
- You will see __Key OK__ in the command output if all goes well until here.
-
-```
+```bash
 opendkim-testkey: using default configfile /etc/opendkim.conf
 opendkim-testkey: checking key 'default._domainkey.your-domain.com'
 opendkim-testkey: key secure
@@ -734,40 +682,29 @@ opendkim-testkey: key OK
 
 It may take time for your DKIM record to propagate over the Internet depending on your domain provider.
 
-_note: If you happen to see "Key not secure" in the command output, this is because DNSSEC isn’t enabled on your domain name. DNSSEC is a security standard for secure DNS query. Most domain names haven’t enabled DNSSEC by default. There’s no need change this for now._ 
+_Note: If you happen to see `Key not secure` in the command output, this is because DNSSEC isn’t enabled on your domain name. DNSSEC is a security standard for secure DNS query. Most domain names haven’t enabled DNSSEC by default. There’s no need change this for now._ 
 
-
-### Connect Postfix to OpenDKIM:
-
+### Connect Postfix to OpenDKIM
 
 Postfix can talk to OpenDKIM via a Unix socket file. The default socket file used by OpenDKIM runs in a chroot jail. So we need to change the OpenDKIM Unix socket file.
 
 Create a directory to hold the OpenDKIM socket file and allow only the opendkim user and the postfix group to access it:
 
-```
+```bash
 sudo mkdir /var/spool/postfix/opendkim
 
 sudo chown opendkim:postfix /var/spool/postfix/opendkim
 ```
 
-Then edit the OpenDKIM main configuration file:
+Then edit the OpenDKIM main configuration file: `sudo vi /etc/opendkim.conf`
 
-`sudo vi /etc/opendkim.conf`
+Find the following line (Ubuntu 20.04): `Socket    local:/run/opendkim/opendkim.sock` or `Socket    local:/var/run/opendkim/opendkim.sock` (for Ubuntu 18.04)
 
-Find the following line (Ubuntu 20.04):
-
-`Socket    local:/run/opendkim/opendkim.sock` or `Socket    local:/var/run/opendkim/opendkim.sock` (for Ubuntu 18.04)
-
-Replace it with the following line. (If you can’t find the above line, then add the following line.)
-
-`Socket    local:/var/spool/postfix/opendkim/opendkim.sock`
-
+Replace it with the following line (If you can’t find the above line, then add the following line.): `Socket    local:/var/spool/postfix/opendkim/opendkim.sock`
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_30.png)
 
-Similarly, find the following line in the "/etc/default/opendkim" file:
-
-`sudo vi /etc/default/opendkim`
+Similarly, find the following line in the `/etc/default/opendkim` file: `sudo vi /etc/default/opendkim`
 
 `SOCKET="local:/var/run/opendkim/opendkim.sock"` or `SOCKET=local:$RUNDIR/opendkim.sock`
 
@@ -779,13 +716,11 @@ Change it to:
 
 Save and close the file.
 
-Alas, we need to edit the Postfix main configuration file.
-
-`sudo vi /etc/postfix/main.cf`
+Alas, we need to edit the Postfix main configuration file: `sudo vi /etc/postfix/main.cf`
 
 Append the following lines to the end of this file.  Postfix will now be able to call OpenDKIM via the milter protocol.
 
-```
+```bash
 # Milter configuration
 milter_default_action = accept
 milter_protocol = 6
@@ -795,16 +730,13 @@ non_SMTPd_milters = $SMTPd_milters
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_32.png)
 
-Save and close the file. Then restart Opendkim and the Postfix service:
+Save and close the file. Then restart Opendkim and the Postfix service: `sudo systemctl restart opendkim postfix`
 
-`sudo systemctl restart opendkim postfix`
-
-**AND FINALLY, WE ARE DONE! .**
+**AND FINALLY, WE ARE DONE!.**
 
 _________________________________________________________________________________________________
 
 ## Validation and checks:
-
 
 1. **Primary Inbox Check:**
 
