@@ -1,5 +1,5 @@
 ---
-title: Building a local SMTP server to bypass spam filters
+title: Building A Local SMTP Server To Bypass Modern Spam Filters
 date: 2022-06-09 09:48:47 +07:00
 categories: RedTeaming
 #modified: 20-08-29 09:24:47 +07:00
@@ -8,7 +8,7 @@ categories: RedTeaming
 description: Building a local SMTP server to bypass spam filters
 ---
 
-**This Blog details setting up a SMTP phishing server from scratch and implementing SPF,DKIM,DMARC and other modern checks to bypass spam filters like gmail, yahoo, outlook etc.**
+**This Blog details setting up a local SMTP phishing server from scratch to implement SPF,DKIM,DMARC and other modern checks to bypass spam filters like gmail, yahoo, outlook etc and send and recieve unlimited emails for free as long as the hosting provider permits it.**
 
 Refer to this [Starting Point Section](Starting_Point.md) to understand the theory and techniques to bypass modern spam filters. 
 
@@ -28,25 +28,25 @@ A "relay" SMTP system receives mail from an SMTP client and transmits it, withou
 
 ## Screenshots
 
-1. **Primary Inbox Check:**
+### Primary Inbox Check
 
-Gmail
+#### Gmail
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_36.png)
 
-Yahoo
+#### Yahoo
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_37.png)
 
-2. **SPF and DKIM Check**
+### SPF and DKIM Check
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_33.png)
 
-3. **Email Score and Placement**
+### Email Score and Placement
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_34.png)
 
-4. **SpamAssasin API**
+### SpamAssasin API
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_35.png)
 
@@ -766,33 +766,33 @@ Save and close the file. Then restart Opendkim and the Postfix service: `sudo sy
 
 _________________________________________________________________________________________________
 
-## Validation and checks:
+## Validation and checks
 
-1. **Primary Inbox Check:**
+#### Primary Inbox Check
 
-Gmail:
+#### Gmail
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_36.png)
 
-Yahoo:
+#### Yahoo
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_37.png)
 
 
-2. **SPF and DKIM Check:**
+### SPF and DKIM Check
 
 Send a test email from thunderbird/gophish or locally to your test Gmail Account and click on the drop down as before --> __show original__. 
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_33.png)
 
 
-3. **Email Score and Placement:**
+### Email Score and Placement
 
 Go to https://www.mail-tester.com. You will see a unique email address. Send an email from your domain to this address and then check your score.
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_34.png)
 
-4. **SpamAssasin API:**
+### SpamAssasin API
 
 Go back to `https://spamcheck.postmarkapp.com/` as before. Go to `show original` as before and click on the `copy to clipboard` button to call the whole message and paste it in the Check score field on the site
 
