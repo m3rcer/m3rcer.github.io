@@ -24,13 +24,45 @@ A workflow of an email´s travel from one user to another would look like so: `M
 
 A "relay" SMTP system receives mail from an SMTP client and transmits it, without modification to the message data other than adding trace information, to another SMTP server for further relaying or for delivery.
 
+-------------------------------------------------------------------------
+
+## Screenshots
+
+1. **Primary Inbox Check:**
+
+Gmail
+
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_36.png)
+
+Yahoo
+
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_37.png)
+
+2. **SPF and DKIM Check**
+
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_33.png)
+
+3. **Email Score and Placement**
+
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_34.png)
+
+4. **SpamAssasin API**
+
+![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_35.png)
+
 ----------------------------------- 
 
-***I will be breaking this into 3 broad stages***
+## Index
+
+***I will be breaking build this into 3 broad stages***
 
 1. Setting up a Message Transport System (MTS) aka SMTP server (Postfix). 
 2. Setting up an IMAP server (Dovecot), configuring TLS Encryption and configuring a Desktop client.
 3. Setup SPF/DKIM records with postfix for improved/best delivery.
+
+_________________________________________________________________________________________________
+
+## Setup Prerequisites
 
 __Note: For this example I've used the following and would recommend a similar setup -->__
 
@@ -472,10 +504,8 @@ It's advisable to restart Dovecot each time you add users.
 And STAGE 2 is complete!
 
 TroubleShooting tips:
-
-> If you get a Relay access denied error it's most likely that our VPS hosting provider dosen't allow relay over these ports.
-
-> If you use the Cloudflare DNS service, you should not enable the CDN (proxy) feature when creating DNS an A record and an AAAA record for the hostname of your mail server as Cloudflare dosen't support SMTP or IMAP proxy.
+- If you get a Relay access denied error it's most likely that our VPS hosting provider dosen't allow relay over these ports.
+- If you use the Cloudflare DNS service, you should not enable the CDN (proxy) feature when creating DNS an A record and an AAAA record for the hostname of your mail server as Cloudflare dosen't support SMTP or IMAP proxy.
 
 Let's check our spam score:
 
@@ -764,7 +794,7 @@ Go to https://www.mail-tester.com. You will see a unique email address. Send an 
 
 4. **SpamAssasin API:**
 
-Go back to https://spamcheck.postmarkapp.com/ as before. Go to __show original__ as before and click on the __copy to clipboard__ button to call the whole message and paste it in the Check score field on the site
+Go back to `https://spamcheck.postmarkapp.com/` as before. Go to `show original` as before and click on the `copy to clipboard` button to call the whole message and paste it in the Check score field on the site
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_35.png)
 
