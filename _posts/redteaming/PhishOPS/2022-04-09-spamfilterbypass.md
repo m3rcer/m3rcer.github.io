@@ -125,9 +125,9 @@ Next enter your domain name when prompted for the system mail name as your domai
 
 This ensures that your mail address naming convention would be in the form of -
 
-> [-] `name@example.com` and not,
+[-] `name@example.com` and not,
 
-> [x] `name@mail.example.com`. 
+[x] `name@mail.example.com`. 
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_2.png)
 
@@ -161,23 +161,23 @@ Head on over to your gmail inbox and open up the mail. Click on the drop down be
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_5.png)
 
-Head on over to https://spamcheck.postmarkapp.com/ and paste your contents in and check your spam score.
+Head on over to `https://spamcheck.postmarkapp.com/` and paste your contents in and check your spam score.
 
 _Note the score over each stage ._
 
 -------------------------------------------------------------------------------------------------
 
-## __STAGE 2__:
+## __STAGE 2__
 
-## Install an IMAP SERVER (Dovecot) , enable TLS encryption and setup a Desktop client.
+## Install an IMAP SERVER (Dovecot), enable TLS encryption and setup a Desktop client
 
-### Getting TLS encryption and a certificate the easy way:
+### Getting TLS encryption and a certificate the easy way
 
-TLS encryption is mandatory and ensures secured delivery. *LetsEncrypt* offers a free certificate with assisstance from their client - _certbot_.
+TLS encryption is mandatory and ensures secured delivery. `LetsEncrypt` offers a free certificate with assisstance from their client - `certbot`.
 
-- Head on over to https://certbot.eff.org/. Click on  "Get Certbot instructions".
+- Head on over to `https://certbot.eff.org/`. Click on  `Get Certbot instructions`.
 
-- Select your server as the Software and which distro your running on system. In my case as i said before im using apache2 and ubuntu20.04LTS.
+- Select your server as the Software and which distro your running on system. In my case as I said before im using apache2 and ubuntu20.04LTS.
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/certbot1.png)
 
@@ -185,9 +185,9 @@ Follow along the instructions to succesfully install certbot and when you reach 
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/certbot-setup2.png)
 
-You will then find your certificates in `/etc/letsencrypt/live/example.com/` .
+You will then find your certificates in `/etc/letsencrypt/live/example.com/`.
 
-_Note: Use fullchain.pem as the supplied certificate and privkey.pem as the key . Fullchain.pem is a  concatenation of cert.pem and chain.pem in one file._
+_Note: Use `fullchain.pem` as the supplied certificate and `privkey.pem` as the key . `Fullchain.pem` is a concatenation of `cert.pem` and `chain.pem` in one file._
 
 All your TLS certificates will now be live and the config automatically replaced in your respective web servers config. Renew or set a cronjob to renew your certificates periodically as listed by certbot.
 
@@ -195,11 +195,9 @@ All your TLS certificates will now be live and the config automatically replaced
 
 To send emails from a desktop email client, we need to enable the submission service of Postfix so that the email client can submit emails to Postfix SMTP server. 
 
-Edit the "master.cf" file using your favorite text editor as follows. Im using "vim" as my editor.
+Edit the `master.cf` file using your favorite text editor as follows. Im using `vim` as my editor: `sudo vi /etc/postfix/master.cf`
 
-`sudo vi /etc/postfix/master.cf`
-
-In the submission section, uncomment the "submission..." line and  add the following lines(the 2nd line on) as stated here below it. 
+In the `submission` section, uncomment the `submission...` line and  add the following lines (the 2nd line on) as stated here below it. 
 This method ensures no bad tabs/spaces causing the config to error out. (Be careful editting this)
 
 ```bash
@@ -216,11 +214,11 @@ submission     inet     n    -    y    -    -    SMTPd
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/tls1.png)
 
-This configuration enables the submission daemon of Postfix and requires TLS encryption so that we can later connect using a desktop client. This listens on port: 587 by default. 
+This configuration enables the submission daemon of Postfix and requires TLS encryption so that we can later connect using a desktop client. This listens on port:587 by default. 
 
 To use Microsoft Outlook as a desktop client listening over port:465. Then you need to do the same and enable the submission daemon over port 465.
 
-Uncomment the "SMTPs.." line as before and paste the follows below it:
+Uncomment the `SMTPs..` line as before and paste the follows below it:
 
 ```bash
 SMTPs     inet  n       -       y       -       -       SMTPd
@@ -235,14 +233,9 @@ SMTPs     inet  n       -       y       -       -       SMTPd
 
 Save and close the file.
 
-Next, we need to specify the location of the previously before generated TLS certificate and private key in the Postfix config file. 
-To do this we need to edit the main.cf conf file.
+Next, we need to specify the location of the previously before generated TLS certificate and private key in the Postfix config file. To do this we need to edit the `main.cf` conf file: `sudo vi /etc/postfix/main.cf`
 
-`sudo vi /etc/postfix/main.cf`
-
-_Delete/Comment-out any previous TLS parameters and edit the TLS parameters as follows._ 
-
- Add the TLS param code block from before and replace _SMTPd_tls_cert_file_ with the full path to your _fullchain.pem_. Or just replace _example.com_ with your domain name if you're using Ubuntu like me.
+Delete/Comment-out any previous TLS parameters and edit the TLS parameters as follows. Add the TLS param code block from before and replace `SMTPd_tls_cert_file` with the full path to your `fullchain.pem`. Or just replace `example.com` with your domain name if you're using Ubuntu like me.
 
 ```bash
 #Enable TLS Encryption when Postfix receives incoming emails
@@ -266,11 +259,7 @@ SMTP_tls_protocols = !SSLv2, !SSLv3, !TLSv1, !TLSv1.1
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_6.png)
 
-Save and close the file. 
-
-Now restart Postfix.
-
-Now run the following command to verify if Postfix is listening on port 587 (port 465 if you've configured outlook too) .
+Save and close the file and restart Postfix. Now run the following command to verify if Postfix is listening on port 587 (port 465 if you've configured outlook too).
 
 `sudo systemctl restart postfix`
 
@@ -279,86 +268,55 @@ Now run the following command to verify if Postfix is listening on port 587 (por
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_7.png)
 
 
-### Next, installing/configuring the IMAP Server - Dovecot:
+### Next, installing/configuring the IMAP Server - Dovecot
 
-Enter the following command to install Dovecot's core packages and the IMAP daemon package on your Ubuntu/custom server.
+Enter the following command to install Dovecot's core packages and the IMAP daemon package on your Ubuntu/custom server: `sudo apt install dovecot-core dovecot-imapd`
 
-`sudo apt install dovecot-core dovecot-imapd`
+To setup `POP3` to fetch emails, install the `dovecot-pop3d` package as follows next: `sudo apt install dovecot-pop3d`
 
-To setup POP3 to fetch emails, install the dovecot-pop3d package as follows next.
-
-`sudo apt install dovecot-pop3d`
-
-Check the version of Dovecot.
-
-`dovecot --version`
-
+Check the version of Dovecot: `dovecot --version`
 
 **Enabling IMAP/POP3/LMTP Protocol**
 
 You can enable and use any protocol depending on your setup and the way you'd like to recieve and manage the mail system. Enabling atleast one is mandatory.
 
-IMAP/POP3:
+`IMAP/POP3`:
 
-Edit the main dovecot config file using:
+Edit the main dovecot config file using: `sudo vi /etc/dovecot/dovecot.conf`
 
-`sudo vi /etc/dovecot/dovecot.conf`
-
-Add/append the following line to enable both the IMAP and POP3 protocol.
-
-`protocols = imap pop3`
+Add/append the following line to enable both the IMAP and POP3 protocol: `protocols = imap pop3`
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_8.png)
 
+**Configuring the Mailbox Location**
 
-**Configuring the Mailbox Location**:
+By default, Postfix and Dovecot use the `mbox format` to store emails. By default each user’s emails are stored in a single file in `/var/mail/username`. To change it to use the `Maildir format` where email messages will be stored under the Maildir directory under each respective user’s home directory for easy management follow along: `sudo vi /etc/dovecot/conf.d/10-mail.conf`
 
+Find and change the `mail_location` to the value as follows: `mail_location = maildir:~/Maildir`
 
-By default, Postfix and Dovecot use the "mbox format" to store emails. By default each user’s emails are stored in a single file in _/var/mail/username_. To change it to use the "Maildir format" where email messages will be stored under the Maildir directory under each respective user’s home directory for easy management follow along:
+Also append the following line to the file. If you're on Ubuntu 18.04+ this line is automatically added so you dont have to enter it: `mail_privileged_group = mail`
 
-`sudo vi /etc/dovecot/conf.d/10-mail.conf`
+Save and close the file. Now create/add dovecot to the mail group so that Dovecot can read theINBOX using: `sudo adduser dovecot mail`
 
-Find and change the _mail_location_ to the value as follows:
-
-`mail_location = maildir:~/Maildir`
-
-Also append the following line to the file . If you're on Ubuntu 18.04+ this line is automatically added so you dont have to enter it.
-
-`mail_privileged_group = mail`
-
-Save and close the file.
-
-Now create/add dovecot to the mail group so that Dovecot can read the INBOX using:
-
-`sudo adduser dovecot mail`
-
-Although we configured Dovecot to store emails in the "Maildir format", by default Postfix uses its built-in local delivery agent (LDA) to move inbound emails to the message store and it will be saved in the "mbox format".
+Although we configured Dovecot to store emails in the `Maildir format`, by default Postfix uses its built-in local delivery agent (LDA) to move inbound emails to the message store and it will be saved in the `mbox format`.
 
 To avoid this we also configure Postfix to pass incoming emails to Dovecot using the LMTP protocol. This is a simplified version of SMTP where incoming emails will be saved in the required "Maildir format" we've setup to use.
 
-Now install the Dovecot LMTP server using :
+Now install the Dovecot LMTP server using: `sudo apt install dovecot-lmtpd`
 
-`sudo apt install dovecot-lmtpd`
+Lets Edit the Dovecot main configuration file to set this up: `sudo vi /etc/dovecot/dovecot.conf`
 
-Lets Edit the Dovecot main configuration file to set this up:
+Add `lmtp` to the supported protocols as before: `protocols = imap pop3 lmtp`
 
-`sudo vi /etc/dovecot/dovecot.conf`
-
-Add _lmtp_ to the supported protocols as before:
-
-`protocols = imap pop3 lmtp`
-
-(I've set all to run in this example.)
+(I've set all to run in this example)
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_9.png)
 
 Save and close the file.
 
-Its now time to edit the "Dovecot 10-master.conf" file.
+Its now time to edit the `Dovecot 10-master.conf` file: `sudo vi /etc/dovecot/conf.d/10-master.conf`
 
-`sudo vi /etc/dovecot/conf.d/10-master.conf`
-
-Find and replace/comment out the __lmtp__ service definition to the following:
+Find and replace/comment out the `lmtp` service definition to the following:
 
 ```bash
 service lmtp {
@@ -372,12 +330,9 @@ service lmtp {
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_10.png)
 
+Now, edit the Postfix main configuration file: `sudo vi /etc/postfix/main.cf`
 
-Now, edit the Postfix main configuration file.
-
-`sudo vi /etc/postfix/main.cf`
-
-Append the following lines to the end of the file to deliver incoming emails to the local message store via the Dovecot LMTP server and disable SMTPUTF8.
+Append the following lines to the end of the file to deliver incoming emails to the local message store via the Dovecot LMTP server and disable `SMTPUTF8`.
 
 ```bash
 mailbox_transport = lmtp:unix:private/dovecot-lmtp
@@ -386,50 +341,35 @@ SMTPutf8_enable = no
 Save and close the file.
 
 
-### Configuring the Authentication Mechanism:
+### Configuring the Authentication Mechanism
 
-Lets start by editing the authentication config file.
+Lets start by editing the authentication config file: `sudo vi /etc/dovecot/conf.d/10-auth.conf`
 
-`sudo vi /etc/dovecot/conf.d/10-auth.conf`
-
-Uncomment/add the following lines:
-
-- `disable_plaintext_auth = yes`
+Uncomment/add the following lines: `disable_plaintext_auth = yes`
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_11.png)
 
 This will disable plaintext authentication when there’s no SSL/TLS encryption for added security and no fallback to vulnerable versions.
 
-- `#auth_username_format = %Lu` and change its value to --> `auth_username_format = %n`.
-
-This is required as we setup canonical mailbox users.
+`#auth_username_format = %Lu` and change its value to --> `auth_username_format = %n`. This is required as we setup canonical mailbox users.
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_12.png)
 
-
-- `auth_mechanisms = plain` and change its value to --> `auth_mechanisms = plain login`
+`auth_mechanisms = plain` and change its value to --> `auth_mechanisms = plain login`. This only enables the PLAIN authentication mechanism.
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_13.png)
 
-This only enables the PLAIN authentication mechanism.
+__Configuring SSL/TLS Encryption__
 
-
-__Configuring SSL/TLS Encryption:__
-
-Edit the SSL/TLS config file as follows:
-
-- `sudo vi /etc/dovecot/conf.d/10-ssl.conf`
+Edit the SSL/TLS config file as follows: `sudo vi /etc/dovecot/conf.d/10-ssl.conf`
 
 Find and change the value of `ssl = yes` to `ssl = required`
 
-- Find and change the value of `#ssl_prefer_server_ciphers = no` to `ssl_prefer_server_ciphers = yes` 
+Find and change the value of `#ssl_prefer_server_ciphers = no` to `ssl_prefer_server_ciphers = yes` 
 
-- Disable outdated and  inscure SSLv3, TLSv1 and TLSv1.1 by adding the following line to the end of the file.
+Disable outdated and inscure SSLv3, TLSv1 and TLSv1.1 by adding the following line to the end of the file: `ssl_protocols = !SSLv3 !TLSv1 !TLSv1.1`
 
-`ssl_protocols = !SSLv3 !TLSv1 !TLSv1.1`
-
-
-- Next find the following lines:
+Next find the following lines:
 
 ```bash
 ssl_cert = </etc/dovecot/private/dovecot.pem
@@ -450,14 +390,11 @@ ssl_key = </etc/letsencrypt/live/example.com/privkey.pem
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_15.png)
 
 
-### Setting up SASL Authentication:
+### Setting up SASL Authentication
 
+Edit the `10-master.conf` file as before: `sudo vi /etc/dovecot/conf.d/10-master.conf`
 
-Edit the "10-master.conf" file as before:
-
-`sudo vi /etc/dovecot/conf.d/10-master.conf`
-
-Change "service auth" section to the following so that Postfix can find the appropriate Dovecot authentication server.
+Change `service auth` section to the following so that Postfix can find the appropriate Dovecot authentication server.
 
 ```bash
 service auth {
@@ -472,17 +409,11 @@ service auth {
 
 Save and close the file.
 
+__Auto-create Sent and Trash Folder__
 
-__Auto-create Sent and Trash Folder:__
+Edit the following config file: `sudo vi /etc/dovecot/conf.d/15-mailboxes.conf`
 
-
-Edit the following config file:
-
-`sudo vi /etc/dovecot/conf.d/15-mailboxes.conf`
-
-Now to "auto-create" a specific section just append the following inside each respective code block.
-
-`auto = create`
+Now to `auto-create` a specific section just append the following inside each respective code block: `auto = create`
 
 Example: To auto-create the Trash folder in your client-->
 
@@ -497,14 +428,11 @@ By default its good practice to enable common folders such as - "Drafts, Junk, S
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_17.png)
 
-Save the file and restart Postfix and Dovecot:
+Save the file and restart Postfix and Dovecot: `sudo systemctl restart postfix dovecot`
 
-`sudo systemctl restart postfix dovecot`
+**We are almost done with stage 2!**
 
-
-**We are almost done with stage 2. Great!**
-
-Dovecot will be listening on port 143 (IMAP) and 993 (IMAPS) .
+Dovecot will be listening on port 143 (IMAP) and 993 (IMAPS).
 
 `sudo ss -lnpt | grep dovecot`
 
@@ -513,42 +441,33 @@ Dovecot will be listening on port 143 (IMAP) and 993 (IMAPS) .
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_18.png)
 
 
-### Finally , setting up the Desktop Email Client:
+### Finally, setting up the Desktop Email Client
 
 I've setup Thunderbird as my Desktop client and would recommend so.
 
-Install it using :
+Install it using:
 
 - On windows : [Go here](https://www.thunderbird.net/en-US/)
 
 - On NIX: `sudo apt install thunderbird`
 
-Run Thunderbird. You'd most likely see a popup stating to setup your mail account if not go to Edit -> Account Settings -> Account Actions -> Add Mail Account to add a mail account.
-
-Click on Configure manually and setup as follows:
+Run Thunderbird. You'd most likely see a popup stating to setup your mail account if not go to `Edit -> Account Settings -> Account Actions -> Add Mail Account` to add a mail account. Click on Configure manually and setup as follows:
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_19.png)
 
-- Select the IMAP protocol; Enter mail.example.com as the server name; Choose port 143 and STARTTLS; Choose normal password as the authentication method.
+Select the IMAP protocol; Enter `mail.example.com` as the server name; Choose port 143 and `STARTTLS`; Choose `normal password` as the authentication method.
 
 _Note: You can also use port 993 with SSL/TLS encryption for IMAP, and use port 465 with SSL/TLS encryption for SMTP if you've set this up with Microsoft Outlook._
 
-You will now be able to connect to your setup mail server and finally send and receive emails with any external desktop email client using your mail server as a secure encrypted relay! Awesome!
+You will now be able to connect to your setup mail server and finally send and receive emails with any external desktop email client using your mail server as a secure encrypted relay!
 
 Send a test mail and enter your credentials to ensure your setups up and working fine.
 
-
-
-- You can now Create various Users on your VPS mail sevrer and create various associated mail accounts for sending/recieving capability.
+You can now Create various Users on your VPS mail sevrer and create various associated mail accounts for sending/recieving capability.
 
 `sudo adduser -m Yahoo` --> Add user with home directory
 
-For example . If i'd like to setup say, a *Spoofed Yahoo account* to send and recieve mails. I'd create a user on my VPS mail server . If only sending would be the need without the recieving capability, go with the *Spoofing method with GoPhish* discussed.
-
-
-You can list all available mailbox users with:
-
-`sudo doveadm user '*'`
+You can list all available mailbox users with: `sudo doveadm user '*'`
 
 It's advisable to restart Dovecot each time you add users.
 
