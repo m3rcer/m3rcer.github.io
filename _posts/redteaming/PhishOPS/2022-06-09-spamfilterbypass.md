@@ -785,7 +785,7 @@ Save and close the file. Then restart Opendkim and the Postfix service: `sudo sy
 
 Since the DMARC standard is used by many email providers (such as Gmail, Yahoo!, AOL, Hotmail, Outlook), it increases your chances of email being delivered successfully.
 
-To setup DMARC as before add a TXT Record: Enter the `Name`, `TTL`, `Type`, and `Record` as described below. Keep in mind that you must select one of the following options for the Record field: `None`, `Reject`, or `Quarantine`.
+To setup DMARC, similar to before add a TXT Record: Enter the `Name`, `TTL`, `Type`, and `Record` as described below. Keep in mind that you must select one of the following options for the Record field: `None`, `Reject`, or `Quarantine`.
 
 
 | Field                                 | Setting                        |
