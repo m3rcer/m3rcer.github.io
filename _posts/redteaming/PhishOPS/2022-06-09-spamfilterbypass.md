@@ -76,6 +76,7 @@ A "relay" SMTP system receives mail from an SMTP client and transmits it, withou
 - [Spoofing](#spoofing)
 - [Evasion](#evasion)
 - [Validation and checks](#validation-and-checks)
+- [Credits and References](#credits-and-references)
 
 _________________________________________________________________________________________________
 
@@ -871,6 +872,17 @@ Go back to `https://spamcheck.postmarkapp.com/` as before. Go to `show original`
 
 
 _________________________________________________________________________________________________
+
+## Credits and References
+
+- [Alexander Færøy's hosting providers repo](https://gitlab.torproject.org/ahf)
+- [h4ms1k - Attacking Exchange Servers](https://h4ms1k.github.io/Red_Team_exchange/)
+- [linuxbabe/setup-basic-postfix-mail-sever-ubuntu](https://www.linuxbabe.com/mail-server/setup-basic-postfix-mail-sever-ubuntu)
+- [luemmelsec/Pentest-Everything-SMTP](https://luemmelsec.github.io/Pentest-Everything-SMTP/)
+- [Hacktricks - Pentesting SMTP](https://book.hacktricks.xyz/pentesting/pentesting-smtp)
+- [Some useful automated scripts]():
+  - [n0pe-sled/Postfix-Server-Setup](https://github.com/n0pe-sled/Postfix-Server-Setup/blob/master/ServerSetup.sh) 
+  - [jamesm0rr1s/Mail-Server-Setup-for-Phishing](https://github.com/jamesm0rr1s/Mail-Server-Setup-for-Phishing)
 
 
 
