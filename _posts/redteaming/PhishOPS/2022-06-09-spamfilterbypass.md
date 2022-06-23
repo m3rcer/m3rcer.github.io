@@ -67,7 +67,7 @@ A "relay" SMTP system receives mail from an SMTP client and transmits it, withou
     - [Setting up SASL Authentication](#setting-up-sasl-authentication)
     - [Setting up the Desktop Email Client](#setting-up-the-desktop-email-client)
 - [STAGE 3](#stage-3)
-  - [Setting up SPF,DMARC and DKIM with Postfix](#setting-up-spfdmarc-and-dkim-with-postfix)
+  - [Setting up SPF, DMARC and DKIM with Postfix](#setting-up-spf-dmarc-and-dkim-with-postfix)
     - [Setting and configuring SPF](#setting-and-configuring-spf)
     - [Setting up DKIM](#setting-up-dkim)
     - [Generate Private and Public Keypairs](#generate-private-and-public-keypairs)
@@ -537,7 +537,7 @@ Let's improve on this.
 
 # Stage 3
 
-## Setting up SPF,DMARC and DKIM with Postfix
+## Setting up SPF, DMARC and DKIM with Postfix
 
 We finally have a working Postfix SMTP server and Dovecot IMAP server with which we can send and receive email using any external email client like a desktop client (thunderbird).
 
