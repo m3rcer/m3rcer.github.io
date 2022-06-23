@@ -4,10 +4,7 @@ permalink: /permalinks/PhishOPS/StartingPoint
 categories: RedTeaming
 ---
 
-<h1 align="center">Requirements and good practices needed to bypass modern MTA spam filters</h1> 
-
-
-
+# Requirements and good practices needed to bypass modern MTA spam filters
 
 **This section gives a short brief to understand various requirements/techniqeus to achieve spam filter bypasses.** This is an overall gist of good practices. 
 
