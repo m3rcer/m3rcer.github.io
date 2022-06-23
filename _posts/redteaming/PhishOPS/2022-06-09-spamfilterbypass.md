@@ -781,6 +781,28 @@ non_SMTPd_milters = $SMTPd_milters
 
 Save and close the file. Then restart Opendkim and the Postfix service: `sudo systemctl restart opendkim postfix`
 
+## Setup DMARC
+
+Since the DMARC standard is used by many email providers (such as Gmail, Yahoo!, AOL, Hotmail, Outlook), it increases your chances of email being delivered successfully.
+
+To setup DMARC as before add a TXT Record: Enter the `Name`, `TTL`, `Type`, and `Record` as described below. Keep in mind that you must select one of the following options for the Record field: `None`, `Reject`, or `Quarantine`.
+
+
+| Field                                 | Setting                        |
+| --------------------------------------  | -------------------------         |
+| Name                                    | \_dmarc                       |
+| TTL                                     | 14400             |
+| Type                                    | TXT                    |
+| Record                                  | In this field you must choose how you want recipient servers to handle email from your domain that fails SPF/DKIM validation.
+None: `v=DMARC1; p=none; sp=none; rf=afrf; pct=100; ri=86400`
+Reject: `v=DMARC1; p=reject; sp=none; rf=afrf; pct=100; ri=86400`
+Quarantine: `v=DMARC1; p=quarantine; sp=none; rf=afrf; pct=100; ri=86400`
+Alternately, you can request an email report of failed DMARC validations by adding a valid email address, such as the following:
+
+None: `v=DMARC1; p=none; sp=none; ruf=mailto:user@example.com; rf=afrf; pct=100; ri=86400`
+Reject: `v=DMARC1; p=reject; sp=none; rf=afrf; pct=100; ruf=mailto:user@example.com; ri=86400`
+Quarantine: `v=DMARC1; p=quarantine; sp=none; ruf=mailto:user@example.com; rf=afrf; pct=100; ri=86400`                          |
+
 **AND FINALLY, WE ARE DONE!.**
 
 _________________________________________________________________________________________________
@@ -800,7 +822,6 @@ Setup a `New Sending Profile` on GoPhish or a similar MUA (Mail User Agent) of c
 Fire-Away using the `New Profile`.
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_36.png)
-
 
 _________________________________________________________________________________________________
 
