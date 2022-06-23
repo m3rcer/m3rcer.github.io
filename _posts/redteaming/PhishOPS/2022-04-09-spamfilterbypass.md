@@ -786,17 +786,17 @@ ________________________________________________________________________________
 
 ## Spoofing
 
-Let's say we want to impersonate _Facebook/Instagram._ Make sure to buy domain names such as `support-services.com` that go in accordance with your campaign so that the spoofed sender will be in the form of `facebook@support-services.com` for this example.
+Let's say we want to impersonate support from `facebook.com`. Make sure to buy domain names such as `support-services.com` that go in accordance with your campaign so that the spoofed sender will be in the form of `facebook@support-services.com` for this example.
 
-- _(Optional):_ Create a user account on your vps server in accordance to your spoofed account if you want to add the functionality to recieve emails too. 
+_(Optional):_ Create a user account on your vps server in accordance to your spoofed account if you want to add the functionality to recieve emails too. 
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/spoof1.png)
 
-- Setup a `New Sending Profile` on GoPhish or a similar MUA (Mail User Agent) of choice as follows:
+Setup a `New Sending Profile` on GoPhish or a similar MUA (Mail User Agent) of choice as follows:
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/spoof2.png)
   
-- Fire-Away using the `New Profile`.
+Fire-Away using the `New Profile`.
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_36.png)
 
@@ -808,25 +808,32 @@ ________________________________________________________________________________
 
 __Remove sensitive information from email headers with postfix -->__
 
-- To get started, make a small file with regular expressions in `/etc/postfix/header_checks`:
-     ```bash
-     /^Received:.*with ESMTPSA/              IGNORE
-     /^X-Originating-IP:/    IGNORE
-     /^X-Mailer:/            IGNORE
-     /^Mime-Version:/        IGNORE
-     ```
-- The `ESMTPSA` match works for me because I only send email via port 465. I don’t allow `SASL authentication` via port 25. You may need to adjust the regular expression if you accept SASL authentication via SMTP.
-- Now, add the following two lines to your `/etc/postfix/main.cf`:
-     ```bash
-     mime_header_checks = regexp:/etc/postfix/header_checks
-     header_checks = regexp:/etc/postfix/header_checks
-     ```
-- Rebuild the hash table and reload the postfix configuration:
-     ```bash
-     postmap /etc/postfix/header_checks
-     postfix reload
-     ```
-- Now, send a test email. View the headers and you should see the original received header (with your client IP address) removed, along with details about your mail client.
+To get started, make a small file with regular expressions in `/etc/postfix/header_checks`:
+
+   ```bash
+   /^Received:.*with ESMTPSA/              IGNORE
+   /^X-Originating-IP:/    IGNORE
+   /^X-Mailer:/            IGNORE
+   /^Mime-Version:/        IGNORE
+   ```
+
+The `ESMTPSA` match works for me because I only send email via port 465. I don’t allow `SASL authentication` via port 25. You may need to adjust the regular expression if you accept SASL authentication via SMTP.
+
+Now, add the following two lines to your `/etc/postfix/main.cf`:
+
+   ```bash
+   mime_header_checks = regexp:/etc/postfix/header_checks
+   header_checks = regexp:/etc/postfix/header_checks
+   ```
+
+Rebuild the hash table and reload the postfix configuration:
+
+   ```bash
+   postmap /etc/postfix/header_checks
+   postfix reload
+   ```
+
+Now, send a test email. View the headers and you should see the original received header (with your client IP address) removed, along with details about your mail client.
 
 _________________________________________________________________________________________________
 
