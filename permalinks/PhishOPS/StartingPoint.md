@@ -1,11 +1,10 @@
 ---
-title: Understand briefly MTA spam filter bypasses
+title: Requirements and good practices needed to bypass modern MTA spam filters
 permalink: /permalinks/PhishOPS/StartingPoint
 categories: RedTeaming
 ---
 
-
-<h1 align="center">Requirements and good practices needed to bypass modern MTA spam filters</h1> ****
+**This section gives a short brief to understand various requirements/techniqeus to achieve spam filter bypasses.** This is an overall gist of good practices. 
 
 ## Find a hosting provider/ISP that allows an SMTP build
 
@@ -14,7 +13,11 @@ Do they have high reputation IP addresses? You definitely don’t want to be lis
 
 **[Here is the link](https://gitlab.torproject.org/legacy/trac/-/wikis/doc/GoodBadISPs)** that provides a list of all the available VPS's that fit the criteria explained above. Choose accordingly. All credits go to [Alexander Færøy](https://gitlab.torproject.org/ahf) for this wonderful Repository.
 
-##  Permanently disable ipv6 and uninstall unecessary services like exim
+## Domain Name age
+
+Domain age is one of the first factors checked by anti-spam filters. The general rule is **the older the domain, the more trustworthy it gets**, provided it has been used with care and following good practices of email deliverability. Keep in mind that your domain reputation equals your sender reputation.
+
+## Permanently disable ipv6 and uninstall unecessary services like exim
 
 Ipv6 is tricky to configure along with ipv4 and just adds a weighted overhead . For example, you'd have to create a seperate reverse DNS entry for ipv6 along w the ipv4 else gmail mail servers are bound to reject you. 
 Exim or any other mail services that come by default packaged with some distributions like debian 8. They'd hinder the installation of another mail service. So uninstall any unwanted mail service of the kind also if they exist on your distro prepackaged.
@@ -62,7 +65,7 @@ Make sure to have published the following records:
 - `DKIM record` - a txt record of your generated pubkey to verify non-repudiation.
 - `DMARC record` - a txt record that helps protect email senders and recipients from spoofing. 
 
-Now that you have a base understanding of the requirements to bypass Spam filter MTA's, [Let's build your local SMTP here.](localsmtp)
+Now that you have a base understanding of the requirements to bypass Spam filter MTA's, [Let's build your local SMTP here.](https://m3rcer.github.io/redteaming/spamfilterbypass/)
 
 _________________________________________________________________________________________________
 

@@ -10,7 +10,7 @@ description: Building a local SMTP server to bypass spam filters
 
 **This Blog details setting up a local SMTP phishing server on a VPS from scratch to implement SPF,DKIM,DMARC and other modern checks to bypass modern spam filters like gmail, yahoo, outlook etc and to send/recieve unlimited mails for free as long as the hosting provider permits it.**
 
-Refer to this [Starting Point Section](Starting_Point.md) to understand the theory and techniques to bypass modern spam filters. 
+Refer to this [Starting Point Section](/permalinks/PhishOPS/StartingPoint) to understand the theory and techniques to bypass modern spam filters. 
 
 ## Introduction
 
