@@ -8,7 +8,7 @@ categories: RedTeaming
 description: Building a local SMTP server to bypass spam filters
 ---
 
-**This Blog details setting up a local SMTP phishing server from scratch to implement SPF,DKIM,DMARC and other modern checks to bypass spam filters like gmail, yahoo, outlook etc and send and recieve unlimited emails for free as long as the hosting provider permits it.**
+**This Blog details setting up a local SMTP phishing server on a VPS from scratch to implement SPF,DKIM,DMARC and other modern checks to bypass modern spam filters like gmail, yahoo, outlook etc and to send/recieve unlimited mails for free as long as the hosting provider permits it.**
 
 Refer to this [Starting Point Section](Starting_Point.md) to understand the theory and techniques to bypass modern spam filters. 
 
@@ -46,19 +46,34 @@ A "relay" SMTP system receives mail from an SMTP client and transmits it, withou
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_34.png)
 
-### SpamAssasin API
-
-![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_35.png)
-
 ----------------------------------- 
 
 ## Index
 
 ***I will be breaking build this into 3 broad stages***
 
-1. Setting up a Message Transport System (MTS) aka SMTP server (Postfix). 
-2. Setting up an IMAP server (Dovecot), configuring TLS Encryption and configuring a Desktop client.
-3. Setup SPF/DKIM records with postfix for improved/best delivery.
+- [Setup Prerequisites](#setup-prerequisites)
+- [STAGE 1](#stage-1)
+  - [Setting up a Message Transport System (MTS) aka SMTP server (Postfix)](#setting-up-a-message-transport-system-mts-aka-smtp-server-postfix)
+    - [Set Hostname and DNS records](#set-hostname-and-dns-records)
+    - [Permanently disable ipv6 and uninstall unecessary services like exim](#permanently-disable-ipv6-and-uninstall-unecessary-services-like-exim)
+    - [PTR record (rDNS)](#ptr-record-rdns)
+    - [Installing Postfix](#installing-postfix)
+- [STAGE 2](#stage-2)
+  - [Install an IMAP SERVER (Dovecot), enable TLS encryption and setup a Desktop client](#install-an-imap-server-dovecot-enable-tls-encryption-and-setup-a-desktop-client)
+    - [Getting TLS encryption and a certificate the easy way](#getting-tls-encryption-and-a-certificate-the-easy-way)
+    - [Installing/configuring the IMAP Server - Dovecot](#installingconfiguring-the-imap-server---dovecot)
+    - [Configuring the Authentication Mechanism](#configuring-the-authentication-mechanism)
+    - [Setting up SASL Authentication](#setting-up-sasl-authentication)
+    - [Setting up the Desktop Email Client](#setting-up-the-desktop-email-client)
+- [STAGE 3](#stage-3)
+  - [Setting up SPF and DKIM with Postfix](#setting-up-spf-and-dkim-with-postfix)
+    - [Setting and configuring SPF](#setting-and-configuring-spf)
+    - [Setting up DKIM](#setting-up-dkim)
+    - [Generate Private and Public Keypairs](#generate-private-and-public-keypairs)
+    - [Publish Your Public Key in the DNS Records](#publish-your-public-key-in-the-dns-records)
+    - [Connect Postfix to OpenDKIM](#connect-postfix-to-opendkim)
+- [Validation and checks](#validation-and-checks)
 
 _________________________________________________________________________________________________
 
@@ -71,7 +86,8 @@ __Note: For this example I've used the following and would recommend a similar s
   * Namecheap as my domain hosting provider.
   * Thunderbird as my desktop client for testing.
   * GoPhish/CobaltStrike as my phish client.
-  * Disabled any firewall rules against ports 25,587,80,443,465,143,993,110,995.              
+  * Disabled any firewall rules against ports 25,587,80,443,465,143,993,110,995.
+  * A reputed domain name with no blacklists aged over 3 months.              
 
 _________________________________________________________________________________________________
 
@@ -122,7 +138,7 @@ Exim or any other mail services that come by default packaged with some distribu
 
 __Permanently disable ipv6:__
 
-- Edit the **/etc/sysctl.conf** configuration file by adding the following lines: `vi /etc/sysctl.conf`
+Edit the **/etc/sysctl.conf** configuration file by adding the following lines: `vi /etc/sysctl.conf`
 
 ```bash
 net.ipv6.conf.all.disable_ipv6=1
@@ -300,7 +316,7 @@ Save and close the file and restart Postfix. Now run the following command to ve
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_7.png)
 
 
-### Next, installing/configuring the IMAP Server - Dovecot
+### Installing/configuring the IMAP Server - Dovecot
 
 Enter the following command to install Dovecot's core packages and the IMAP daemon package on your Ubuntu/custom server: `sudo apt install dovecot-core dovecot-imapd`
 
@@ -473,7 +489,7 @@ Dovecot will be listening on port 143 (IMAP) and 993 (IMAPS).
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_18.png)
 
 
-### Finally, setting up the Desktop Email Client
+### Setting up the Desktop Email Client
 
 I've setup Thunderbird as my Desktop client and would recommend so.
 
