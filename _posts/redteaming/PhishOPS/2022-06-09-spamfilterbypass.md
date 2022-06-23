@@ -73,6 +73,7 @@ A "relay" SMTP system receives mail from an SMTP client and transmits it, withou
     - [Generate Private and Public Keypairs](#generate-private-and-public-keypairs)
     - [Publish Your Public Key in the DNS Records](#publish-your-public-key-in-the-dns-records)
     - [Connect Postfix to OpenDKIM](#connect-postfix-to-opendkim)
+    - [Setup DMARC](#setup-dmarc)
 - [Spoofing](#spoofing)
 - [Evasion](#evasion)
 - [Validation and checks](#validation-and-checks)
@@ -793,16 +794,17 @@ To setup DMARC, similar to before add a TXT Record: Enter the `Name`, `TTL`, `Ty
 | Name                                    | \_dmarc                       |
 | TTL                                     | 14400             |
 | Type                                    | TXT                    |
-| Record                                  | In this field you must choose how you want recipient servers to handle email from your domain that fails SPF/DKIM validation. |
+| Record                                  | In this field you must choose how you want recipient servers to handle email from your domain that fails SPF/DKIM validation. Various examples are listed below|
 
-None: `v=DMARC1; p=none; sp=none; rf=afrf; pct=100; ri=86400`
-Reject: `v=DMARC1; p=reject; sp=none; rf=afrf; pct=100; ri=86400`
-Quarantine: `v=DMARC1; p=quarantine; sp=none; rf=afrf; pct=100; ri=86400`
+**Some `record` examples:**
+- None: `v=DMARC1; p=none; sp=none; rf=afrf; pct=100; ri=86400`
+- Reject: `v=DMARC1; p=reject; sp=none; rf=afrf; pct=100; ri=86400`
+- Quarantine: `v=DMARC1; p=quarantine; sp=none; rf=afrf; pct=100; ri=86400`
+
 Alternately, you can request an email report of failed DMARC validations by adding a valid email address, such as the following:
-
-None: `v=DMARC1; p=none; sp=none; ruf=mailto:user@example.com; rf=afrf; pct=100; ri=86400`
-Reject: `v=DMARC1; p=reject; sp=none; rf=afrf; pct=100; ruf=mailto:user@example.com; ri=86400`
-Quarantine: `v=DMARC1; p=quarantine; sp=none; ruf=mailto:user@example.com; rf=afrf; pct=100; ri=86400`                          
+- None: `v=DMARC1; p=none; sp=none; ruf=mailto:user@example.com; rf=afrf; pct=100; ri=86400`
+- Reject: `v=DMARC1; p=reject; sp=none; rf=afrf; pct=100; ruf=mailto:user@example.com; ri=86400`
+- Quarantine: `v=DMARC1; p=quarantine; sp=none; ruf=mailto:user@example.com; rf=afrf; pct=100; ri=86400`                          
 
 **AND FINALLY, WE ARE DONE!.**
 
