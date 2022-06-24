@@ -83,7 +83,7 @@ ________________________________________________________________________________
 
 ## Setup Prerequisites
 
-__Note: For this example I've used the following and would recommend a similar setup -->__
+__Note: For this example I've used the following on a VPS and would recommend a similar setup -->__
 
   * Ubuntu 20.04LTS as my distro.
   * Gmail as the testing mail service.
