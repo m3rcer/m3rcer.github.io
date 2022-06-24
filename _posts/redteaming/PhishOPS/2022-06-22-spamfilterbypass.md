@@ -50,7 +50,7 @@ A "relay" SMTP system receives mail from an SMTP client and transmits it, withou
 
 ## Index
 
-***I will be breaking build this into 3 broad stages***
+***I will be breaking this build into 3 broad stages***
 
 - [Setup Prerequisites](#setup-prerequisites)
 - [STAGE 1](#stage-1)
