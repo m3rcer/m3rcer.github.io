@@ -1,6 +1,6 @@
 ---
 title: Building A Local SMTP Server To Bypass Modern Spam Filters
-date: 2022-06-09 09:48:47 +07:00
+date: 2022-06-22 09:48:47 +07:00
 categories: RedTeaming
 #modified: 20-08-29 09:24:47 +07:00
 #tags: [blog, netlify, jekyll, github]
@@ -8,7 +8,7 @@ categories: RedTeaming
 description: Building a local SMTP server to bypass spam filters
 ---
 
-**This Blog details setting up a local SMTP phishing server on a VPS from scratch to implement TLS, SPF, DKIM, DMARC and other modern checks to improve overall mail deliverability and bypass modern spam filters like Gmail, yahoo, outlook etc. Also building a local SMTP allows to send/receive unlimited mails for free as long as the hosting provider permits it and you have bandwidth.**
+**This Blog details setting up a local SMTP phishing server on a VPS from scratch to implement TLS, SPF, DKIM, DMARC and other modern checks to improve overall mail deliverability and bypass modern spam filters like Gmail, yahoo, outlook etc. Also building a local SMTP allows to send/receive unlimited mails for free as long as the hosting provider permits it and you haven't run out of internet bandwidth.**
 
 Refer to this [Starting Point Section](/permalinks/PhishOPS/StartingPoint) to understand the theory and techniques to bypass modern spam filters. 
 
@@ -805,8 +805,6 @@ Alternately, you can request an email report of failed DMARC validations by addi
 - None: `v=DMARC1; p=none; sp=none; ruf=mailto:user@example.com; rf=afrf; pct=100; ri=86400`
 - Reject: `v=DMARC1; p=reject; sp=none; rf=afrf; pct=100; ruf=mailto:user@example.com; ri=86400`
 - Quarantine: `v=DMARC1; p=quarantine; sp=none; ruf=mailto:user@example.com; rf=afrf; pct=100; ri=86400`                          
-
-**AND FINALLY, WE ARE DONE!.**
 
 _________________________________________________________________________________________________
 
