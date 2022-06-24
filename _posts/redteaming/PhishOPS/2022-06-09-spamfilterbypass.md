@@ -8,7 +8,7 @@ categories: RedTeaming
 description: Building a local SMTP server to bypass spam filters
 ---
 
-**This Blog details setting up a local SMTP phishing server on a VPS from scratch to implement TLS, SPF, DKIM, DMARC and other modern checks to improve overall mail delivaribility and bypass modern spam filters like gmail, yahoo, outlook etc. Also building a local SMTP allows to send/recieve unlimited mails for free as long as the hosting provider permits it and you have bandwidth.**
+**This Blog details setting up a local SMTP phishing server on a VPS from scratch to implement TLS, SPF, DKIM, DMARC and other modern checks to improve overall mail deliverability and bypass modern spam filters like Gmail, yahoo, outlook etc. Also building a local SMTP allows to send/receive unlimited mails for free as long as the hosting provider permits it and you have bandwidth.**
 
 Refer to this [Starting Point Section](/permalinks/PhishOPS/StartingPoint) to understand the theory and techniques to bypass modern spam filters. 
 
@@ -16,7 +16,7 @@ Refer to this [Starting Point Section](/permalinks/PhishOPS/StartingPoint) to un
 
 The default ports used by SMTP are 25, 465 (Exchange) and 587 that are meant to be used for submissions from your e-mail client to the e-mail server and higher ports are used for relaying between SMTP-server.
 
-- Some verbatim assocaited with SMTP:
+- Some verbatim associated with SMTP:
   - `Mail User Agent (MUA)`: This is a (part of a) program connecting to a SMTP-server in order to send an email. Most likely this is your Outlook, Thunderbird, whatever.
   - `Mail Transfer Agent (MTA)`: The transport service part of a program. They receive and transfer the emails. This might be an Exchange server, an internet facing gateway and so on.
 
@@ -56,7 +56,7 @@ A "relay" SMTP system receives mail from an SMTP client and transmits it, withou
 - [STAGE 1](#stage-1)
   - [Setting up a Message Transport System (MTS) aka SMTP server (Postfix)](#setting-up-a-message-transport-system-mts-aka-smtp-server-postfix)
     - [Set Hostname and DNS records](#set-hostname-and-dns-records)
-    - [Permanently disable ipv6 and uninstall unecessary services like exim](#permanently-disable-ipv6-and-uninstall-unecessary-services-like-exim)
+    - [Permanently disable ipv6 and uninstall unnecessary services like exim](#permanently-disable-ipv6-and-uninstall-unecessary-services-like-exim)
     - [PTR record (rDNS)](#ptr-record-rdns)
     - [Installing Postfix](#installing-postfix)
 - [STAGE 2](#stage-2)
@@ -134,11 +134,11 @@ mail.example.com        <ip-addr>
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/a_record.png)
 
 
-### Permanently disable ipv6 and uninstall unecessary services like exim
+### Permanently disable ipv6 and uninstall unnecessary services like exim
 
-Ipv6 is tricky to configure along w ipv4 and just adds a weighted overhead . For example , you'd have to create a seperate reverse dns entry for ipv6 along w the ipv4 else gmail mail servers are bound to reject you. 
+Ipv6 is tricky to configure along w ipv4 and just adds a weighted overhead . For example , you'd have to create a separate reverse dns entry for ipv6 along w the ipv4 else Gmail mail servers are bound to reject you. 
 
-Exim or any other mail services that come by default packaged with some distributions like debian 8 . They'd hinder the installation of another mail service . So uninstall any unwanted mail service of the kind if they exist on your distro prepackaged.
+Exim or any other mail services that come by default packaged with some distributions like debian 8 . They'd hinder the installation of another mail service . So uninstall any unwanted mail service of the kind if they exist on your distro pre-packaged.
 
 __Permanently disable ipv6:__
 
@@ -149,11 +149,11 @@ net.ipv6.conf.all.disable_ipv6=1
 net.ipv6.conf.default.disable_ipv6=1
 ```
 
-This works on ubuntu 20.04, If it dosen't find an equivalent to disable ipv6 for your specific distro. A recommened method would be using grub too. Check this [article](https://itsfoss.com/disable-ipv6-ubuntu-linux/) for more details .
+This works on ubuntu 20.04, If it doesn’t find an equivalent to disable ipv6 for your specific distro. A recommended method would be using grub too. Check this [article](https://itsfoss.com/disable-ipv6-ubuntu-linux/) for more details .
 
 ### PTR record (rDNS)
 
-Your PTR record does the inverse, ie maps your IP address back to your FQDN. This is as crucial as it gets as MTA's like gmail and most out there will only accept mails through into the primary inbox if this is set right.
+Your PTR record does the inverse, that is maps your IP address back to your FQDN. This is as crucial as it gets as MTA's like Gmail and most out there will only accept mails through into the primary inbox if this is set right.
 
 _This could be an option your hosting provider allows you to setup like how you did your domain records (`cockbox.org` uses this method ) or you'd have to probably contact support and they'd do it for you (`flokinet.is` works this way). Either case find a hosting provider that supports this._
 
@@ -173,7 +173,7 @@ While installation you will be asked to select a type for mail configuration. Se
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_1.png)
 
-Next enter your domain name when prompted for the system mail name as your domain name without __"mail"__ ie just `example.com`. 
+Next enter your domain name when prompted for the system mail name as your domain name without __"mail"__ that is just `example.com`. 
 
 This ensures that your mail address naming convention would be in the form of -
 
@@ -205,11 +205,11 @@ Or you could install mailutils using `sudo apt-get install mailutils` . Just typ
 
 *Note:* The email might land through into your primary right away but could be potentially flagged by other stronger MTA's and their spam filters. We will be comparing the spam score at each stage to see the overall improvement in deliverability.
 
-Incase your hosting provider has blocked outbound port 25, verify it using: `telnet gmail-SMTP-in.l.google.com 25`
+In case your hosting provider has blocked outbound port 25, verify it using: `telnet gmail-SMTP-in.l.google.com 25`
 
-If you see a status showing `"Connected" --> outbound 25 works succesfully`. Use `quit` to quit the command.
+If you see a status showing `"Connected" --> outbound 25 works successfully`. Use `quit` to quit the command.
 
-Head on over to your gmail inbox and open up the mail. Click on the drop down below the `Printer icon` to the right as shown in the screenshot --> next click on `show original`. --> next click on the `Copy to clipboard` button to copy all contents.
+Head on over to your Gmail inbox and open up the mail. Click on the drop down below the `Printer icon` to the right as shown in the screenshot --> next click on `show original`. --> next click on the `Copy to clipboard` button to copy all contents.
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_5.png)
 
@@ -225,7 +225,7 @@ _Note the score over each stage ._
 
 ### Getting TLS encryption and a certificate the easy way
 
-TLS encryption is mandatory and ensures secured delivery. `LetsEncrypt` offers a free certificate with assisstance from their client - `certbot`.
+TLS encryption is mandatory and ensures secured delivery. `LetsEncrypt` offers a free certificate with assistance from their client - `certbot`.
 
 Head on over to `https://certbot.eff.org/`. Click on  `Get Certbot instructions`.
 
@@ -233,7 +233,7 @@ Select your server as the Software and which distro your running on system. In m
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/certbot1.png)
 
-Follow along the instructions to succesfully install certbot and when you reach an instruction such as `sudo certbot --apache` you will be prompted for the domains and subdomains to enable TLS on along with an administrative mail contact. Fill them as your hosting needs. 
+Follow along the instructions to successfully install certbot and when you reach an instruction such as `sudo certbot --apache` you will be prompted for the domains and subdomains to enable TLS on along with an administrative mail contact. Fill them as your hosting needs. 
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/certbot-setup2.png)
 
@@ -247,10 +247,10 @@ All your TLS certificates will now be live and the config automatically replaced
 
 To send emails from a desktop email client, we need to enable the submission service of Postfix so that the email client can submit emails to Postfix SMTP server. 
 
-Edit the `master.cf` file using your favorite text editor as follows. Im using `vim` as my editor: `sudo vi /etc/postfix/master.cf`
+Edit the `master.cf` file using your favourite text editor as follows. I’m using `vim` as my editor: `sudo vi /etc/postfix/master.cf`
 
 In the `submission` section, uncomment the `submission...` line and  add the following lines (the 2nd line on) as stated here below it. 
-This method ensures no bad tabs/spaces causing the config to error out. (Be careful editting this)
+This method ensures no bad tabs/spaces causing the config to error out. (Be careful editing this)
 
 ```bash
 submission     inet     n    -    y    -    -    SMTPd
@@ -330,7 +330,7 @@ Check the version of Dovecot: `dovecot --version`
 
 **Enabling IMAP/POP3/LMTP Protocol**
 
-You can enable and use any protocol depending on your setup and the way you'd like to recieve and manage the mail system. Enabling atleast one is mandatory.
+You can enable and use any protocol depending on your setup and the way you'd like to receive and manage the mail system. Enabling at least one is mandatory.
 
 `IMAP/POP3`:
 
@@ -346,9 +346,9 @@ By default, Postfix and Dovecot use the `mbox format` to store emails. By defaul
 
 Find and change the `mail_location` to the value as follows: `mail_location = maildir:~/Maildir`
 
-Also append the following line to the file. If you're on Ubuntu 18.04+ this line is automatically added so you dont have to enter it: `mail_privileged_group = mail`
+Also append the following line to the file. If you're on Ubuntu 18.04+ this line is automatically added so you don’t have to enter it: `mail_privileged_group = mail`
 
-Save and close the file. Now create/add dovecot to the mail group so that Dovecot can read theINBOX using: `sudo adduser dovecot mail`
+Save and close the file. Now create/add dovecot to the mail group so that Dovecot can read the INBOX using: `sudo adduser dovecot mail`
 
 Although we configured Dovecot to store emails in the `Maildir format`, by default Postfix uses its built-in local delivery agent (LDA) to move inbound emails to the message store and it will be saved in the `mbox format`.
 
@@ -366,7 +366,7 @@ Add `lmtp` to the supported protocols as before: `protocols = imap pop3 lmtp`
 
 Save and close the file.
 
-Its now time to edit the `Dovecot 10-master.conf` file: `sudo vi /etc/dovecot/conf.d/10-master.conf`
+It’s now time to edit the `Dovecot 10-master.conf` file: `sudo vi /etc/dovecot/conf.d/10-master.conf`
 
 Find and replace/comment out the `lmtp` service definition to the following:
 
@@ -419,7 +419,7 @@ Find and change the value of `ssl = yes` to `ssl = required`
 
 Find and change the value of `#ssl_prefer_server_ciphers = no` to `ssl_prefer_server_ciphers = yes` 
 
-Disable outdated and inscure SSLv3, TLSv1 and TLSv1.1 by adding the following line to the end of the file: `ssl_protocols = !SSLv3 !TLSv1 !TLSv1.1`
+Disable outdated and insecure SSLv3, TLSv1 and TLSv1.1 by adding the following line to the end of the file: `ssl_protocols = !SSLv3 !TLSv1 !TLSv1.1`
 
 Next find the following lines:
 
@@ -428,7 +428,7 @@ ssl_cert = </etc/dovecot/private/dovecot.pem
 ssl_key = </etc/dovecot/private/dovecot.key
 ```
 
-Replace them with the perviously generated location of your Let’s Encrypt TLS certificate and private key.
+Replace them with the previously generated location of your Let’s Encrypt TLS certificate and private key.
 
 It would be as follows:
 
@@ -465,7 +465,7 @@ __Auto-create Sent and Trash Folder__
 
 Edit the following config file: `sudo vi /etc/dovecot/conf.d/15-mailboxes.conf`
 
-Now to `auto-create` a specific section just append the following inside each respective code block: `auto = create`
+Now to `auto-create` a specific section just appends the following inside each respective code block: `auto = create`
 
 Example: To auto-create the Trash folder in your client-->
 
@@ -476,7 +476,7 @@ Example: To auto-create the Trash folder in your client-->
  }
 ```
 
-By default its good practice to enable common folders such as - "Drafts, Junk, Sent, Trash" for better usage and tracking of the mails sent and recieved.
+By default its good practice to enable common folders such as - "Drafts, Junk, Sent, Trash" for better usage and tracking of the mails sent and received.
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_17.png)
 
@@ -513,7 +513,7 @@ You will now be able to connect to your setup mail server and finally send and r
 
 Send a test mail and enter your credentials to ensure your setups up and working fine.
 
-You can now Create various Users on your VPS mail sevrer and create various associated mail accounts for sending/recieving capability.
+You can now Create various Users on your VPS mail server and create various associated mail accounts for sending/receiving capability.
 
 `sudo adduser -m Yahoo` --> Add user with home directory
 
@@ -523,9 +523,9 @@ It's advisable to restart Dovecot each time you add users.
 
 And STAGE 2 is complete!
 
-TroubleShooting tips:
-- If you get a Relay access denied error it's most likely that our VPS hosting provider dosen't allow relay over these ports.
-- If you use the Cloudflare DNS service, you should not enable the CDN (proxy) feature when creating DNS an A record and an AAAA record for the hostname of your mail server as Cloudflare dosen't support SMTP or IMAP proxy.
+Troubleshooting tips:
+- If you get a Relay access denied error it's most likely that our VPS hosting provider doesn’t allow relay over these ports.
+- If you use the Cloudflare DNS service, you should not enable the CDN (proxy) feature when creating DNS an A record and an AAAA record for the hostname of your mail server as Cloudflare doesn’t support SMTP or IMAP proxy.
 
 Let's check our spam score:
 
@@ -543,7 +543,7 @@ We finally have a working Postfix SMTP server and Dovecot IMAP server with which
 
 Although we have correctly set up our DNS MX, A and PTR records our emails are still flagged as spam by strong and popular email services such as Gmail and Outlook mail.
 
-As we all know most of our targets would be using such mail services so to succesfully bypass most strong spam filters its mandatory to set up a SPF and DKIM record as explained before.
+As we all know most of our targets would be using such mail services so to successfully bypass most strong spam filters its mandatory to set up a SPF and DKIM record as explained before.
 
 And we begin,
 
@@ -557,7 +557,7 @@ Get back to your respective domain management interface for DNS and create a new
 > mx: means all hosts listed in the MX records are allowed to send emails for your domain and any other hosts are disallowed.
 
 > \~all: indicates that emails from your domain should only come from hosts specified in the SPF record.
-Use the following command to verify you've succesfully added the record: `dig example.com txt +short`
+Use the following command to verify you've successfully added the record: `dig example.com txt +short`
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_21.png)
 
@@ -715,7 +715,7 @@ _Note: The string after the `p parameter` is the public key._
 
 Now copy everything in the between the parentheses and paste it creating a new DNS record in your domain DNS config as follows:
 
-_Note: Delete all double quotes and white spaces in the value field if any using some sed magic._
+_Note: Delete all double quotes and white spaces in the value field if any using some `sed` magic._
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_29.png)
 
@@ -736,7 +736,7 @@ _Note: If you happen to see `Key not secure` in the command output, this is beca
 
 ### Connect Postfix to OpenDKIM
 
-Postfix can talk to OpenDKIM via a Unix socket file. The default socket file used by OpenDKIM runs in a chroot jail. So we need to change the OpenDKIM Unix socket file.
+Postfix can talk to OpenDKIM via a Unix socket file. The default socket file used by OpenDKIM runs in a chroot jail. So, we need to change the OpenDKIM Unix socket file.
 
 Create a directory to hold the OpenDKIM socket file and allow only the opendkim user and the postfix group to access it:
 
@@ -814,7 +814,7 @@ ________________________________________________________________________________
 
 Let's say we want to impersonate support from `facebook.com`. Make sure to buy domain names such as `support-services.com` that go in accordance with your campaign so that the spoofed sender will be in the form of `facebook@support-services.com` for this example.
 
-_(Optional):_ Create a user account on your vps server in accordance to your spoofed account if you want to add the functionality to recieve emails too. 
+_(Optional):_ Create a user account on your vps server in accordance to your spoofed account if you want to add the functionality to receive emails too. 
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/spoof1.png)
 
