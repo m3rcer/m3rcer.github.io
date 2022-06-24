@@ -840,7 +840,7 @@ To get started, make a small file with regular expressions in `/etc/postfix/head
    /^Mime-Version:/        IGNORE
    ```
 
-The `ESMTPSA` match works for me because I only send email via port 465. I don’t allow `SASL authentication` via port 25. You may need to adjust the regular expression if you accept SASL authentication via SMTP.
+The `ESMTPSA` match works for me because I only send email via port 465 most times. I don’t allow `SASL authentication` via port 25. You may need to adjust the regular expression if you accept SASL authentication via SMTP.
 
 Now, add the following two lines to your `/etc/postfix/main.cf`:
 
