@@ -875,7 +875,7 @@ ________________________________________________________________________________
 
 ### SPF and DKIM Check
 
-Send a test email from thunderbird/gophish or locally to your test Gmail Account and click on the drop down as before --> __show original__. 
+Send a test email from thunderbird/gophish or locally to your test Gmail Account and click on the drop down as before --> `show original` 
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_33.png)
 
