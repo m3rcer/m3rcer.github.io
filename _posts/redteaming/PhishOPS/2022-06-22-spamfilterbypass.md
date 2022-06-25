@@ -5,10 +5,10 @@ categories: RedTeaming
 #modified: 20-08-29 09:24:47 +07:00
 #tags: [blog, netlify, jekyll, github]
 #layout: post
-description: Building a local SMTP server on a VPS from scratch to implement TLS, SPF, DKIM, DMARC and other modern checks to improve overall mail deliverability and bypass modern spam filters checks
+description: Building a local SMTP server on a VPS from scratch to implement TLS, SPF, DKIM, DMARC and other modern checks to improve overall mail deliverability and bypass modern spam filters
 ---
 
-**This Blog details setting up a local SMTP server on a VPS from scratch to implement TLS, SPF, DKIM, DMARC and other modern checks to improve overall mail deliverability and bypass modern spam filters checks like Gmail, yahoo, outlook etc. Building a local SMTP also allows to send/receive unlimited mails for free as long as the hosting provider permits it and you haven't run out of internet bandwidth.**
+**This Blog details setting up a local SMTP server on a VPS from scratch to implement TLS, SPF, DKIM, DMARC and other modern checks to improve overall mail deliverability and bypass modern spam filters like Gmail, yahoo, outlook etc. Building a local SMTP also allows to send/receive unlimited mails for free as long as the hosting provider permits it and you haven't run out of internet bandwidth.**
 
 Refer to this [Starting Point Section](/permalinks/PhishOPS/StartingPoint) to understand the theory and techniques behind modern spam filters bypasses. 
 
