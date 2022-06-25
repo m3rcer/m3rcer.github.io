@@ -55,6 +55,7 @@ Add the required functions in `functions.txt` which uses `syscalls.asm` (generat
 	}
 	#endif
 	```
+	
 Setup requirements to replace the functions calls. (refer [bs's blog](https://br-sn.github.io/Implementing-Syscalls-In-The-CobaltStrike-Artifact-Kit/))
 - Start by grabbing the approprate function prototypes and incorporating it in the program.
 	```c
@@ -185,7 +186,7 @@ Replace the function calls to their NT equivalents similar to the blog.
 	        NtCreateThreadEx(&thandle, GENERIC_EXECUTE, NULL, hProc, run, base_addr, FALSE, 0, 0, 0, NULL);
 	}
 	```
-	
+
 Validate the syscalls: `VirtualAlloc()`, `VirtualProtect()` and `CreateThread` shouldn't appear now.
 - peclone: `./peclone dump ~/artifact/dist-template/artifact64.exe`
 - strings: `strings ~/artifact/dist-template/artifact64.exe | grep Virtual`
