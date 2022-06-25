@@ -136,7 +136,7 @@ mail.example.com        <ip-addr>
 
 ### Permanently disable ipv6 and uninstall unnecessary services like exim
 
-Ipv6 is tricky to configure along w ipv4 and just adds a weighted overhead . For example , you'd have to create a separate reverse dns entry for ipv6 along w the ipv4 else Gmail mail servers are bound to reject you. 
+Ipv6 is tricky to configure along with ipv4 and just adds a weighted overhead . For example , you'd have to create a separate reverse dns entry for ipv6 along w the ipv4 else Gmail mail servers are bound to reject you. 
 
 Exim or any other mail services that come by default packaged with some distributions like debian 8 . They'd hinder the installation of another mail service . So uninstall any unwanted mail service of the kind if they exist on your distro pre-packaged.
 
@@ -882,7 +882,7 @@ Send a test email from thunderbird/gophish or locally to your test Gmail Account
 
 ### Email Score and Placement
 
-Go to https://www.mail-tester.com. You will see a unique email address. Send an email from your domain to this address and then check your score.
+Go to `https://www.mail-tester.com`. You will see a unique email address. Send an email from your domain to this address and then check your score.
 
 ![Image](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/PhishOPS/images/postfix_install_34.png)
 
