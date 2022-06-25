@@ -12,15 +12,12 @@ description: Using InlineWhispers to implement Direct Syscalls in Cobalt Strike'
      <img src="https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/cobaltsyscalls/syscalls.png">
 </p>
 
-## Resources
+## Resources/Credits
 
-[Using Direct Syscalls from Beacon Object Files and MinGW](https://outflank.nl/blog/2020/12/26/direct-syscalls-in-beacon-object-files/)
-
-[Implementing Syscalls in the Artifact Kit](https://br-sn.github.io/Implementing-Syscalls-In-The-CobaltStrike-Artifact-Kit/)
-
-[Using Direct Syscalls in Cobalt Strike's Artifact Kit - YT](https://www.youtube.com/watch?v=mZyMs2PP38w&t=21s&ab_channel=RaphaelMudge)
-
-[InlineWhispers](https://github.com/outflanknl/InlineWhispers)
+- [Using Direct Syscalls from Beacon Object Files and MinGW](https://outflank.nl/blog/2020/12/26/direct-syscalls-in-beacon-object-files/)
+- [Implementing Syscalls in the Artifact Kit](https://br-sn.github.io/Implementing-Syscalls-In-The-CobaltStrike-Artifact-Kit/)
+- [Using Direct Syscalls in Cobalt Strike's Artifact Kit - YT](https://www.youtube.com/watch?v=mZyMs2PP38w&t=21s&ab_channel=RaphaelMudge)
+- [InlineWhispers](https://github.com/outflanknl/InlineWhispers)
 
 ## Methodology
 
@@ -55,7 +52,7 @@ Add the required functions in `functions.txt` which uses `syscalls.asm` (generat
 	}
 	#endif
 	```
-	
+
 Setup requirements to replace the functions calls. (refer [bs's blog](https://br-sn.github.io/Implementing-Syscalls-In-The-CobaltStrike-Artifact-Kit/))
 - Start by grabbing the approprate function prototypes and incorporating it in the program.
 	```c
