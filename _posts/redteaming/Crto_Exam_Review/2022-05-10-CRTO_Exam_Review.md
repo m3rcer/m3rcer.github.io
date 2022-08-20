@@ -16,7 +16,7 @@ description: CRTO 2022
 
 Index:
 - [Preface](#preface)
-- [Course Review](#Bcourse-review)
+- [Course Review](#course-review)
 	- [Course Highlights](#course-highlights)
 	- [Course Drawbacks](#course-drawbacks)
 - [Exam Review](#exam-review)
