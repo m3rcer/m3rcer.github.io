@@ -32,7 +32,7 @@ I'd recommend having a strong Active Directory Hacking skillset along with knowl
 
 ## Lab Review
 
-![](lab.png)
+![](https://github.com/m3rcer/m3rcer.github.io/raw/master/_posts/redteaming/Paces_Review/lab.png)
 
 This by far has to be the interesting and most hardened Active Directory Lab I've engaged. The labs also known as GCB (Global Central Bank) simulates an Enterprise Cyber Range that mimics a financial institution's network. The lab is truly vast with around 7 forest's in total with unique attack paths for each host. What I really liked was that the lab wasn't CTF like rather required an overall methodological approach which was great. The course comes along with 3 hours of video course material which deals with only with explanations regarding attack vectors taught beyond the CRTE/CRTP course. Everything before is expected to be known or researched. 
 This lab doesn’t have flags and is objective based. There is no walkthrough for the labs other than Hint Diagrams which give hints about the approach to consider. If you ever get stuck the support is amazing and offers immediate support and remediation on the topic. I did find my self asking for help quite a bit during the labs and I'm glad I did because I just couldn't figure some parts on my own. 
@@ -46,7 +46,7 @@ I managed to complete the labs in around 3 weeks. The last week I revised the la
 
 ## Exam Review
 
-![](lab2.png)
+![](https://github.com/m3rcer/m3rcer.github.io/raw/master/_posts/redteaming/Paces_Review/lab2.png)
 
 I began my exam on `Aug 5th`, after a 5-day break from the labs and the objective was to get command execution (not necessarily with administrative privileges) on 5 target server's other than the foothold after which secure all found vulnerabilities and setup defence’s/configurations as per said client requirements (provided with the exam objective mail). I managed to pwn 4/5 servers on my first day after which I gave up because I had exhausted my enumeration/out of the box thinking for the day. I woke up just 1.5 hrs after feeling time paranoid and redid all my enumeration steps to check if I missed any step and there it was in plain sight hiding in a step I managed to miss during my enumeration phase. After which cleartext passwords are provided on a target DC to go about securing the environment as per said requirements. The course doesn’t prepare you a lot in terms of defences but I spent a good time understanding and researching these vulnerabilities in my own home lab so I had completed the defence part in about 2 hrs after. I found both parts very amusing and definitely learnt a lot. 
 
@@ -58,7 +58,7 @@ Some key take away’s to pass the exam are:
 
 Overall I'd say the exam labs is a fair challenge, definitely not as hard as the course labs but definitely does teach a lot and is a great addition to my Active Directory Exploitation experience. I'm glad to have this certificate to my name and am grateful for the experience.
 
-![](cert.png)
+![](https://github.com/m3rcer/m3rcer.github.io/raw/master/_posts/redteaming/Paces_Review/cert.png)
 
 -------------------------------------------------------
 
