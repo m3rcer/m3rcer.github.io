@@ -4,8 +4,8 @@ date: 2022-08-30 09:48:47 +07:00
 categories: RedTeaming
 #modified: 20-08-29 09:24:47 +07:00
 #tags: [blog, netlify, jekyll, github]
-#description: PACES Review 2022
-header-img: "https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Paces_Review/lab.png"
+description: PACES lab and exam review
+header-img: "lab.png"
 ---
 
 <p align="center">
