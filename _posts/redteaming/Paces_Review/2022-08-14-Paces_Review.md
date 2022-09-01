@@ -56,7 +56,7 @@ Some key take away’s to pass the exam are:
 - Learn to be really good and competent using the `ADModule` for enumeration and also leveraging `credential objects` when things seem broken. 
 - Enumerate a forest quickly using `bloodhound` and be competent with manual enumeration too, understand all attack vectors taught during the labs and you will definitely pass this exam. 
 
-Overall I'd say the exam labs is a fair challenge, definitely not as hard as the course labs but definitely does teach a lot and is a great addition to my Active Directory Exploitation experience. I'm glad to have this certificate to my name and am grateful for the experience.
+Overall I'd say the exam labs is a fair challenge, not as hard as the course labs but definitely does teach a lot and is a great addition to my Active Directory Exploitation experience. I'm glad to have this certificate to my name and am grateful for the experience.
 
 ![](https://github.com/m3rcer/m3rcer.github.io/raw/master/_posts/redteaming/Paces_Review/cert.png)
 
