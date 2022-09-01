@@ -64,6 +64,6 @@ Overall I'd say the exam labs is a fair challenge, definitely not as hard as the
 
 ## What's Next
 
-I will be delving further into Malware Development, AV Evasion via courses from `sektor7`. Also, I plan to learn/research Azure Active Directory and various other cloud Active Directory Services in the near future.
+I will be delving further into Malware Development, AV Evasion via research/courses from `sektor7`. Also, I plan to research Azure Active Directory and various other cloud Active Directory Services in the near future.
 
 -------------------------------------------------------
