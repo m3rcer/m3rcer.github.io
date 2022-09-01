@@ -28,7 +28,7 @@ Ever since I've begun learning Active Directory Hacking, I've always aspired to 
 
 The course deals with enterprise implementations like LAPS, JEA, WSL, RBCD, WDAC, ASR, AWL, Credential Guard, CLM, WSUS, virtualization and User simulation. An elk instance is provided alongside to analyse the logs and understand better OPSEC behaviour. A lot of techniques/technologies are bought into play which does require extensive research beyond the course contents.
 
-I'd recommend having a strong Active Directory Hacking skillset along with knowledge of common abuse misconfigurations to begin with this journey.
+I'd recommend having a strong Active Directory Hacking skillset along with knowledge of common abuse misconfigurations to begin with this journey. Learn more about this certifcation [here](https://www.pentesteracademy.com/gcb)
 
 -------------------------------------------------------
 
