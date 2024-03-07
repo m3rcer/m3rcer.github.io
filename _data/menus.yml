@@ -10,18 +10,18 @@
 #  url: /about/
 #  external: false # set true if you using external link, see below
 
-- title: CTF
-  url: /CTF/
-  external: false
+#- title: CTF
+#  url: /CTF/
+#  external: false
 
 
-- title: RedTeaming
-  url: /RedTeaming/
-  external: false
+#- title: RedTeaming
+#  url: /RedTeaming/
+#  external: false
 
-- title: Code
-  url: /Code/
-  external: false
+#- title: Code
+#  url: /Code/
+#  external: false
 
 # Example:
 # - title: github
