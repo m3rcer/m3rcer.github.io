@@ -45,10 +45,9 @@ The standard way to resolve the above associated APIs is by importing the NTDLL 
 
 One method to get a clean NTDLL module without MDE raising telemetry and detections is the [Blindside technique](https://github.com/CymulateResearch/Blindside), which leverages hardware breakpoints and debugging techniques.
 
-Blog Reference: https://cymulate.com/blog/blindside-a-new-technique-for-edr-evasion-with-hardware-breakpoints
+Blog Reference: <https://cymulate.com/blog/blindside-a-new-technique-for-edr-evasion-with-hardware-breakpoints>
 
 Blindside works by initially spawning a debug process, employing a breakpoint handler to set a hardware breakpoint, which compels the debugged process to load solely a fresh copy of the NTDLL module in memory. The breakpoint obstructs the loading of additional DLLs by hooking LdrLoadDLL, thus creating a process with only the NTDLL in a stand-alone, unhooked state.
-
 Here's a good diagram from the above Blindside blog that explains the technique well.
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/NtProccesHollow/Images/Pasted%20image%2020240326004752.png)
@@ -76,7 +75,6 @@ C:\> .\Blindside.exe
 ```
 
 It is now possible to leverage this unhooked NTDLL module to resolve and invoke the mentioned Process Hollowing APIs.
-
 Building on the Blindside source to add Process Injection functionality, replace and resolve all NT APIs associated with Process Hollowing leaving out CreateProcess and other APIs associated with thread context manipulation. 
 
 *Note: NT API header definitions have to be included.*
@@ -189,7 +187,6 @@ Testing this POC against MDE we find the following alerts.
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/NtProccesHollow/Images/Pasted%20image%2020230915184322.png)
 
 Process Hollowing is clearly detected. 
-
 Improve the POC by replacing CreateProcess with NtCreateUserProcess, this can be a little tricky to replace. Here is a blog showcasing how to do it: https://captmeelo.com/redteam/maldev/2022/05/10/ntcreateuserprocess.html
 Make sure to also replace the remaining APIs for thread context manipulation such as - NtGetContextThread, NtSetContextThread and NtResumeThread.
 
@@ -348,8 +345,7 @@ Usually, EDRs such as MDE correlate multiple potential indicators and if a certa
 Recent Process Injection techniques like [DllNotificationInjection](https://github.com/ShorSec/DllNotificationInjection/tree/master) and [ThreadlessInject](https://github.com/CCob/ThreadlessInject) avoid the execution of common APIs that are used in thread context manipulation and execution such as SetThreadContext and ResumeThread. We could focus on this indicator, however for Process Hollowing in particular a good indicator to bypass is the mapping and unmapping of memory sections. This is peculiar to this technique while other indicators are often shared with other Process Injection techniques.
 
 It is possible to remove the NtUnMapViewOfSection API without breaking functionality for Process Hollowing with the only consequence being the mapped section would exist until the process terminates, in short a trade-off for bad memory management.
-
-Removing the NtUnMapViewOfSection API gives an interesting result where no detections were further found. The source change looks something like this:
+Removing the NtUnMapViewOfSection API gives an interesting result where no detections were further found. The source looks something like this:
 
 ```
 int main(int argc, char* argv[])
@@ -402,7 +398,7 @@ EDR Detection mechanisms have evolved around the MiniDumpWriteDump function, pri
 3. Dropping a memory dump of LSASS on disk
 4. Signature of the dump file (file gets detected and deleted)
 
-Blog Reference: https://dec0ne.github.io/research/2022-11-14-Undetected-Lsass-Dump-Workflow/
+Blog Reference: <https://dec0ne.github.io/research/2022-11-14-Undetected-Lsass-Dump-Workflow/>	
 
 Using the above blog as a reference, it is possible to build a C++ DLL / EXE leveraging the MiniDumpWriteDump API for an encrypted LSASS dump primarily to bypass the Signature of the dump by performing simple XOR / AES encryption. In this case, XOR encryption is leveraged.
 
@@ -466,9 +462,7 @@ We have two fields:
 It is possible to leverage both these rules to perform trusted execution to operate in the blind spots of MDE and avoid detection from the "Blocking Credential Stealing from LSASS" ASR rule.
 
 Processes like WerFaultSecure.exe have issues running shellcode while processes like svchost.exe are heavily monitored hence not all excluded processes make ideal candidates for process injection. In this case we target the CompatTelRunner.exe process.
-
 "CompatTelRunner.exe is also known as Windows Compatibility Telemetry. This periodically sends usage and performance data to Microsoft IP addresses so that improvements can be made on user experience and fix potential errors."
-
 This makes it an optimal choice for injection, given its default availability on a wide range of systems, including Windows Home, Server editions, and Core editions.
 
 An example of a permissible command line argument based on the above `GetCommandLineExclusions` is as follows.
@@ -478,7 +472,6 @@ An example of a permissible command line argument based on the above `GetCommand
 ```
 
 Incorporate both these changes to the source as follows. 
-
 Also make sure to add functionality to parse arguments for the webserver and shellcode required so that these may not be hard-coded at all times.
 
 ```
