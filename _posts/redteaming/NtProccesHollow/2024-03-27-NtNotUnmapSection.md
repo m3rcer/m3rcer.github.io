@@ -402,7 +402,7 @@ Blog Reference: <https://dec0ne.github.io/research/2022-11-14-Undetected-Lsass-D
 
 Using the above blog as a reference, it is possible to build a C++ DLL / EXE leveraging the MiniDumpWriteDump API for an encrypted LSASS dump primarily to bypass the Signature of the dump by performing simple XOR / AES encryption. In this case, XOR encryption is leveraged.
 
-Using the blog as a reference, build and compile the DLLHijackLSASSDump POC as an exe / DLL and later convert it to shellcode using [pe2shc](https://github.com/hasherezade/pe_to_shellcode) / [donut](https://github.com/TheWover/donut). Test the shellcode using runshc64.
+Build and compile the DLLHijackLSASSDump POC as an exe / DLL and later convert it to shellcode using [pe2shc](https://github.com/hasherezade/pe_to_shellcode) / [donut](https://github.com/TheWover/donut). Test the shellcode using runshc64.
 
 *NOTE: The source for the DLLHijackLSASSDump shellcode can be found in the `/shellcode` folder on GitHub.*
 
