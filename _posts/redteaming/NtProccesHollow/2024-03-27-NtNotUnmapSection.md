@@ -51,7 +51,7 @@ Blindside works by initially spawning a debug process, employing a breakpoint ha
 
 Here's a good diagram from the above Blindside blog that explains the technique well.
 
-![](https://github.com/m3rcer/m3rcer.github.io/tree/master/_posts/redteaming/NtProccesHollow/Images/Pasted%20image%2020240326004752.png)
+![](https://github.com/m3rcer/m3rcer.github.io/blob/master/_posts/redteaming/NtProccesHollow/Images/Pasted%20image%2020240326004752.png)
 
 This method stays unnoticed / undetected by MDE due to Microsoft's lack of acknowledgment regarding attempts to generate telemetry, as mentioned in the Conclusion section of the Blindside blog.
 
@@ -186,7 +186,7 @@ int main()
 
 Testing this POC against MDE we find the following alerts.
 
-![](https://github.com/m3rcer/m3rcer.github.io/tree/master/_posts/redteaming/NtProccesHollow/Images/Pasted%20image%2020230915184322.png)
+![](https://github.com/m3rcer/m3rcer.github.io/blob/master/_posts/redteaming/NtProccesHollow/Images/Pasted%20image%2020230915184322.png)
 
 Process Hollowing is clearly detected. 
 
@@ -336,7 +336,7 @@ int main(int argc, char* argv[])
 
 Testing against MDE we are still flagged.
 
-![](edited1.png)
+![](https://github.com/m3rcer/m3rcer.github.io/blob/master/_posts/redteaming/NtProccesHollow/Images/edited1.png)
 
 Nevertheless, the alerts provided above offer valuable insight into MDE's response and telemetry development towards our POC, some notable detections around our NT Process Hollowing technique include:
 - Unusual or hijacked thread contexts
@@ -508,7 +508,7 @@ Make sure to compile the POC as a Multi-threaded DLL to avoid runtime detections
 
 *NOTE: vc_redist.x64.exe might be required on the target.*
 
-![](https://github.com/m3rcer/m3rcer.github.io/tree/master/_posts/redteaming/NtProccesHollow/Images/Pasted%20image%2020240324013644.png)
+![](https://github.com/m3rcer/m3rcer.github.io/blob/master/_posts/redteaming/NtProccesHollow/Images/Pasted%20image%2020240324013644.png)
 
 Upon testing execution on a patched system (March 2024) with MDE enabled, Microsoft asks to send this file for submission, please deny this and any uploads to VirusTotal.
 
@@ -539,11 +539,11 @@ Mode                 LastWriteTime         Length Name
 ```
 
 
-![](https://github.com/m3rcer/m3rcer.github.io/tree/master/_posts/redteaming/NtProccesHollow/Images/Pasted%20image%2020230913171829.png)
+![](https://github.com/m3rcer/m3rcer.github.io/blob/master/_posts/redteaming/NtProccesHollow/Images/Pasted%20image%2020230913171829.png)
 
 Noting for any alerts, no new alerts are found:
 
-![](https://github.com/m3rcer/m3rcer.github.io/tree/master/_posts/redteaming/NtProccesHollow/Images/Pasted%20image%2020230823180840.png)
+![](https://github.com/m3rcer/m3rcer.github.io/blob/master/_posts/redteaming/NtProccesHollow/Images/Pasted%20image%2020230823180840.png)
 
 Finally, retrieve and decrypt the LSASS dump using a standard XOR decrypting python routine such as below.
 
