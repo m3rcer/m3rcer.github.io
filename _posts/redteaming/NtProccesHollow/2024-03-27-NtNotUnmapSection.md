@@ -355,7 +355,7 @@ int main(int argc, char* argv[])
 	[snip]
 	
 	/* Process Injection */
-    [snip]
+	[snip]
 
 	// Get thread context of primary thread
 	CONTEXT threadContext;
