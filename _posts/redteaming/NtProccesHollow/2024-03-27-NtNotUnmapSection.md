@@ -433,7 +433,7 @@ MDE heavily relies on ASR rules for telemetry and detection as noticed above. To
 
 Reversing and parsing ASR .LUA rules, it is possible to find blind spots to perform trusted execution using the MiniDumpWriteDump function. We can use this approach to gain trusted execution blinding MDE of process telemetry. [hfiref0x](https://github.com/hfiref0x) wrote such a tool named [wd-extract](https://github.com/hfiref0x/WDExtract). 
 
-Pay attention to the ASR reversed rule primarily targeting LSASS dump detections - "Blocking Credential Stealing from LSASS": https://github.com/HackingLZ/ExtractedDefender/blob/main/asr/9e6c4e1f-7d60-472f-ba1a-a39ef669e4b2
+Pay attention to the ASR reversed rule primarily targeting LSASS dump detections - "Blocking Credential Stealing from LSASS": <https://github.com/HackingLZ/ExtractedDefender/blob/main/asr/9e6c4e1f-7d60-472f-ba1a-a39ef669e4b2>
 
 ```
 GetPathExclusions = function()
