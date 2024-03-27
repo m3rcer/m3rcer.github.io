@@ -187,7 +187,7 @@ Testing this POC against MDE we find the following alerts.
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/NtProccesHollow/Images/Pasted%20image%2020230915184322.png)
 
 Process Hollowing is clearly detected. 
-Improve the POC by replacing CreateProcess with NtCreateUserProcess, this can be a little tricky to replace. Here is a blog showcasing how to do it: https://captmeelo.com/redteam/maldev/2022/05/10/ntcreateuserprocess.html
+Improve the POC by replacing CreateProcess with NtCreateUserProcess, this can be a little tricky to replace. Here is a blog showcasing how to do it: <https://captmeelo.com/redteam/maldev/2022/05/10/ntcreateuserprocess.html>
 Make sure to also replace the remaining APIs for thread context manipulation such as - NtGetContextThread, NtSetContextThread and NtResumeThread.
 
 Optionally add a few more checks such as the Process Mitigation Policy to avoid non-Microsoft loads (applicable to other EDRs and not MDE). 
