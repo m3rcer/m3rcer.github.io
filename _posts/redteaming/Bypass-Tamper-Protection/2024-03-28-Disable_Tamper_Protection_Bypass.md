@@ -42,7 +42,7 @@ Below is a sample screenshot showcasing the POC crafted to abuse this bypass and
 Tamper Protection in Windows Security **helps prevent malicious apps from changing important Microsoft Defender Antivirus settings**, including real-time protection and cloud-delivered protection. With the introduction of Tamper Protection, it is not possible to disable Defender settings using commands such as `Set-MpPreference -DisableRealtimeMonitoring $true`.
 
 To disable Tamper Protection via registry, the registry subkey - `TamperProtection` located at `HKLM\SYSTEM\CurrentControlSet\Services\WinDefend` should be set from `5` to `0/4`.  
-It is not possible to modify registry subkey values at `HKLM\SYSTEM\CurrentControlSet\Services\WinDefend` even using SYSTEM / TrustedInstaller privileges on newer windows versions as stated [here](https://arxiv.org/ftp/arxiv/papers/2210/2210.02821.pdf) because "**Windows Defender has a kernel-mode driver (WdFilter.sys) that registers a Registry callback filter which protects Defender’s registry keys**." 
+It is not possible to modify registry subkey values at `HKLM\SYSTEM\CurrentControlSet\Services\WinDefend` even using SYSTEM / TrustedInstaller privileges on newer windows versions because "**Windows Defender has a kernel-mode driver (WdFilter.sys) that registers a Registry callback filter which protects Defender’s registry keys**." 
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020221124161502.png)
 
