@@ -25,8 +25,7 @@ Even though Windows Server 2019 doesn't support Tamper Protection, the POC can s
 
 ## Summary
 
-With the introduction of Tamper Protection, it has now become harder to disable Defender settings as an adversary. This is due to the fact that Tamper Protection and other Defender registry settings are protected by a Kernel-mode driver called WdFilter.sys. 
-
+With the introduction of Tamper Protection, it has now become harder to disable Defender settings as an adversary. This is due to the fact that Tamper Protection and other Defender registry settings are protected by a Kernel-mode driver called WdFilter.sys.
 It is possible to abuse SYSTEM / TrustedInstaller privileges to tamper WdFilter settings and unload the kernel minidriver to disable Tamper protection and other Defender components. This also affects Microsoft's Defender for Endpoint (MDE), blinding MDE of telemetry and activity performed on a target.
 
 A POC has been crafted along with explanation of the vulnerability with methods of remediation and possibilities to enhance the efficiency / OPSEC of the current technique.
@@ -208,7 +207,7 @@ Sequential Usage: 1 --> 2 --> 3
 
 An example, to use this POC is as follows:
 
-1. Unload WdFilter:
+1) Unload WdFilter:
 
 ```
 C:\Users\User\Desktop> .\Disable-TamperProtection.exe 1
@@ -231,7 +230,7 @@ C:\Users\User\Desktop>.\Disable-TamperProtection.exe 1
 [+] WDFilter has been successfully unloaded, use option 2 to disable Tamper Protection.
 ```
 
-2. Disable Tamper Protection:
+2) Disable Tamper Protection:
 
 ```
 C:\Users\User\Desktop>.\Disable-TamperProtection.exe 2
@@ -334,7 +333,6 @@ PS C:\Users\Administrator> Set-MpPreference -DisableIOAVProtection $false
 ## Remediation
 
 To remediate this vulnerability, avoid permitting TrustedInstaller privileges to alter and delete the `"HKLM\SYSTEM\CurrentControlSet\Services\WdFilter\Instances\WdFilter Instance\Altitude` registry key. 
-
 A safer and a more favorable measure would be to protect all Defender registry keys subject to alteration using SYSTEM / TrustedInstaller privileges as patched in Windows 11 above BuildLabEx Version: 22621.1.amd64fre.ni_release.220506-1250 (Win11 22H2 22621.1105).
 
 ## Credits
