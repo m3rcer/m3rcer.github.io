@@ -241,7 +241,7 @@ C:\Users\User\Desktop>.\Disable-TamperProtection.exe 2
 [+] Use option '3' to finally Disable AV/MDE.
 ```
 
-3. Disable Defender / MDE:
+3) Disable Defender / MDE:
 
 ```
 C:\Users\User\Desktop>.\Disable-TamperProtection.exe 3
