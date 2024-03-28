@@ -187,7 +187,7 @@ The attack chain can be summarized as follows:
 
 ## Proof of Concept
 
-A POC has been included, written in C++ called Disable-TamperProtection can be found on GitHub here: https://github.com/m3rcer/Disable-TamperProtection
+A POC has been included, written in C++ called Disable-TamperProtection can be found on GitHub here: <https://github.com/m3rcer/Disable-TamperProtection>
 
 *NOTE: VC_redist.x64.exe could be required on the target.*
 
