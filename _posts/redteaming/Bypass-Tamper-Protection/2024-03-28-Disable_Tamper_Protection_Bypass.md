@@ -25,7 +25,7 @@ A POC has been crafted along with explanation of the vulnerability with methods 
 
 Below is a sample screenshot showcasing the POC crafted to abuse this bypass and disable WdFilter, Tamper Protection and Real-time monitoring (AMSI) on a target updated Server 2022 MDE testlab instance.
 
-![](Images/Pasted%20image%2020240311143923.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020240311143923.png)
 
 
 
@@ -36,10 +36,10 @@ Tamper Protection in Windows Security **helps prevent malicious apps from chang
 To disable Tamper Protection via registry, the registry subkey - `TamperProtection` located at `HKLM\SYSTEM\CurrentControlSet\Services\WinDefend` should be set from `5` to `0/4`.  
 It is not possible to modify registry subkey values at `HKLM\SYSTEM\CurrentControlSet\Services\WinDefend` even using SYSTEM / TrustedInstaller privileges on newer windows versions as stated [here](https://arxiv.org/ftp/arxiv/papers/2210/2210.02821.pdf) because "**Windows Defender has a kernel-mode driver (WdFilter.sys) that registers a Registry callback filter which protects Defender’s registry keys**." 
 
-![](Images/Pasted%20image%2020221124161502.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020221124161502.png)
 
 In short, the Defender protection chain is as follows: 
-*WdFilter (prevents Tamper protection and other defender registry key alteration) → Tamper Protection (prevents Defender settings alteration) → Defender settings and registry keys enable AV / MDE on the target (RealTimeMonitoring / IOAVProtection etc.) *
+*WdFilter (prevents Tamper protection and other defender registry key alteration) → Tamper Protection (prevents Defender settings alteration) → Defender settings and registry keys enable AV / MDE on the target (RealTimeMonitoring / IOAVProtection etc.)*
 
 To disable Defender / MDE settings, it is required to disable these prior protections (WdFilter + Tamper Protection regkey) safeguarding it.
 
@@ -87,7 +87,7 @@ Path                                                                            
 Microsoft.PowerShell.Core\Registry::HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdFilter NT AUTHORITY\SYSTEM 
 ```
 
-![](Images/Pasted%20image%2020221124163404.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020221124163404.png)
 
 It is possible to impersonate such privileges to run a Command Prompt with SYSTEM / TrustedInstaller contexts, enabling all privileges and Integrity Levels. Some notable tools that can do this are [NSudo](https://github.com/M2Team/NSudo/releases),  [superUser](https://github.com/mspaintmsi/superUser) and [PSExec](https://learn.microsoft.com/en-us/sysinternals/downloads/psexec).
 
@@ -123,7 +123,7 @@ C:\Tools\NSudo_8.2_All_Components\NSudo Launcher\x64> reg delete "HKLM\SYSTEM\Cu
 The operation completed successfully.
 ````
 
-Next, reboot the computer (recommended) or wait a few minutes (inconsistent: ~20 mins) for the changes to take effect. 
+Next, reboot the computer (recommended) or wait a few minutes (inconsistent: ~20 mins) for the changes to take effect.
 
 ```
 C:\Tools\NSudo_8.2_All_Components\NSudo Launcher\x64> shutdown /r /t 0
@@ -166,15 +166,15 @@ PS C:\Users\Administrator> Set-MpPreference -DisableRealtimeMonitoring $true
 PS C:\Users\Administrator> Set-MpPreference -DisableIOAVProtection $true
 ```
 
-![](Images/Pasted%20image%2020221124183431.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020221124183431.png)
 
 *NOTE: Even though Tamper Protection is effectively disabled now, it takes a a reboot to render the same change in the "Security Settings" GUI Prompt.*
 
-![](Images/Pasted%20image%2020221124183731.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020221124183731.png)
 
 The attack chain can be summarized as follows:
 
-![](Images/edited.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/edited.png)
 
 
 
@@ -249,15 +249,15 @@ C:\Users\User\Desktop>.\Disable-TamperProtection.exe 3
 
 The POC manages to semi-permanently disable Real time monitoring (gray out) after Tamper Protection is disabled. This can be remediated by the mentioned method in this blog.
 
-![](Images/Pasted%20image%2020240311143923.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020240311143923.png)
 
 The CodeBase in the Disable-TamperProtection POC can be altered to disable specific or all components of Defender / MDE. These have included as comments in the POC at line 338. 
 
-![](Images/Pasted%20image%2020231227155027.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020231227155027.png)
 
 An example to chain / add parts to disable more than one component together is yet again showcased in comments at line 382. Uncomment these lines and replace in accordance.
 
-![](Images/Pasted%20image%2020231227155153.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020231227155153.png)
 
 ## Impact against MDE
 
@@ -270,20 +270,20 @@ Testing the POC with latest Windows Defender Signatures as of this writing resul
 
 - Alert 1: Suspicious process reparenting detected: This alert is generated when a process is spawned under TrustedInstaller to gain its privileges.
 
-![](Images/Pasted%20image%2020231211123832.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020231211123832.png)
 
-![](Images/Pasted%20image%2020231211123417.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020231211123417.png)
 
 - Alert 2: Tampering with Microsoft Defender for Endpoint sensor settings: This alert is generated upon deletion of the WdFilter Altitude regkey.
 
-![](Images/Pasted%20image%2020231211123519.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020231211123519.png)
 
 
 ## Resolution, Telemetry and related OPSEC
 
 Apart from logs generated by the attack using NSudo / the POC and privileged access, An `Information Event` is generated on every reboot with an `EVENT ID: 7026`, stating that the "WdFilter driver failed to load".
 
-![](Images/Pasted%20image%2020221124184543.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020221124184543.png)
 
 This could be used as a good IoC if the WdFilter driver fails to load each time on a reboot. 
 
@@ -299,7 +299,7 @@ The operation completed successfully.
 
 Reboot the computer to make the changes effective. The WdFilter minidriver is restored back to it's original state, leaving Tamper Protection and Real-Time Protection still disabled. This improves the attacks overall OPSEC avoiding the above-mentioned Event ID.
 
-![](Images/Pasted%20image%2020221124190217.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020221124190217.png)
 
 To restore Tamper Protection back to its original "enabled" state, perform the same process as above with an elevated NSudo prompt, setting the `TamperProtection` subkey value back to `5`: 
 
@@ -309,7 +309,7 @@ C:\Tools\NSudo_8.2_All_Components\NSudo Launcher\x64> reg add "HKLM\SOFTWARE\Mic
 The operation completed successfully.
 ```
 
-![](Images/Pasted%20image%2020221124190959.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020221124190959.png)
 
 After performing a reboot, Tamper Protection re-enables along with Real-Time Protection and restores it back to its original protected state. Real-Time Protection can optionally be manually re-enabled in an Admin PowerShell session using:
 
@@ -321,7 +321,7 @@ PS C:\Users\Administrator> Set-MpPreference -DisableRealtimeMonitoring $false
 PS C:\Users\Administrator> Set-MpPreference -DisableIOAVProtection $false
 ```
 
-![](Images/Pasted%20image%2020221124191854.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020221124191854.png)
 
 ## Remediation
 
