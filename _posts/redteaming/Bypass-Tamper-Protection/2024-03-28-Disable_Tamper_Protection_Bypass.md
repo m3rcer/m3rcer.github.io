@@ -91,7 +91,7 @@ $registryKeyPath = "HKLM:\SYSTEM\CurrentControlSet\Services\WdFilter"
 $acl = Get-Acl -Path $registryKeyPath
 $acl
 
-Path                                                                                          Owner
+Path                                                                                              Owner
 Microsoft.PowerShell.Core\Registry::HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WdFilter NT AUTHORITY\SYSTEM 
 ```
 
