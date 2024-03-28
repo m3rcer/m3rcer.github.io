@@ -332,7 +332,7 @@ PS C:\Users\Administrator> Set-MpPreference -DisableIOAVProtection $false
 
 ## Remediation
 
-To remediate this vulnerability, avoid permitting TrustedInstaller privileges to alter and delete the `"HKLM\SYSTEM\CurrentControlSet\Services\WdFilter\Instances\WdFilter Instance\Altitude` registry key. 
+To remediate this vulnerability, avoid permitting TrustedInstaller privileges to alter and delete the `HKLM\SYSTEM\CurrentControlSet\Services\WdFilter\Instances\WdFilter Instance\Altitude` registry key. 
 A safer and a more favorable measure would be to protect all Defender registry keys subject to alteration using SYSTEM / TrustedInstaller privileges as patched in Windows 11 above BuildLabEx Version: 22621.1.amd64fre.ni_release.220506-1250 (Win11 22H2 22621.1105).
 
 ## Credits
