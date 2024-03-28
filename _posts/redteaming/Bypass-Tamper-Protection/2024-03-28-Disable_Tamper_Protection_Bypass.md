@@ -1,5 +1,14 @@
 
-# Disabling Tamper Protection and other components of Defender / MDE
+---
+title: Disabling Tamper Protection and other components of Defender / MDE
+date: 2024-03-28 09:48:47 +07:00
+categories: RedTeaming
+#modified: 20-08-29 09:24:47 +07:00
+#tags: [blog, netlify, jekyll, github]
+#description: PACES lab and exam review
+#thumbnail: "https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Paces_Review/lab.png"
+#image: "https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Paces_Review/lab.png"
+---
 
 ## Disclosure Timeline
 
