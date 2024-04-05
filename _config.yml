@@ -12,7 +12,7 @@ mode: dark # default theme "dark" | "light"
 author:
   name: m3rcer # author name
   bio: >- # tell to the world
-    23 - "Welcome to the top of the food chain.".
+    26 - "Welcome to the top of the food chain.".
   username: m3rcer # general username
   github: m3rcer # github username
   #twitter: twitter_username # twitter username
@@ -63,7 +63,7 @@ number_of_posts: 5
 # Build settings
 # theme: klise
 sass:
-  style: compressed
+  style: compact
 
 include:
   - _redirects
