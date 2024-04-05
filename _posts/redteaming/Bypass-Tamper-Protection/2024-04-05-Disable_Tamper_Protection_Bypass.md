@@ -253,11 +253,11 @@ C:\Users\User\Desktop>.\Disable-TamperProtection.exe 3
 
 *NOTE: Even though Tamper Protection is effectively disabled now, it takes a reboot to render the same change in the "Security Settings" GUI Prompt.*
 
-The POC manages to semi-permanently disable Real time monitoring (gray out) after Tamper Protection is disabled. This can be remediated by the mentioned method in this blog.
+The POC manages to semi-permanently disable Real time monitoring (gray out) after Tamper Protection is disabled. This can be remediated using option 4.
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020240311143923.png)
 
-4) Optionally reinstate the WdFilter minidriver, TamperProtection and Defender Settings (RealTimeMonitoring) using option 4. Make sure to change the Altitude number (Default: 328010) back to it's original value at line 530 in the POC.  
+4) Optionally reinstate the WdFilter minidriver, TamperProtection and Defender Settings (RealTimeMonitoring) utilizing option 4. Make sure to change the Altitude number (Default: 328010) back to it's original value at line 530 in the POC.  
 
 ```
 # Restart the computer to restore settings successfully
@@ -273,7 +273,7 @@ C:\Users\User\Desktop>.\Disable-TamperProtection.exe 4
 [+] Created process ID: 7044 and assigned additional token privileges.
 ```
 
-The CodeBase in the Disable-TamperProtection POC can be altered to disable specific or all components of Defender / MDE. These have included as comments in the POC at line 338. 
+The CodeBase in the Disable-TamperProtection POC can be altered to disable specific or all components of Defender / MDE. These have been included as comments in the POC at line 338. 
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020231227155027.png)
 
