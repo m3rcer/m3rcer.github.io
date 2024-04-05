@@ -63,7 +63,7 @@ number_of_posts: 5
 # Build settings
 # theme: klise
 sass:
-  style: compact
+  style: nested
 
 include:
   - _redirects
