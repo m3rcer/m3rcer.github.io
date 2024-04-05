@@ -257,7 +257,7 @@ The POC manages to semi-permanently disable Real time monitoring (gray out) afte
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020240311143923.png)
 
-4) Optionally reinstate the WdFilter minidriver, TamperProtection and Defender Settings (RealTimeMonitoring) using option 4 as follows:
+4) Optionally reinstate the WdFilter minidriver, TamperProtection and Defender Settings (RealTimeMonitoring) using option 4. Make sure to change the Altitude number (Default: 328010) back to it's original value at line 530 in the POC.  
 
 ```
 # Restart the computer to restore settings successfully
