@@ -1,5 +1,5 @@
 ---
-title: Disabling Tamper Protection and other components of Defender / MDE
+title: Disabling Tamper Protection and other Defender / MDE components 
 date: 2024-04-08 09:48:47 +07:00
 categories: RedTeaming
 #modified: 20-08-29 09:24:47 +07:00
@@ -12,10 +12,10 @@ description: Crashing WdFilter to disable Tamper Protection and other Defender /
 ## Disclosure Timeline
 
 - Sep 23, 2022 - Initial discovery
-- Jan 5, 2024 - Reported with POC through MSRC portal.
+- Jan 05, 2024 - Reported with POC through MSRC portal.
 - Jan 11, 2024 - MSRC team confirmed. MSRC ticket was moved to Review / Repro.
-- Mar 7, 2024 - MSRC status was changed to Complete stating "unable to reproduce this issue."
-- Mar 28, 2024 - Public release of Blog and POC.
+- Mar 07, 2024 - MSRC status was changed to Complete stating "unable to reproduce this issue."
+- Apr 08, 2024 - Public release of Blog and POC.
 
 ## Platform
 
