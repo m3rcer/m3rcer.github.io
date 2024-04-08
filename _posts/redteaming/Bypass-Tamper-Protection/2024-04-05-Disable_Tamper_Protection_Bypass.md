@@ -223,7 +223,7 @@ C:\Users\User\Desktop>.\Disable-TamperProtection.exe 1
 [+] Restart the system or wait a few minutes for WdFilter to unload.
 [+] Execute option 1 to validate!
 
-# Restart (or wait a few minutes) to crash and unload WdFilter
+# Restart or wait a few minutes to crash and unload WdFilter
 C:\Users\User\Desktop>.\Disable-TamperProtection.exe 1
 [+] WdFilter Altitude Registry key has been successfully deleted.
 [+] WDFilter has been successfully unloaded, use option 2 to disable Tamper Protection.
