@@ -1,6 +1,6 @@
 ---
 title: Disabling Tamper Protection and other Defender / MDE components 
-date: 2024-04-11 09:48:47 +07:00
+date: 2024-04-09 09:48:47 +07:00
 categories: RedTeaming
 #modified: 20-08-29 09:24:47 +07:00
 #tags: [blog, netlify, jekyll, github]
