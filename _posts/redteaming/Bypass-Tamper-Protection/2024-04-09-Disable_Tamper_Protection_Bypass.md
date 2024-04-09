@@ -33,7 +33,7 @@ It is possible to abuse SYSTEM / TrustedInstaller privileges to tamper WdFilter 
 
 A POC has been crafted along with explanation of the vulnerability with methods of remediation and possibilities to enhance the efficiency / OPSEC of the current technique.
 
-Below is a sample screenshot showcasing the POC crafted to abuse this bypass and disable WdFilter, Tamper Protection and Real-time monitoring (AMSI) on a target updated Server 2022 MDE testlab instance.
+Below is a sample screenshot showcasing the POC crafted to abuse this bypass and disable WdFilter, Tamper Protection and Real-time monitoring (AMSI) on a target Server 2022 MDE testlab instance.
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020240311143923.png)
 
