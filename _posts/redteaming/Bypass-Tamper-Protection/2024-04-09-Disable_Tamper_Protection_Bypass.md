@@ -189,13 +189,13 @@ The attack chain can be summarized as follows:
 
 ## Proof of Concept
 
-A POC has been included, called Disable-TamperProtection which can be found on GitHub here: https://github.com/m3rcer/Disable-TamperProtection
+A POC has been included, called Disable-TamperProtection which can be found on GitHub here: <https://github.com/m3rcer/Disable-TamperProtection>
 
 *NOTE: VC_redist.x64.exe could be required on the target.*
 
 Required elevated privileges to perform the attack have been incorporated in the POC by using the superUser project codebase as a reference for TrustedInstaller privilege impersonation. 
 
-POC Video Demo: https://www.youtube.com/watch?v=aGTrjDxMSdU
+POC Video Demo: <https://www.youtube.com/watch?v=aGTrjDxMSdU>
 
 The POC works in 3 steps (Admin privileges required):
 
