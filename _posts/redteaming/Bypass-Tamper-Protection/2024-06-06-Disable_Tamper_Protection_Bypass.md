@@ -20,7 +20,7 @@ During my research I found it possible to abuse SYSTEM / TrustedInstaller privil
 
 I have created a POC called Disable-TamperProtection showcasing this bypass to disable WdFilter, Tamper Protection, Real-time protection (AMSI) and reinstate them back. A sample test against a target Server 2022 MDE testlab instance  can be found below.
 
-The POC can be found on GitHub here: https://github.com/AlteredSecurity/Disable-TamperProtection
+The POC can be found on GitHub here: <https://github.com/AlteredSecurity/Disable-TamperProtection>
 
 *NOTE: Administrative privileges are required to run the POC and technique.*
 
