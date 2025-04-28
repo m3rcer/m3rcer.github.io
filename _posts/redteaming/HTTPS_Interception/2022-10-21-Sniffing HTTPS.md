@@ -32,21 +32,21 @@ m3rcer@GHOUL:/mnt/c/Tools$ openssl req -x509 -new -nodes -key ca.key -sha256 -da
 
 In Chrome, go to the `Settings` tab --> `Privacy and Security` --> `Manage device certificates` --> select the `Trusted Root Certification Authorities` tab.
 
-![](Pasted%20image%2020230920141925.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/HTTPS_Interception/Images/Pasted%20image%2020230920141925.png)
 
 Select `Import` and import `ca.crt` into the `Trusted Root Certification Authorities` store. 
 
-![](Pasted%20image%2020230920141956.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/HTTPS_Interception/Images/Pasted%20image%2020230920141956.png)
 
 Select `Yes` when prompted.
 
-![](Pasted%20image%2020230920142042.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/HTTPS_Interception/Images/Pasted%20image%2020230920142042.png)
 
-![](Pasted%20image%2020230920142135.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/HTTPS_Interception/Images/Pasted%20image%2020230920142135.png)
 
 Now search `Proxy Settings` in the Windows search bar and add the following Manual Proxy setup and select `Save`:
 
-![](Pasted%20image%2020230920142355.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/HTTPS_Interception/Images/Pasted%20image%2020230920142355.png)
 
 Finally, in an elevated cmd / powershell prompt start glorp with the trusted CA certificate and key.
 
@@ -54,11 +54,11 @@ Finally, in an elevated cmd / powershell prompt start glorp with the trusted CA 
 PS C:\Tools> .\glorp.exe -cert ca.crt -key ca.key
 ```
 
-![](Pasted%20image%2020230920142619.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/HTTPS_Interception/Images/Pasted%20image%2020230920142619.png)
 
 Back on Chrome navigate to https://login.microsoftonline.com/ or the https site you would like to sniff/intercept.
 
-![](Pasted%20image%2020230920143148.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/HTTPS_Interception/Images/Pasted%20image%2020230920143148.png)
 
 To understand various possible operations to proxy, replay or save output as .json read the UI Usage at: https://github.com/denandz/glorp#ui-usage
 
@@ -140,17 +140,17 @@ To install the CA certificate, execute mitmdump once as follows and visit mitm.i
 PS C:\Tools\mitmproxy-10.0.0-windows> .\mitmdump.exe
 ```
 
-![](Pasted%20image%2020230921170326.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/HTTPS_Interception/Images/Pasted%20image%2020230921170326.png)
 
 Next, double click the download .p12 certificate to install it in the `Trusted Root Certification Authorities` store. 
 
-![](Pasted%20image%2020230921170539.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/HTTPS_Interception/Images/Pasted%20image%2020230921170539.png)
 
-![](Pasted%20image%2020230921170605.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/HTTPS_Interception/Images/Pasted%20image%2020230921170605.png)
 
 Select `Yes` when prompted.
 
-![](Pasted%20image%2020230921170711.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/HTTPS_Interception/Images/Pasted%20image%2020230921170711.png)
 
 Finally, create a PSRemote session as in objective and transfer tools and execute the following command remotely to intercept the GraphAPIToken (we use regex filters to only look for `graph.microsoft.com`):
 
