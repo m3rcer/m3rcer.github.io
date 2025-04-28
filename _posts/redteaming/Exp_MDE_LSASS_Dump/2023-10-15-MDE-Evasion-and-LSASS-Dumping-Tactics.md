@@ -19,9 +19,7 @@ Detection mechanisms have evolved to detect dumping techniques by **hooking** th
 
 ## Setting up Microsoft Advanced Threat Protection
 
-Signup for a trial version from: https://signup.microsoft.com/create-account/signup?products=7f379fee-c4f9-4278-b0a1-e4c8c2fcdf7e&ru=https://aka.ms/MDEp2OpenTrial?ocid=docs-wdatp-enablesiem-abovefoldlink
-
-Setup an Evaluation lab:
+Setup an MDE Evaluation lab (deprecated):
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020220820154525.png)
 
