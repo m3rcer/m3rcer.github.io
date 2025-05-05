@@ -9,7 +9,26 @@ description: Crashing WdFilter to disable Tamper Protection and other Defender /
 #image: "https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Paces_Review/lab.png"
 ---
 
+<!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
 
+- [Summary](#summary)
+- [Description](#description)
+   * [Disabling Wdfilter by removing Altitude Numbers](#disabling-wdfilter-by-removing-altitude-numbers)
+      + [1. Crash and Stop WDFilter](#1-crash-and-stop-wdfilter)
+      + [2. Disable Tamper Protection](#2-disable-tamper-protection)
+      + [3. Disable Defender Settings](#3-disable-defender-settings)
+- [Proof of Concept](#proof-of-concept)
+- [Impact against MDE](#impact-against-mde)
+- [Detection and Alerts](#detection-and-alerts)
+- [Resolution, Telemetry and related OPSEC](#resolution-telemetry-and-related-opsec)
+- [Remediation](#remediation)
+- [Platform](#platform)
+- [Disclosure Timeline](#disclosure-timeline)
+- [References](#references)
+
+<!-- TOC end -->
+
+<!-- TOC --><a name="summary"></a>
 ## Summary
 
 Also published on: <https://www.alteredsecurity.com/post/disabling-tamper-protection-and-other-defender-mde-components>
@@ -27,6 +46,7 @@ The POC can be found on GitHub here: <https://github.com/AlteredSecurity/Disable
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020240311143923.png)
 
 
+<!-- TOC --><a name="description"></a>
 ## Description
 
 Tamper Protection in Windows Security **helps prevent malicious apps from changing important Microsoft Defender Antivirus settings**, including real-time protection and cloud-delivered protection. With the introduction of Tamper Protection, it is not possible to disable Defender settings using commands such as `Set-MpPreference -DisableRealtimeMonitoring $true`.
@@ -43,6 +63,7 @@ To disable Defender / MDE settings, it is required to disable these prior protec
 
 In theory, if it is possible to unload, crash / stop the WdFilter kernel minidriver from running, the Defender service can be stopped from using the WdFilter kernel minidriver from processing events and intern protecting Tamper Protection and other Defender's Registry Keys, after which it should be possible to disable Tamper Protection and other settings such as Real-Time Protection.
 
+<!-- TOC --><a name="disabling-wdfilter-by-removing-altitude-numbers"></a>
 ### Disabling Wdfilter by removing Altitude Numbers
 
 "A minifilter driver's `FilterUnloadCallback` routine is called when the minifilter driver is unloaded. This routine closes any open communication server ports, calls `FltUnregisterFilter`, and performs any needed cleanup. Registering this routine is optional. However, if the minifilter driver does not register a `FilterUnloadCallback` routine, the minifilter driver cannot be unloaded."
@@ -136,6 +157,7 @@ The attack chain can be summarized as follows:
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/edited.png)
 
+<!-- TOC --><a name="1-crash-and-stop-wdfilter"></a>
 #### 1. Crash and Stop WDFilter
 
 From above, it is noted that the WdFilter kernel minidriver has an altitude number of: `328010`
@@ -211,6 +233,7 @@ npsvctrig                               1        46000         0
 Wof                                     1        40700         0
 ```
 
+<!-- TOC --><a name="2-disable-tamper-protection"></a>
 #### 2. Disable Tamper Protection
 
 Now that the WdFilter kernel minidriver is no longer loaded and protecting the Defender Registry Keys, successfully proceed to disable these unprotected keys, in this case the Tamper Protection regkey as it is the next protection chain in line to finally in turn disable defender protections like Real-time protection.
@@ -223,6 +246,7 @@ C:\Tools\NSudo_8.2_All_Components\NSudo Launcher\x64> reg add "HKLM\SOFTWARE\Mic
 The operation completed successfully.
 ```
 
+<!-- TOC --><a name="3-disable-defender-settings"></a>
 #### 3. Disable Defender Settings
 
 Finally, since Tamper Protection is now disabled leaving Defender / MDE settings vulnerable to change, disable AV and AMSI in a standard PowerShell Administrator prompt (SYSTEM / TrustedInstaller privileges are not mandatory) using the following commands:
@@ -242,6 +266,7 @@ PS C:\Users\Administrator> Set-MpPreference -DisableIOAVProtection $true
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020221124183731.png)
 
 
+<!-- TOC --><a name="proof-of-concept"></a>
 ## Proof of Concept
 
 A POC has been included, called Disable-TamperProtection which can be found on GitHub here: <https://github.com/AlteredSecurity/Disable-TamperProtection>
@@ -341,10 +366,12 @@ An example to chain / add parts to disable more than one component together is y
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020231227155153.png)
 
+<!-- TOC --><a name="impact-against-mde"></a>
 ## Impact against MDE
 
 Testing the POC against a target Windows machine as mentioned with MDE enabled, it is found that Tamper Protection can successfully be disabled along with other Defender settings.
 
+<!-- TOC --><a name="detection-and-alerts"></a>
 ## Detection and Alerts
 
 Alerts and detections can be used to build basic telemetry and detections for this attack.
@@ -361,6 +388,7 @@ Testing the POC with MDE enabled results in successful execution with the follow
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020231211123519.png)
 
 
+<!-- TOC --><a name="resolution-telemetry-and-related-opsec"></a>
 ## Resolution, Telemetry and related OPSEC
 
 Apart from logs generated by the attack using NSudo / the POC and privileged access, An `Information Event` is generated on every reboot with an `EVENT ID: 7026`, stating that the "WdFilter driver failed to load".
@@ -407,10 +435,12 @@ The Proof of Concept (POC) incorporates functionality to reinstate the WdFilter 
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Bypass-Tamper-Protection/Images/Pasted%20image%2020221124191854.png)
 
+<!-- TOC --><a name="remediation"></a>
 ## Remediation
 
 To remediate this vulnerability, avoid permitting TrustedInstaller / SYSTEM privileges to alter and delete sensitive Defender registry keys such as the `HKLM\SYSTEM\CurrentControlSet\Services\WdFilter\Instances\WdFilter Instance\Altitude` registry key as patched in latest Windows versions (April 2024).
 
+<!-- TOC --><a name="platform"></a>
 ## Platform
 
 This vulnerability, in my testing affects the following versions of Windows:
@@ -418,6 +448,7 @@ This vulnerability, in my testing affects the following versions of Windows:
 - Windows 10 until BuildLabEx Version: 19041.1.amd64fre.vb_release.191206-1406 (April 2024 update)
 - Windows 11 until BuildLabEx Version: 22621.1.amd64fre.ni_release.220506-1250 (Sep 2023 update). 
 
+<!-- TOC --><a name="disclosure-timeline"></a>
 ## Disclosure Timeline
 
 - Sep 23, 2022 - Initial discovery.
@@ -427,12 +458,25 @@ This vulnerability, in my testing affects the following versions of Windows:
 - April 09, 2024 - Patched on most Windows versions as part of security updates.
 - June 06, 2024 - Public release of Blog and POC.
 
+<!-- TOC --><a name="references"></a>
 ## References
 
 - [Load order groups and altitudes for minifilter drivers by Microsoft](https://learn.microsoft.com/en-us/windows-hardware/drivers/ifs/load-order-groups-and-altitudes-for-minifilter-drivers)
 - [NSudo](https://github.com/M2Team/NSudo/releases)
 - [superUser](https://github.com/mspaintmsi/superUser)
 - [Research paper on Blinding Defender](https://arxiv.org/ftp/arxiv/papers/2210/2210.02821.pdf)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
