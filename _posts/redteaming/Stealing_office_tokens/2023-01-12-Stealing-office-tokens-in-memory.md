@@ -1,17 +1,17 @@
 ---
-title: Stealing office tokens in memory
+title: Stealing Microsoft Office tokens in memory
 date: 2023-01-12 09:48:47 +07:00
 categories: RedTeaming
 #modified: 20-08-29 09:24:47 +07:00
 #tags: [blog, netlify, jekyll, github]
-description: Stealing Microsoft office tokens in memory
+description: Stealing Microsoft Office tokens in memory
 #thumbnail: "https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Paces_Review/lab.png"
 #image: "https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Paces_Review/lab.png"
 ---
 
-Let us look into stealing office tokens present in memory on a host for a target pricipal. 
+Let us look into stealing Microsoft Office tokens present in memory on a host for a target pricipal. 
 
-To simulate an Office login on the host using the a target user, a Macro command executing tool such as MacroRecorder was used to automate the log in process: https://www.macrorecorder.com/
+To simulate an MS Office login on the host using the a target user, a Macro command executing tool such as MacroRecorder was used to automate the log in process: https://www.macrorecorder.com/
 
 ```
 & 'C:\Program Files (x86)\MacroRecorder\MacroRecorder.exe' -play=C:C:\Users\Administrator\Desktop\macro.mrf
@@ -19,7 +19,7 @@ To simulate an Office login on the host using the a target user, a Macro command
 
 Attempting to analyze and search for office tokens (`eyJ0eX`) using Process Hacker 2 after a valid login,  consistent results after a user simulation action are observed:
 
-![](Pasted%20image%2020230925124733.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Stealing_office_tokens/Images/Pasted%20image%2020230925124733.png)
 
 However when performing a minidump of the process and then looking for this string results were inconsistent, this is primarily because minidumps using say procdump do not include Private mapped regions. As an alternative we can perform a Full process memory dump or alternative dumps that can dump private mapped regions too.
 
@@ -90,7 +90,7 @@ b","refresh_on":"0","requested_claims":"{\"access_token\":{\"xms_cc\":{\"values\
 
 Copy and decode the token at `https://jwt.io/` as follows:
 
-![](Pasted%20image%2020231003124256.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Stealing_office_tokens/Images/Pasted%20image%2020231003124256.png)
 
 Similarly, here's an example for `substrate.office.com`:
 
