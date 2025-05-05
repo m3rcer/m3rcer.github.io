@@ -32,7 +32,7 @@ description: APT Emulation - Nobellium
 As a pentester or Red teamer it is important to perform adversary simulation simulating actual adversary actions. To do so, it is a good exercise to emulate attacker chains to execute in actual engagements and Red Team operations. Here is an example inspired from [NOBELLIUM's](https://www.microsoft.com/security/blog/2021/05/28/breaking-down-nobeliums-latest-early-stage-toolset/) unique infection attack chain.
 In this case we bypass defenses on the target that include Windows Defender and ATP.
 
-![](Pasted%20image%2020220817163642.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817163642.png)
 
 - The attack chain is as follows:
 
@@ -40,13 +40,13 @@ In this case we bypass defenses on the target that include Windows Defender and 
 
 - In this scenario, we assume that a malicious `.iso` file was downloaded from the internet / was download via `HTML Smuggling` techniques. Usually `.iso` files contain installers (Ex: Games). To emulate this I've used the simple `winrar` project. Once the `.iso` file is opened or mounted 3 files appear. 
 
-	![](Pasted%20image%2020220824161512.png)
+	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220824161512.png)
 
 - As the names suggest the user would misdirected to click on the malicious `.lnk` setup file which would inturn execute the `HellsGateDropper/Injector` (`winrar-x64-611-check.exe`). If examined, this would look like a normal check but in the background it downloads AES encrypted shellcode, decrypts it on the fly, spawns the legitimate `winrar-x64-611.exe` setup file and injects shellcode into the trusted installer. 
 
 - From an user's standpoint after clicking on the `.lnk` setup the trusted installer is spawned, deeming the execution non malicious but in the background a lot more malicious events occur.
 
-	![](Pasted%20image%2020220818032107.png)
+	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818032107.png)
 
 - Since the shellcode is injected into the trusted installer, it would live for as along as the process is terminated. It is recommended to chain this along with persistence techniques, but that is out of scope for this assignment.
 
@@ -141,19 +141,19 @@ kali> ./mythic-cli start
 
 - Go to the `Payloads` tab --> `Actions` drop down --> click `Generate New Payload`
 
-![](Pasted%20image%2020220817164505.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817164505.png)
 
 - Select Target Operating System as `Windows` and click `Next`:
 
-![](Pasted%20image%2020220817164648.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817164648.png)
 
 - Select Output as `Shellcode`:
 
-![](Pasted%20image%2020220817164743.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817164743.png)
 
 - Select only `load` (other commands can be loaded later using this if needed) `upload`, `exit`, `link` and `unlink` to keep the agent as small as possible and then click `Next`:
 
-![](Pasted%20image%2020220817165222.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817165222.png)
 
 - In C2 profiles select `http`: 
 
@@ -165,15 +165,15 @@ kali> ./mythic-cli start
 
 	- Change the `Name of the query parameter for GET requests` to something custom like `winrarq` and the same with `POST request URI` to something like `winrardata` and click `Next`
 
-	![](Pasted%20image%2020220817170153.png)
+	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817170153.png)
 
 - Name the payload and click `Create Payload`
 
-	![](Pasted%20image%2020220817170425.png)
+	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817170425.png)
 
 - A payload should be generate in the `Payloads` tab. Download it and transfer it to a Windows machine.
 
-	![](Pasted%20image%2020220817170627.png)
+	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817170627.png)
 
 <!-- TOC --><a name="aes-encrypt-the-apollo-shellcode"></a>
 ### AES Encrypt the Apollo Shellcode 
@@ -228,11 +228,11 @@ This C# implementation of `HellsGate`  is used as a base template: https://githu
 
 - Compiling from source using `Visual Studio 2019` without changing anything we have 20 detections:
 
-![](Pasted%20image%2020220817201913.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817201913.png)
 
 - Analyzing with a decompiler: `ILSpy`
 
-![](Pasted%20image%2020220817202621.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817202621.png)
 
 - It most likely looks like the detections arise from:
 
@@ -246,19 +246,19 @@ This C# implementation of `HellsGate`  is used as a base template: https://githu
 
 	- In Visual Studio, use `CTRL` + `SHFT` + `H` to `search and replace` in all files: replace words like `HellsGate` to `HellG`
 
-	![](Pasted%20image%2020220817203025.png)
+	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817203025.png)
 
 	- Rewrite comments for verbosity (`Console.WriteLine()` statements) to break any signatures from them as follows:
 
-	![](Pasted%20image%2020220817203258.png)
+	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817203258.png)
 
 	- Replace the shellcode to a something non malicious like a nullbyte to test if the detection was from the shellcode:
 
-	![](Pasted%20image%2020220817203426.png)
+	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817203426.png)
 
 - Rebuild the project and upload it on Virus Total: We see that it bypass's Microsoft defender/ATP and has lessened detections to 8.
 
-![](Pasted%20image%2020220817203731.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817203731.png)
 
 - Rewriting and adding more functionality to the code should improve the detections a bit.
 
@@ -437,7 +437,7 @@ int processid = procId;
 
 - Rebuild the project and upload the binary to VirusTotal: We now have only 5 detections:
 
-	![](Pasted%20image%2020220817210442.png)
+	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817210442.png)
 
 - Download a `winrar` setup file from: https://www.win-rar.com/download.html?&L=0 and place it in the same folder. 
 
@@ -449,13 +449,13 @@ int processid = procId;
 
 	- Rename the `HellsGate.exe` file to `winrar-x64-611-check.exe`:
 
-	![](Pasted%20image%2020220817230834.png)
+	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817230834.png)
 
 - Change executable permissions for  `winrar-x64-611-check`: Right click over the executable and select `Properties`
 
 	- Enable `Run as Admin`:
 
-	![](Pasted%20image%2020220817231040.png)
+	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220817231040.png)
 
 <!-- TOC --><a name="create-the-malicious-lnk"></a>
 ### Create the malicious .lnk
@@ -488,15 +488,15 @@ $link.arguments = "advpack.dll,RegisterOCX winrar-x64-611-check.exe"
 
 - Select `Create image file from files/folders`
 
-	![](Pasted%20image%2020220818013000.png)
+	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818013000.png)
 
 - Browse and add the folder including all 3 payload files.
 
-![](Pasted%20image%2020220818013118.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818013118.png)
 
 - Next click `Create Now` with a suitable name.
 
-	![](Pasted%20image%2020220818013212.png)
+	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818013212.png)
 
 <!-- TOC --><a name="payload-emulation"></a>
 ### Payload Emulation
@@ -512,26 +512,26 @@ Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
 
 - Mount / Execute the iso:
 
-	![](Pasted%20image%2020220818015104.png)
+	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818015104.png)
 
 - Execute the benign `winrar-x64-611-setup` file
 
-![](Pasted%20image%2020220818015326.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818015326.png)
 
-![](Pasted%20image%2020220818024714.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818024714.png)
 
 <!-- TOC --><a name="lateral-movement"></a>
 ### Lateral Movement
 
 - Generate Apollo shellcode same way as before but this time for the `SMB` profile:
 
-	![](Pasted%20image%2020220818025010.png)
+	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818025010.png)
 
 - Say that we compromise credentials for another server from this host: Load the `make_token` and `link` modules: `load <command name>`
 
 - Create a new Credential using `make_token`
 
-![](Pasted%20image%2020220818025532.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818025532.png)
 
 - Reiterate the process to now encrypt the `SMB` shellcode and upload it on the `ADMIN$` share from Mythic using: `upload \\PACES-DC\C$\users\public\ winrar-x64-611.zip`
 
@@ -545,7 +545,7 @@ PS> .\winrar-x64-611-setup.lnk
 
 - Use Mythic to create a `link` to the SMB beacon on `PACES-DC`: `link PACES-DC`
 
-![](Pasted%20image%2020220818031735.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818031735.png)
 
 <!-- TOC --><a name="analysis"></a>
 ### Analysis
@@ -554,17 +554,17 @@ Analysing using `Process Hacker 2`:
 
 - A single `winrar` process exist inside which the shellcode is injected:
 
-	![](Pasted%20image%2020220818032107.png)
+	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818032107.png)
 
 - Analysing memory there are no regions with `Execute` permissions:
 
-	![](Pasted%20image%2020220818032212.png)
+	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818032212.png)
 
 - Non existent parent process exists
 
-![](Pasted%20image%2020220818032417.png)
+![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818032417.png)
 
 - Analyzing modules we see that `amsi.dll` is loaded in the current process:
 
-	![](Pasted%20image%2020220818032319.png)
+	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/APT-Emulation-Nobellium/Pasted%20image%2020220818032319.png)
 
