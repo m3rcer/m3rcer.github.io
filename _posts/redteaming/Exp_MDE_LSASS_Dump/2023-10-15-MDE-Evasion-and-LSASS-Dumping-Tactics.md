@@ -1,3 +1,34 @@
+<!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
+
+- [Introduction](#introduction)
+   * [Setting up Microsoft Advanced Threat Protection](#setting-up-microsoft-advanced-threat-protection)
+- [Using custom APIs](#using-custom-apis)
+   * [MiniDumpDotNet](#minidumpdotnet)
+      + [Tool Setup](#tool-setup)
+      + [Binary execution against EDR (MDE) - MiniDumpDotNet](#binary-execution-against-edr-mde-minidumpdotnet)
+      + [PowerShell and dll execution against EDR (MDE) - MiniDumpDotNet](#powershell-and-dll-execution-against-edr-mde-minidumpdotnet)
+      + [Credential Extraction from dump file](#credential-extraction-from-dump-file)
+   * [PostDump](#postdump)
+   * [PPLMedic](#pplmedic)
+- [Using full memory dumps](#using-full-memory-dumps)
+   * [Extracting LSASS credentials from raw memory dumps](#extracting-lsass-credentials-from-raw-memory-dumps)
+      + [Tool Setup](#tool-setup-1)
+      + [Local Binary execution against EDR (MDE) - DumpIt, WinPmem and MemProcFS analysis](#local-binary-execution-against-edr-mde-dumpit-winpmem-and-memprocfs-analysis)
+      + [Remote Binary execution against EDR (MDE) - MemProcFS ](#remote-binary-execution-against-edr-mde-memprocfs)
+      + [Remote Binary execution against EDR (MDE) - physmem2profit](#remote-binary-execution-against-edr-mde-physmem2profit)
+      + [Credential Extraction from dump file](#credential-extraction-from-dump-file-1)
+- [Using Exploits instead of Vulnerable Signed Drivers](#using-exploits-instead-of-vulnerable-signed-drivers)
+   * [Binary execution against EDR (MDE) - EDRSandblast-GodFault](#binary-execution-against-edr-mde-edrsandblast-godfault)
+- [Using Process Injection](#using-process-injection)
+   * [Process Injection in a ASR excluded process using an Unhooked ntdll - Blindside](#process-injection-in-a-asr-excluded-process-using-an-unhooked-ntdll-blindside)
+   * [Process Injection in a ASR excluded process using SignatureGate](#process-injection-in-a-asr-excluded-process-using-signaturegate)
+   * [Process Injection using Process MockinJay](#process-injection-using-process-mockinjay)
+      + [Self Injection](#self-injection)
+- [Conclusion](#conclusion)
+- [References](#references)
+
+<!-- TOC end -->
+
 ---
 title: Testing EDR boundaries - Experiments in modern MDE Evasion and LSASS Dumping Tactics
 date: 2023-10-15 09:48:47 +07:00
@@ -9,6 +40,7 @@ description: Experiments in modern MDE Evasion and LSASS Dumping Tactics
 #image: "https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Paces_Review/lab.png"
 ---
 
+<!-- TOC --><a name="introduction"></a>
 # Introduction
 
 Oftentimes, once local administrative access is achieved on a single host, dumping LSASS allows for a chain of lateral movement, where one set of credentials is compromised that then has local admin access to another host, where additional credentials are stored in memory that has local admin elsewhere.
@@ -17,6 +49,7 @@ In the modern day it isn't possible to just to just inject into `lsass` without 
 
 Detection mechanisms have evolved to detect dumping techniques by **hooking** the `MiniDumpWriteDump` function along with its associated `Win32 API` usage patterns. In addition, **opening up a new handle** to the `lsass.exe` process itself is also detected/blocked by many vendors. Dropping the memory dump of `lsass.exe` **to disk** is also an IoC, which is detected/blocked by some vendors. The signature of the dump file can be detected, most times the file gets instantly deleted.
 
+<!-- TOC --><a name="setting-up-microsoft-advanced-threat-protection"></a>
 ## Setting up Microsoft Advanced Threat Protection
 
 Setup an MDE Evaluation lab (deprecated):
@@ -42,8 +75,10 @@ H4mjIv-IjUBU
 
 ----
 
+<!-- TOC --><a name="using-custom-apis"></a>
 # Using custom APIs
 
+<!-- TOC --><a name="minidumpdotnet"></a>
 ## MiniDumpDotNet
 
 To bypass EDR/AV hooks around the `MiniDumpWriteDump` function, we can try and use a custom rewritten reimplementation of the `MiniDumpWriteDump` function in a way that instead of utilizing the actual `MiniDumpWriteDump`. Originally a [BOF](https://github.com/rookuu/BOFs/tree/main/MiniDumpWriteDump) adapted a reimplementation of this API using some `ReactOS` [source code](https://doxygen.reactos.org/d8/d5d/minidump_8c_source.html).
@@ -52,6 +87,7 @@ To bypass EDR/AV hooks around the `MiniDumpWriteDump` function, we can try and u
 
 The best part about this project is that it could be targetted to dump any process other than `lsass` with little to no detections, for instance: dumping processes's like `Outlook` in some cases result in finding cleartext login credentials.
 
+<!-- TOC --><a name="tool-setup"></a>
 ### Tool Setup
 
 Clone/Download the project: `PS> git clone https://github.com/WhiteOakSecurity/MiniDumpDotNet.git`
@@ -74,6 +110,7 @@ Uploading on `VirusTotal` we have 0 detections (don't recommend doing so as it w
 
 	![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020220820032153.png)
 
+<!-- TOC --><a name="binary-execution-against-edr-mde-minidumpdotnet"></a>
 ### Binary execution against EDR (MDE) - MiniDumpDotNet
 
 Copy `minidumpdotnet.exe` to `C:\Tools` on a `testmachine`.
@@ -88,6 +125,7 @@ Noting for any alerts, no new alerts are found:
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230823180900.png)
 
+<!-- TOC --><a name="powershell-and-dll-execution-against-edr-mde-minidumpdotnet"></a>
 ### PowerShell and dll execution against EDR (MDE) - MiniDumpDotNet
 
 As above, compile seperately the project as a Class Library (.dll) and copy the .dll to the target `testmachine` to test execution against MDE.
@@ -138,6 +176,7 @@ Noting for any alerts, no new alerts are found:
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230823180840.png)
 
+<!-- TOC --><a name="credential-extraction-from-dump-file"></a>
 ### Credential Extraction from dump file
 
 Extract credentials form the .dmp file with `mimikatz` (I did this by copying the `minidump` file to my machine) as follows:
@@ -199,6 +238,7 @@ SID               : S-1-5-90-0-2
 
 <div style="page-break-after: always;"></div>
 
+<!-- TOC --><a name="postdump"></a>
 ## PostDump
 
 ```
@@ -320,6 +360,7 @@ PS D:\Work\ADCS Challenges\Tools\ThreatCheck-master\ThreatCheck\ThreatCheck\bin\
 [+] No threat found!
 ```
 
+<!-- TOC --><a name="pplmedic"></a>
 ## PPLMedic
 
 ```
@@ -347,8 +388,10 @@ PS D:\Work\ADCS Challenges\Tools\ThreatCheck-master\ThreatCheck\ThreatCheck\bin\
 
 ----
 
+<!-- TOC --><a name="using-full-memory-dumps"></a>
 # Using full memory dumps
 
+<!-- TOC --><a name="extracting-lsass-credentials-from-raw-memory-dumps"></a>
 ## Extracting LSASS credentials from raw memory dumps
 
 DumpIt is a closed source tool made primarily for forensic analysis, that uses a driver to dump all the physical memory into a file. Because the dumps size depends on the amount of memory available and can be quite large, retrieving and exfiltrating one from a remote system is usually slow and not feasible.
@@ -357,6 +400,7 @@ To ease this process, MemProcFS allows mounting raw memory dumps, then in the mo
 
 Requirement:  Around 17gb free disk space for the raw memory dump.
 
+<!-- TOC --><a name="tool-setup-1"></a>
 ### Tool Setup
 
 Begin by downloading [DumpIt](https://github.com/h4sh5/DumpIt-mirror) and [MemProcFS](https://github.com/ufrisk/MemProcFS). Next Copy DumpIt onto the `testmachine`.
@@ -374,6 +418,7 @@ PS D:\> .\ThreatCheck.exe -f D:\Tools\MemProcFS\MemProcFS.exe
 [+] No threat found!
 ```
 
+<!-- TOC --><a name="local-binary-execution-against-edr-mde-dumpit-winpmem-and-memprocfs-analysis"></a>
 ### Local Binary execution against EDR (MDE) - DumpIt, WinPmem and MemProcFS analysis
 
 Copy DumpIt and MemprocFS onto the `testmachine`.
@@ -502,6 +547,7 @@ Noting for any alerts, no new alerts are found:
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230823180840.png)
 
 
+<!-- TOC --><a name="remote-binary-execution-against-edr-mde-memprocfs"></a>
 ### Remote Binary execution against EDR (MDE) - MemProcFS 
 
 It is possible to use MemProcFS to remotely perform the analysis as showcased [here](https://github.com/ufrisk/MemProcFS/wiki/_Remoting). 
@@ -535,6 +581,7 @@ C:\Tools>.\MemProcFS\MemProcFS.exe -device C:\Tools\TestMachine4-20230825-103250
 
 Perform the analysis now in the remote system as showcased above.
 
+<!-- TOC --><a name="remote-binary-execution-against-edr-mde-physmem2profit"></a>
 ### Remote Binary execution against EDR (MDE) - physmem2profit
 
 A more and better way to perform the same remote analysis without installing dependencies like `leechAgent` is by using the [physmem2profit](https://github.com/WithSecureLabs/physmem2profit) project specially created for this purpose from a remote non domain joined linux system.
@@ -631,6 +678,7 @@ Noting for any alerts, no new alerts are found:
 
 ![](https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/refs/heads/master/_posts/redteaming/Exp_MDE_LSASS_Dump/Images/Pasted%20image%2020230823180840.png)
 
+<!-- TOC --><a name="credential-extraction-from-dump-file-1"></a>
 ### Credential Extraction from dump file
 
 Exfiltrate the minidmp file from `C:\Tools\minidump` back onto our local machine by a simple Copy - Paste and parse it using mimikatz as follows:
@@ -685,8 +733,10 @@ SID               : S-1-5-21-3554741335-746861664-1298996758-500
 
 ----
 
+<!-- TOC --><a name="using-exploits-instead-of-vulnerable-signed-drivers"></a>
 # Using Exploits instead of Vulnerable Signed Drivers
 
+<!-- TOC --><a name="binary-execution-against-edr-mde-edrsandblast-godfault"></a>
 ## Binary execution against EDR (MDE) - EDRSandblast-GodFault
 
 [EDRSandblast](https://github.com/wavestone-cdt/EDRSandblast) is a tool that leverages a vulnerable signed driver (`RTCore64.sys`) to bypass EDR Kernel Routine Callbacks, Object Callbacks, ETW tracing and LSASS protections. It includes both userland and kernelmode techniques  to evade monitoring.
@@ -769,8 +819,10 @@ From ThreatCheck we had found that the offset for detection was at: `0x501FD`. U
 
 ----
 
+<!-- TOC --><a name="using-process-injection"></a>
 # Using Process Injection
 
+<!-- TOC --><a name="process-injection-in-a-asr-excluded-process-using-an-unhooked-ntdll-blindside"></a>
 ## Process Injection in a ASR excluded process using an Unhooked ntdll - Blindside
 
 Since MDE has major detections around getting a handle to LSASS, the MiniDumpWrite API etc, is there any way to use these and still remain undetected? The answer is yes if you decide to perform execution in the blindspots of MDE. MDE heavily relies on ASR rules for detection. 
@@ -1530,6 +1582,7 @@ Process Injection Summary:
 
 <div style="page-break-after: always;"></div>
 
+<!-- TOC --><a name="process-injection-in-a-asr-excluded-process-using-signaturegate"></a>
 ## Process Injection in a ASR excluded process using SignatureGate
 
 [SignatureGate](https://github.com/florylsk/SignatureGate) is a weaponized version of HellsGate that abuses opt-in-fix CVE-2013-3900 based on the original [SharpHellsGate](https://github.com/am0nsec/SharpHellsGate) and [SigFlip](https://github.com/med0x2e/SigFlip) implementations.
@@ -1676,6 +1729,7 @@ Noting for any alerts on MDE, no new alerts are found:
 
 <div style="page-break-after: always;"></div>
 
+<!-- TOC --><a name="process-injection-using-process-mockinjay"></a>
 ## Process Injection using Process MockinJay
 
 Official Blog: https://www.securityjoes.com/post/process-mockingjay-echoing-rwx-in-userland-to-achieve-code-execution
@@ -1691,6 +1745,7 @@ Since Remote Injection involves leveraging installed application which could var
 To find Dll's with an RWX portion we can use a POC such as: https://github.com/pwnsauc3/RWXfinder
 
 
+<!-- TOC --><a name="self-injection"></a>
 ### Self Injection
 
 POC reference used: `https://github.com/ewby/Mockingjay_POC/tree/main`
@@ -1975,6 +2030,7 @@ Noting for any alerts on MDE, no new alerts are found:
 
 ---- 
 
+<!-- TOC --><a name="conclusion"></a>
 # Conclusion
 
 In this blog, we explored various experiments targetting Microsoft Defender for Endpoint (MDE) while attempting to dump LSASS memory. Traditional techniques such as direct injection or basic handle opening are no longer viable against modern defensive controls, requiring more stealthy approaches like creating memory minidumps.
@@ -1983,6 +2039,7 @@ Continuous testing, experimentation, and learning are vital as EDR capabilities 
 
 ----
 
+<!-- TOC --><a name="references"></a>
 # References
 
 - Microsoft Defender for Endpoint Trial: [Sign-up Portal](https://signup.microsoft.com/create-account/signup?products=7f379fee-c4f9-4278-b0a1-e4c8c2fcdf7e&ru=https://aka.ms/MDEp2OpenTrial?ocid=docs-wdatp-enablesiem-abovefoldlink)
