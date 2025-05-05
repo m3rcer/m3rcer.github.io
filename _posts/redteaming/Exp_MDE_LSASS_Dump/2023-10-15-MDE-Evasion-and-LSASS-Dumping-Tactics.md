@@ -40,16 +40,6 @@ description: Experiments in modern MDE Evasion and LSASS Dumping Tactics
 
 <!-- TOC end -->
 
----
-title: Testing EDR boundaries - Experiments in modern MDE Evasion and LSASS Dumping Tactics
-date: 2023-10-15 09:48:47 +07:00
-categories: RedTeaming
-#modified: 20-08-29 09:24:47 +07:00
-#tags: [blog, netlify, jekyll, github]
-description: Experiments in modern MDE Evasion and LSASS Dumping Tactics
-#thumbnail: "https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Paces_Review/lab.png"
-#image: "https://raw.githubusercontent.com/m3rcer/m3rcer.github.io/master/_posts/redteaming/Paces_Review/lab.png"
----
 
 <!-- TOC --><a name="introduction"></a>
 # Introduction
