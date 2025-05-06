@@ -68,9 +68,7 @@ We can then search for office tokens by looking for the string `eyJ0eX` using th
 
 Using `select-string` in PowerShell (preferred) we look for a token with `graph.microsoft.com` and `outlook.office365.com`. In this case first for `graph.microsoft.com`
 
-*Regex NOTE:
-. is escaped as \. because . is a special character in regular expressions and we want to match a literal dot.
-.\*? matches any characters (including spaces) in between "graph.microsoft.com" and "eyJ0eX" on the same line.*
+*Regex NOTE: `.` is escaped as `.` is a special character in regular expressions and we want to match a literal dot. `.\*?` matches any characters (including spaces) in between "graph.microsoft.com" and "eyJ0eX" on the same line.*
 
 ```
 [WIN-JH5F00D8313.nerd.corp]: PS C:\Users\Administrator> $graphtoken = Select-String -Path C:\Users\Administrator\Desktop\ca\ProcDump\WINWORD.EXE_231003_070025.dmp -Pattern "graph\.microsoft\.com.*?eyJ0eX"
